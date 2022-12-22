@@ -2,3 +2,6 @@ name: Cores
 version: '${version}'
 main: eu.cosup.cores.Cores
 api-version: 1.19
+commands:
+  spectate :
+    description: spectate for spectators

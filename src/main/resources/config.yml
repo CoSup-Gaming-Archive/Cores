@@ -1,3 +1,4 @@
 blacklist-craft : []
 required-player-count : 1
 start-countdown : 10
+respawn-delay : 5

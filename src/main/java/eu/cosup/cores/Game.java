@@ -1,28 +1,45 @@
 package eu.cosup.cores;
 
+import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.managers.*;
 import eu.cosup.cores.tasks.StartCountdownTask;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 
 public class Game {
 
-    private int playerCount = 0;
+    private static Game gameInstance;
+    private ArrayList<Player> joinedPlayers = new ArrayList<>();
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
     private PlayerManager playerManager;
 
-    public Game() {
+    private LoadedMap selectedMap;
+    private BukkitTask startTask;
+
+    public Game(LoadedMap selectedMap) {
+        gameInstance = this;
+
         gameStateManager = new GameStateManager();
         teamManager = new TeamManager();
         playerManager = new PlayerManager();
+
+        this.selectedMap = selectedMap;
+
         refreshPlayerCount();
 
         // TODO choose and load map
 
         initGame();
+    }
+
+    public static Game getGameInstance() {
+        return gameInstance;
     }
 
     public GameStateManager getGameStateManager() {
@@ -34,9 +51,14 @@ public class Game {
     }
 
     public int getPlayerCount() {
-        return playerCount;
+        return joinedPlayers.size();
     }
 
+    public LoadedMap getSelectedMap() {
+        return selectedMap;
+    }
+
+    // loading and joining phase
     private void initGame() {
         gameStateManager.setGameState(GameStateManager.GameState.LOADING);
 
@@ -45,39 +67,53 @@ public class Game {
         gameStateManager.setGameState(GameStateManager.GameState.JOINING);
     }
 
-    private void startGame() {
-        // asign teams for players
+    // active phase
+    public void activateGame() {
 
-        ArrayList<Player> joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
-        teamManager.makeTeams(joinedPlayers);
+        // get the spawn locations and teleport players to them
+        Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"STARTING");
 
-        // TODO remove debug line bellow
-        for (Team team : teamManager.getTeams()) {
-            for (Player player : team.getPlayers()) {
-                player.sendMessage(TeamColor.getChatColor(team.getColor())+"You are on ");
+        teleportPlayersToSpawns();
+
+    }
+
+    private void teleportPlayersToSpawns() {
+        for (Player player : joinedPlayers) {
+
+            TeamColor teamColor = Game.getGameInstance().teamManager.whichTeam(player);
+
+            if (teamColor == TeamColor.RED) {
+                player.teleport(Game.getGameInstance().getSelectedMap().getTeamRedSpawns());
             }
+
+            if (teamColor == TeamColor.BLUE) {
+                player.teleport(Game.getGameInstance().getSelectedMap().getTeamBlueSpawns());
+            }
+
+            player.setGameMode(GameMode.SURVIVAL);
         }
-
-        new StartCountdownTask(this).runTask(Cores.getInstance());
-
     }
 
-    private void teleportPlayers() {
-
+    public ArrayList<Player> getJoinedPlayers() {
+        return joinedPlayers;
     }
 
-
+    // to check how many players are on the cores game
     public void refreshPlayerCount() {
-        playerCount = Cores.getInstance().getServer().getOnlinePlayers().size();
 
-        if (playerCount < Cores.getInstance().getConfig().getInt("required-player-count")) {
+        // remove all the spectators from joined
+        joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
+
+        if (joinedPlayers.size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
+            Cores.getInstance().getServer().broadcastMessage("Not enough players");
             return;
         }
+
         // if the game already started
         if (gameStateManager.getGameState() != GameStateManager.GameState.JOINING) {
             return;
         }
 
-        startGame();
+        startTask = new StartCountdownTask().runTask(Cores.getInstance());
     }
 }
