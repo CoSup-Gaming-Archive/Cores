@@ -1,5 +1,6 @@
 package eu.cosup.cores;
 
+import eu.cosup.cores.listeners.PlayerDeathListener;
 import eu.cosup.cores.listeners.PlayerJoinListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -39,6 +40,7 @@ public final class Cores extends JavaPlugin {
 
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
     }
 
     @Override
