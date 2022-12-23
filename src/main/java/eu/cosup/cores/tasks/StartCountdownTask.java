@@ -19,7 +19,7 @@ public class StartCountdownTask extends BukkitRunnable {
         startCountdown = Cores.getInstance().getConfig().getInt("start-countdown");
 
         if (startCountdown <= 0) {
-            Bukkit.getLogger().severe("Start countdown cannot be that low");
+            Bukkit.getLogger().severe("Start countdown cannot be that low, defaulting to 10");
             startCountdown = 10;
         }
 
@@ -48,6 +48,11 @@ public class StartCountdownTask extends BukkitRunnable {
                 @Override
                 public void run() {
 
+                    if (this.isCancelled()) {
+                        cancel();
+                        return;
+                    }
+
                     // at the alst second
                     if (finalI <= 0) {
                         // change the game state and activate the main loop
@@ -56,6 +61,7 @@ public class StartCountdownTask extends BukkitRunnable {
 
                         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ACTIVE);
                         Game.getGameInstance().activateGame();
+                        Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"STARTING");
 
                         return;
                     }

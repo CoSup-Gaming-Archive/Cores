@@ -15,5 +15,4 @@ public class PlayerLeaveListener implements Listener {
         Game.getGameInstance().refreshPlayerCount();
 
     }
-
 }

@@ -9,10 +9,12 @@ public class Team {
 
     ArrayList<Player> players;
     private final TeamColor color;
+    private int beaconCount;
 
-    public Team(TeamColor teamColor, ArrayList<Player> players) {
+    public Team(TeamColor teamColor, ArrayList<Player> players, int beaconCount) {
         this.players = players;
         this.color = teamColor;
+        this.beaconCount = beaconCount;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -23,11 +25,18 @@ public class Team {
         return color;
     }
 
+    public int getBeaconCount() {
+        return beaconCount;
+    }
+
+    public void loseBeacon() {
+        this.beaconCount--;
+    }
+
     // check for player UUID and not player object beacues yes
     public boolean isPlayerInTeam(Player player) {
         for (Player player1 : players) {
             if (player1.getName().equals(player.getName())) {
-                Bukkit.getLogger().info(player1.getUniqueId()+"   "+player.getUniqueId());
                 return true;
             }
         }

@@ -1,6 +1,7 @@
 package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
+import eu.cosup.cores.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
@@ -8,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class TeamManager {
 
@@ -34,7 +36,13 @@ public class TeamManager {
 
                 if (teamPlayers.size() >= players.size()/2) {
 
-                    teams.add(new Team((TeamColor) teamColor, teamPlayers));
+                    if ((TeamColor) teamColor == TeamColor.BLUE) {
+                        teams.add(new Team((TeamColor) teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamBlueBeacons().size()));
+                    }
+
+                    if ((TeamColor) teamColor == TeamColor.RED) {
+                        teams.add(new Team((TeamColor) teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamRedBeacons().size()));
+                    }
 
                     teamPlayers = new ArrayList<>();
 
@@ -56,7 +64,20 @@ public class TeamManager {
             }
         }
 
-        // uhhhs
+        return null;
+
+    }
+
+    public Team getTeamByColor(TeamColor teamColor) {
+
+        for (Team team : teams) {
+
+            if (Objects.equals(team.getColor().toString(), teamColor.toString())) {
+                return team;
+            }
+
+        }
+
         return null;
 
     }

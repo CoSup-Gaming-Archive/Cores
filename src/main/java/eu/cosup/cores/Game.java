@@ -2,10 +2,12 @@ package eu.cosup.cores;
 
 import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.managers.*;
+import eu.cosup.cores.tasks.ActivateGameTask;
+import eu.cosup.cores.tasks.GameEndTask;
 import eu.cosup.cores.tasks.StartCountdownTask;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
+import org.bukkit.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -17,8 +19,6 @@ public class Game {
     private ArrayList<Player> joinedPlayers = new ArrayList<>();
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
-    private PlayerManager playerManager;
-
     private LoadedMap selectedMap;
     private BukkitTask startTask;
 
@@ -27,7 +27,6 @@ public class Game {
 
         gameStateManager = new GameStateManager();
         teamManager = new TeamManager();
-        playerManager = new PlayerManager();
 
         this.selectedMap = selectedMap;
 
@@ -62,7 +61,8 @@ public class Game {
     private void initGame() {
         gameStateManager.setGameState(GameStateManager.GameState.LOADING);
 
-        // do all the loading for maps and stuff
+        // TODO load maps here
+        // then switch to joining
 
         gameStateManager.setGameState(GameStateManager.GameState.JOINING);
     }
@@ -70,28 +70,14 @@ public class Game {
     // active phase
     public void activateGame() {
 
-        // get the spawn locations and teleport players to them
-        Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"STARTING");
-
-        teleportPlayersToSpawns();
+        new ActivateGameTask(joinedPlayers).run();
 
     }
 
-    private void teleportPlayersToSpawns() {
-        for (Player player : joinedPlayers) {
+    public void finishGame(TeamColor winner) {
 
-            TeamColor teamColor = Game.getGameInstance().teamManager.whichTeam(player);
+        new GameEndTask(winner).run();
 
-            if (teamColor == TeamColor.RED) {
-                player.teleport(Game.getGameInstance().getSelectedMap().getTeamRedSpawns());
-            }
-
-            if (teamColor == TeamColor.BLUE) {
-                player.teleport(Game.getGameInstance().getSelectedMap().getTeamBlueSpawns());
-            }
-
-            player.setGameMode(GameMode.SURVIVAL);
-        }
     }
 
     public ArrayList<Player> getJoinedPlayers() {
@@ -101,10 +87,14 @@ public class Game {
     // to check how many players are on the cores game
     public void refreshPlayerCount() {
 
-        // remove all the spectators from joined
         joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
 
+        // TODO fix this
         if (joinedPlayers.size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
+            Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.JOINING);
+            if (startTask != null) {
+                startTask.cancel();
+            }
             Cores.getInstance().getServer().broadcastMessage("Not enough players");
             return;
         }

@@ -1,9 +1,13 @@
 package eu.cosup.cores.data;
 
+import eu.cosup.cores.managers.Team;
+import eu.cosup.cores.managers.TeamColor;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class LoadedMap {
 
@@ -76,5 +80,29 @@ public class LoadedMap {
 
     public Location getSpectatorSpawn() {
         return spectatorSpawn;
+    }
+
+    // returns the team that the beacon belongs to
+    public TeamColor whichTeamBeacon(Location beaconLocation) {
+
+        for (Location location : getTeamBlueBeacons()) {
+
+            if (Objects.equals(location.toVector(), beaconLocation.toVector())) {
+                return TeamColor.BLUE;
+            }
+
+        }
+
+        for (Location location : getTeamRedBeacons()) {
+
+            if (Objects.equals(location.toVector(), beaconLocation.toVector())) {
+                return TeamColor.RED;
+            }
+
+        }
+
+
+        // in case the beacon is from noone
+        return null;
     }
 }
