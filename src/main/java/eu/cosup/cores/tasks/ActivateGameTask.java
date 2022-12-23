@@ -3,10 +3,7 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.TeamColor;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
@@ -31,52 +28,82 @@ public class ActivateGameTask extends BukkitRunnable {
     @Override
     public void run() {
 
+        prepareEnviroment();
         preparePlayers();
-        teleportPlayersToSpawns();
         spawnBeacons();
+    }
 
-        // give players armor and stuff
+    private void prepareEnviroment() {
 
-        givePlayerArmor();
-        givePlayerTools();
+        Cores.getInstance().getWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        Cores.getInstance().getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
+
+        // im pretty sure this is right
+        Cores.getInstance().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
+
+        // qol for builders
+        Cores.getInstance().getWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
+
     }
 
     private void preparePlayers() {
-
         for (Player player : joinedPlayers) {
-            player.getInventory().clear();
-            player.setGameMode(GameMode.SURVIVAL);
+            preparePlayerFull(player);
+        }
+    }
+
+    // ooo so juicy
+    public static void preparePlayerFull(Player player) {
+
+        preparePlayerStats(player);
+        givePlayerArmor(player);
+        givePlayerTools(player);
+        teleportPlayerToSpawn(player);
+
+    }
+
+    // prepare player stats
+    public static void preparePlayerStats(Player player) {
+        player.getInventory().clear();
+        player.setGameMode(GameMode.SURVIVAL);
+        player.setFoodLevel(Integer.MAX_VALUE);
+        player.setHealth(20);
+    }
+
+    public static void teleportPlayerToSpawn(Player player) {
+
+        TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
+
+        if (teamColor == TeamColor.RED) {
+            player.teleport(Game.getGameInstance().getSelectedMap().getTeamRedSpawns());
+        }
+
+        if (teamColor == TeamColor.BLUE) {
+            player.teleport(Game.getGameInstance().getSelectedMap().getTeamBlueSpawns());
         }
 
     }
 
-    private void givePlayerArmor() {
+    public static void givePlayerArmor(Player player) {
 
-        // TODO give colored armor peaces
+        // TODO give player colored armor
 
-        for (Player player : joinedPlayers) {
+        List<String> armorPeaces = Cores.getInstance().getConfig().getStringList("armor");
 
-            List<String> armorPeaces = Cores.getInstance().getConfig().getStringList("armor");
-
-            // oooof this could print many error nicht gut
-            player.getInventory().setBoots(new ItemStack(Material.getMaterial(armorPeaces.get(0))));
-            player.getInventory().setLeggings(new ItemStack(Material.getMaterial(armorPeaces.get(1))));
-            player.getInventory().setChestplate(new ItemStack(Material.getMaterial(armorPeaces.get(2))));
-            player.getInventory().setHelmet(new ItemStack(Material.getMaterial(armorPeaces.get(3))));
-        }
+        // oooof this could print many error nicht gut
+        player.getInventory().setBoots(new ItemStack(Material.getMaterial(armorPeaces.get(0))));
+        player.getInventory().setLeggings(new ItemStack(Material.getMaterial(armorPeaces.get(1))));
+        player.getInventory().setChestplate(new ItemStack(Material.getMaterial(armorPeaces.get(2))));
+        player.getInventory().setHelmet(new ItemStack(Material.getMaterial(armorPeaces.get(3))));
     }
 
-    private void givePlayerTools() {
+    public static void givePlayerTools(Player player) {
 
         // TODO make give player items in inventory
 
-        for (Player player : joinedPlayers) {
+        for (String inventoryItem : Cores.getInstance().getConfig().getStringList("hotbar")) {
 
-            // this could definetely go wrtong
-            for (String inventoryItem : Cores.getInstance().getConfig().getStringList("hotbar")) {
-
-                player.getInventory().setItem(0, new ItemStack(Material.getMaterial(inventoryItem)));
-            }
+            player.getInventory().setItem(0, new ItemStack(Material.getMaterial(inventoryItem)));
         }
     }
 
@@ -93,21 +120,4 @@ public class ActivateGameTask extends BukkitRunnable {
         Bukkit.getLogger().info("Spawned beacons");
 
     }
-
-    private void teleportPlayersToSpawns() {
-        for (Player player : joinedPlayers) {
-
-            TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
-
-            if (teamColor == TeamColor.RED) {
-                player.teleport(Game.getGameInstance().getSelectedMap().getTeamRedSpawns());
-            }
-
-            if (teamColor == TeamColor.BLUE) {
-                player.teleport(Game.getGameInstance().getSelectedMap().getTeamBlueSpawns());
-            }
-
-        }
-    }
-
 }

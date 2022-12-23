@@ -14,8 +14,6 @@ import java.util.List;
 
 public class BlockPlaceListener implements Listener {
 
-    private static List<String> placableList = Cores.getInstance().getConfig().getStringList("whitelist-break");
-
     @EventHandler
     private void onPlayerPlaceBlock(BlockPlaceEvent event) {
 
@@ -36,6 +34,11 @@ public class BlockPlaceListener implements Listener {
 
         if (Game.getGameInstance().getSelectedMap().getMinHeight() > block.getY()) {
             player.sendMessage(ChatColor.RED+"Cannot place blocks here");
+            event.setCancelled(true);
+            return;
+        }
+
+        if (!BlockBreakListener.blockWhitelisted(block)) {
             event.setCancelled(true);
         }
 

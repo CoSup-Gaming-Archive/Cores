@@ -54,11 +54,15 @@ public class GameEndTask extends BukkitRunnable {
                 // you should return players to lobby before restarting
                 Bukkit.getLogger().severe("Restarting game");
 
+
                 // TODO test this
                 // create the new game
                 Cores.getInstance().createGame();
 
-                // after some time return players to lobby
+                // basicaly kill all players
+                Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> player.setHealth(0));
+
+                Cores.getInstance().getGame().refreshPlayerCount();
 
             }
         }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("return-to-lobby-delay")*20L);

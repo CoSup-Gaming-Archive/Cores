@@ -1,9 +1,9 @@
-whitelist-break : []
-whitelist-craft : []
+whitelist-break : [IRON_BLOCK]
+whitelist-craft : [IRON_INGOT]
 required-player-count : 2
 start-countdown : 15
 respawn-delay : 5
-return-to-lobby-delay : 120
+return-to-lobby-delay : 60
 
 armor : ["LEATHER_BOOTS", "LEATHER_LEGGINGS", "LEATHER_CHESTPLATE", "LEATHER_HELMET"]
 inventory : ["STONE_SWORD"]

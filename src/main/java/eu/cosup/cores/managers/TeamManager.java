@@ -30,7 +30,7 @@ public class TeamManager {
         // this wont work in future since parties will be athing im guessing
         for (Object teamColor : Arrays.stream(TeamColor.values()).filter(teamColor -> teamColor != TeamColor.SPECTATOR).toArray()) {
 
-            Bukkit.getLogger().info(""+teamColor.toString());
+            Bukkit.getLogger().info(""+teamColor.toString()+" is being registered.");
 
             for (Player player : players) {
 

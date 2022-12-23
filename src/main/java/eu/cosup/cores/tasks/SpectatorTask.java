@@ -53,7 +53,7 @@ public class SpectatorTask extends BukkitRunnable {
                     player.teleport(Game.getGameInstance().getSelectedMap().getTeamBlueSpawns());
                 }
 
-                player.setGameMode(GameMode.SURVIVAL);
+                ActivateGameTask.preparePlayerFull(player);
 
                 player.sendMessage(TeamColor.getChatColor(team)+"You are alive");
             }

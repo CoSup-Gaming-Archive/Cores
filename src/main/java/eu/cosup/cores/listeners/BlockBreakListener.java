@@ -18,10 +18,12 @@ public class BlockBreakListener implements Listener {
 
     private static List<String> breakableList = Cores.getInstance().getConfig().getStringList("whitelist-break");
 
+    // TODO clean this up a bit
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
 
         Player player = event.getPlayer();
+        Block block = event.getBlock();
 
         // if the game doesnt start
         if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
@@ -29,9 +31,9 @@ public class BlockBreakListener implements Listener {
         }
 
         // in case it is a beacon
-        if (event.getBlock().getType() == Material.BEACON) {
+        if (block.getType() == Material.BEACON) {
 
-            TeamColor beaconTeamColor = Game.getGameInstance().getSelectedMap().whichTeamBeacon(event.getBlock().getLocation());
+            TeamColor beaconTeamColor = Game.getGameInstance().getSelectedMap().whichTeamBeacon(block.getLocation());
 
             TeamColor playerTeamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
 
@@ -49,7 +51,9 @@ public class BlockBreakListener implements Listener {
                 return;
             }
 
+
             // it was no accident
+
 
             Team loserTeam = Game.getGameInstance().getTeamManager().getTeamByColor(beaconTeamColor);
 
@@ -57,9 +61,10 @@ public class BlockBreakListener implements Listener {
             loserTeam.loseBeacon();
 
             // broadcast that they lost beacon
-            Cores.getInstance().getServer().broadcastMessage(ChatColor.RED+"A "+loserTeam.getColor()+" was destroyed");
+            Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(loserTeam.getColor())+"A "+loserTeam.getColor()+" beacon"+ChatColor.WHITE+" was destroyed");
 
-            event.getBlock().setType(Material.AIR);
+            // cheeky way of getting the beacon to not drop anything
+            block.setType(Material.AIR);
             event.setCancelled(true);
 
             if (loserTeam.getBeaconCount() <= 0) {
@@ -75,9 +80,26 @@ public class BlockBreakListener implements Listener {
                 }
             }
 
+            return;
+        }
 
+
+        if (!BlockBreakListener.blockWhitelisted(block)) {
+            event.setCancelled(true);
         }
 
     }
 
+    public static boolean blockWhitelisted(Block block) {
+
+        for (String materialString : breakableList) {
+
+            Material material = Material.getMaterial(materialString.toUpperCase());
+
+            if (material == block.getType()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
