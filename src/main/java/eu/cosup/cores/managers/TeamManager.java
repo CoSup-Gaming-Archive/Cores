@@ -53,6 +53,7 @@ public class TeamManager {
             }
         }
 
+        teams.add(new Team(TeamColor.SPECTATOR, new ArrayList<>(), 0));
     }
 
     // which team player is in
@@ -79,6 +80,12 @@ public class TeamManager {
         }
 
         return null;
+
+    }
+
+    public void addPlayerToTeam(Player player, TeamColor teamColor) {
+
+        getTeamByColor(teamColor).addPlayerToTeam(player);
 
     }
 }

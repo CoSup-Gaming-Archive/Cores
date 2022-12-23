@@ -43,17 +43,8 @@ public final class Cores extends JavaPlugin {
             return;
         }
 
-        Random random = new Random();
-
-        // by default we get number 0
-        LoadedMap selectedMap = loadedMaps.get(0);
-
-        // if there are more maps to choose from
-        if (loadedMaps.size() > 1) {
-            selectedMap = loadedMaps.get(random.nextInt()*loadedMaps.size()-1);
-        }
-
-        game = new Game(selectedMap);
+        // initial creation of game.
+        createGame();
 
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
@@ -65,6 +56,25 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HungerReceiveListener(), this);
         getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
 
+    }
+
+    public void createGame() {
+        game = new Game(selectMap());
+    }
+
+    private LoadedMap selectMap() {
+
+        Random random = new Random();
+
+        // by default we get number 0
+        LoadedMap selectedMap = loadedMaps.get(0);
+
+        // if there are more maps to choose from
+        if (loadedMaps.size() > 1) {
+            selectedMap = loadedMaps.get(random.nextInt()*loadedMaps.size()-1);
+        }
+
+        return selectedMap;
     }
 
     @Override
@@ -109,6 +119,6 @@ public final class Cores extends JavaPlugin {
         //        76,
         //        76
         //));
-
+//
     }
 }

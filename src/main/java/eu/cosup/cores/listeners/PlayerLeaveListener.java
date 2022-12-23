@@ -12,6 +12,8 @@ public class PlayerLeaveListener implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {
 
+        Game.getGameInstance().getJoinedPlayers().remove(event.getPlayer());
+
         Game.getGameInstance().refreshPlayerCount();
 
     }

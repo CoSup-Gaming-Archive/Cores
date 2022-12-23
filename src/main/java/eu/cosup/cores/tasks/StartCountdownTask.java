@@ -9,10 +9,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
+
+import java.util.ArrayList;
 
 public class StartCountdownTask extends BukkitRunnable {
 
     private int startCountdown;
+    private boolean stopped = false;
+    private ArrayList<BukkitTask> countTasks = new ArrayList<>();
 
     public StartCountdownTask() {
 
@@ -27,16 +32,6 @@ public class StartCountdownTask extends BukkitRunnable {
 
     @Override
     public void run() {
-
-
-        // TODO remove debug loop bellow
-        // its just for testing to see that you are on the right team
-        for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
-            for (Player player : team.getPlayers()) {
-                player.sendMessage(TeamColor.getChatColor(team.getColor())+"You are on yes :))))))))");
-            }
-        }
-
         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.STARTING);
 
         // yes very nice now
@@ -44,12 +39,14 @@ public class StartCountdownTask extends BukkitRunnable {
         for (int i = 0; i <= startCountdown; i++) {
 
             int finalI = i;
-            new BukkitRunnable() {
+            BukkitTask task = new BukkitRunnable() {
                 @Override
                 public void run() {
-
-                    if (this.isCancelled()) {
-                        cancel();
+                    if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.JOINING || stopped) {
+                        // i mean its a cheaky way but works for me
+                        // TODO should probably find a different way of doing this by canceling tasks but that for some reason didnt work for me.
+                        // TODO you can probably lag the server by joining and rejoining really fast
+                        stopped = true;
                         return;
                     }
 
@@ -57,6 +54,8 @@ public class StartCountdownTask extends BukkitRunnable {
                     if (finalI <= 0) {
                         // change the game state and activate the main loop
                         // TODO make players be able to join as parties because its tournamet
+                        // TODO make teams method is used here!!!!
+                        // so we probably want to chage it
                         Game.getGameInstance().getTeamManager().makeTeams(Game.getGameInstance().getJoinedPlayers());
 
                         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ACTIVE);
@@ -69,6 +68,7 @@ public class StartCountdownTask extends BukkitRunnable {
                     Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"Starting in " + finalI);
                 }
             }.runTaskLater(Cores.getInstance(), (startCountdown-i)*20L);
+            countTasks.add(task);
         }
     }
 }

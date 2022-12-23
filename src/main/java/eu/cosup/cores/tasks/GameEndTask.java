@@ -47,15 +47,17 @@ public class GameEndTask extends BukkitRunnable {
 
         Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(winner)+""+winner+" is the winner team congratulations!");
 
-        // the task for shutting down server
-        // this should be changed but whatever for now
-
         new BukkitRunnable() {
             @Override
             public void run() {
 
-                Bukkit.getLogger().severe("Shutting down server");
-                Cores.getInstance().getServer().shutdown();
+                // you should return players to lobby before restarting
+                Bukkit.getLogger().severe("Restarting game");
+
+                // TODO test this
+                // create the new game
+                Cores.getInstance().createGame();
+
                 // after some time return players to lobby
 
             }

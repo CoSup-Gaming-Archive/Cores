@@ -42,4 +42,14 @@ public class Team {
         }
         return false;
     }
+
+    public void addPlayerToTeam(Player player) {
+
+        if (player == null) {
+            throw new NullPointerException("Player was null nonono");
+        }
+
+        players.add(player);
+
+    }
 }

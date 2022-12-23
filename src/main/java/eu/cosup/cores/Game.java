@@ -20,7 +20,6 @@ public class Game {
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
     private LoadedMap selectedMap;
-    private BukkitTask startTask;
 
     public Game(LoadedMap selectedMap) {
         gameInstance = this;
@@ -32,7 +31,9 @@ public class Game {
 
         refreshPlayerCount();
 
-        // TODO choose and load map
+        // TODO add load map chunks with probably async task
+
+        joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
 
         initGame();
     }
@@ -70,13 +71,13 @@ public class Game {
     // active phase
     public void activateGame() {
 
-        new ActivateGameTask(joinedPlayers).run();
+        new ActivateGameTask(joinedPlayers).runTask(Cores.getInstance());
 
     }
 
     public void finishGame(TeamColor winner) {
 
-        new GameEndTask(winner).run();
+        new GameEndTask(winner).runTask(Cores.getInstance());
 
     }
 
@@ -87,23 +88,28 @@ public class Game {
     // to check how many players are on the cores game
     public void refreshPlayerCount() {
 
-        joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
+        Bukkit.getLogger().info(""+joinedPlayers);
+
+        // if the game already started
+        if (gameStateManager.getGameState() != GameStateManager.GameState.JOINING && gameStateManager.getGameState() != GameStateManager.GameState.STARTING) {
+            return;
+        }
 
         // TODO fix this
         if (joinedPlayers.size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
-            Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.JOINING);
-            if (startTask != null) {
-                startTask.cancel();
+            // this means there is already a countdown going
+            if (Game.gameInstance.gameStateManager.getGameState() == GameStateManager.GameState.STARTING) {
+
+                Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.JOINING);
+
+                Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"Stopping!");
             }
-            Cores.getInstance().getServer().broadcastMessage("Not enough players");
+            // omg teach me proper formatting cuz god dayum this one is ugly
+            Cores.getInstance().getServer().broadcastMessage(ChatColor.RED+"Not enough players: ("+joinedPlayers.size()+"/"+Cores.getInstance().getConfig().getInt("required-player-count")+")");
             return;
         }
 
-        // if the game already started
-        if (gameStateManager.getGameState() != GameStateManager.GameState.JOINING) {
-            return;
-        }
-
-        startTask = new StartCountdownTask().runTask(Cores.getInstance());
+        // just saving so we can cancel it later
+        new StartCountdownTask().runTask(Cores.getInstance());
     }
 }
