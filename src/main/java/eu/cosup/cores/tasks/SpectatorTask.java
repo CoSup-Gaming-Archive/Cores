@@ -24,7 +24,7 @@ public class SpectatorTask extends BukkitRunnable {
     @Override
     public void run() {
 
-        player.sendMessage(ChatColor.RED+"You died");
+        player.sendMessage(ChatColor.RED + "You died");
 
         TeamColor team = Game.getGameInstance().getTeamManager().whichTeam(player);
 
@@ -39,7 +39,6 @@ public class SpectatorTask extends BukkitRunnable {
             @Override
             public void run() {
 
-                // TODO make sure this works later because can be a bug players experience
                 if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ENDING) {
                     cancel();
                     return;
@@ -55,11 +54,8 @@ public class SpectatorTask extends BukkitRunnable {
 
                 ActivateGameTask.preparePlayerFull(player);
 
-                player.sendMessage(TeamColor.getChatColor(team)+"You are alive");
+                player.sendMessage(TeamColor.getChatColor(team) + "You are alive");
             }
-
-        }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("respawn-delay")*20L);
-
+        }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("respawn-delay") * 20L);
     }
-
 }

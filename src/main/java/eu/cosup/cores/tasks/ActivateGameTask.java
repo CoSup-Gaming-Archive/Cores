@@ -107,6 +107,24 @@ public class ActivateGameTask extends BukkitRunnable {
         }
     }
 
+    public static boolean isItemDefault(Material item) {
+
+        for (String inventoryItem : Cores.getInstance().getConfig().getStringList("hotbar")) {
+
+            if (Material.getMaterial(inventoryItem) == item) {
+                return true;
+            }
+        }
+
+        for (String inventoryItem : Cores.getInstance().getConfig().getStringList("armor")) {
+
+            if (Material.getMaterial(inventoryItem) == item) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void spawnBeacons() {
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamBlueBeacons()) {
@@ -118,6 +136,5 @@ public class ActivateGameTask extends BukkitRunnable {
         }
 
         Bukkit.getLogger().info("Spawned beacons");
-
     }
 }

@@ -24,7 +24,9 @@ public class PlayerJoinListener implements Listener {
         if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
             // if player is not in a team
 
-            if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer()) == null) {
+            TeamColor playerTeam = Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer());
+
+            if (playerTeam == null) {
 
                 Game.getGameInstance().getTeamManager().addPlayerToTeam(event.getPlayer(), TeamColor.SPECTATOR);
 
@@ -33,6 +35,7 @@ public class PlayerJoinListener implements Listener {
                 return;
             }
 
+            event.getPlayer().sendMessage(TeamColor.getChatColor(playerTeam)+"You joined as "+playerTeam);
             event.getPlayer().setHealth(0);
             return;
         }

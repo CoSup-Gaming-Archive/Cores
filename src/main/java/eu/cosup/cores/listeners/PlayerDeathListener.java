@@ -5,15 +5,31 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.SpectatorTask;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class PlayerDeathListener implements Listener {
 
     @EventHandler
     private void onPlayerDeath(PlayerDeathEvent event) {
 
+        Player player = event.getPlayer();
+
+        for (ItemStack itemStack : player.getInventory()) {
+            if (itemStack != null) {
+                player.setItemInHand(itemStack);
+                player.dropItem(true);
+                player.getInventory().removeItem(itemStack);
+            }
+        }
 
         event.setCancelled(true);
 
