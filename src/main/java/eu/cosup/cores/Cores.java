@@ -15,7 +15,7 @@ import java.util.Random;
 public final class Cores extends JavaPlugin {
 
     private static Cores instance;
-
+    //very nice comment
     public static Cores getInstance() {
         return instance;
     }
