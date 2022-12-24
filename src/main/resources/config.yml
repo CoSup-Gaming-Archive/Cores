@@ -1,9 +1,12 @@
 whitelist-break : [IRON_BLOCK] #also place
 whitelist-craft : [IRON_INGOT] #also throw
 required-player-count : 2
-start-countdown : 15
+start-countdown : 5
 respawn-delay : 5
 return-to-lobby-delay : 60
 
 armor : ["LEATHER_BOOTS", "LEATHER_LEGGINGS", "LEATHER_CHESTPLATE", "LEATHER_HELMET"]
-inventory : ["STONE_SWORD"]
+hotbar :
+  STONE_SWORD: 1
+  IRON_PICKAXE : 1
+  OAK_LOG: 16

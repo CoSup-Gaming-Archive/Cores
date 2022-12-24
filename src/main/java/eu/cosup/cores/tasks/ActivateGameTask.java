@@ -3,6 +3,7 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.TeamColor;
+import it.unimi.dsi.fastutil.Hash;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -10,8 +11,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class ActivateGameTask extends BukkitRunnable {
 
@@ -87,6 +87,8 @@ public class ActivateGameTask extends BukkitRunnable {
             leatherArmorMeta.setColor(TeamColor.getColor(Game.getGameInstance().getTeamManager().whichTeam(player)));
             armorPeace.setItemMeta(leatherArmorMeta);
 
+            // cheeky way but maybe there is a better method
+            // TODO maybe better method
             if (armorPeaceName.toLowerCase().contains("helmet")) {
                 player.getInventory().setHelmet(armorPeace);
             }
@@ -110,19 +112,22 @@ public class ActivateGameTask extends BukkitRunnable {
 
     public static void givePlayerTools(Player player) {
 
-        // TODO make give player items in inventory
+        int i = 0;
+        for (String itemName : Cores.getInstance().getConfig().getConfigurationSection("hotbar").getKeys(false)) {
 
-        for (String inventoryItem : Cores.getInstance().getConfig().getStringList("hotbar")) {
+            // this is ugly
+            // TODO make this less ugly
+            player.getInventory().setItem(i, new ItemStack(Material.getMaterial(itemName), Cores.getInstance().getConfig().getConfigurationSection("hotbar").getInt(itemName)));
 
-            player.getInventory().setItem(0, new ItemStack(Material.getMaterial(inventoryItem)));
+            i++;
         }
     }
 
     public static boolean isItemDefault(Material item) {
 
-        for (String inventoryItem : Cores.getInstance().getConfig().getStringList("hotbar")) {
+        for (String itemName : Cores.getInstance().getConfig().getConfigurationSection("hotbar").getKeys(false)) {
 
-            if (Material.getMaterial(inventoryItem) == item) {
+            if (item == Material.getMaterial(itemName)) {
                 return true;
             }
         }

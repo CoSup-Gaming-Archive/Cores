@@ -101,28 +101,28 @@ public final class Cores extends JavaPlugin {
 
         // this is just for my world (Sakura map i downloaded from intenret)
         // TODO remove this this just my testing world
-        ArrayList<Location> blueBeacons = new ArrayList<>();
-        blueBeacons.add(new Location(getWorld(), -34,80,237));
-        blueBeacons.add(new Location(getWorld(), -34,80,275));
-
-
-        ArrayList<Location> redBeacons = new ArrayList<>();
-        // LMAO BRUH
-        redBeacons.add(new Location(getWorld(), 18,80,275));
-        redBeacons.add(new Location(getWorld(), 18,80,237));
-
-        // TODO this is a test so remove this
-        loadedMaps.add(new LoadedMap(
-            "TestMap",
-                blueBeacons,
-                redBeacons,
-                new Location(getWorld(),-72,81,256),
-                new Location(getWorld(),57,81,256),
-                new Location(getWorld(),-4,121,257),
-                89,
-                76,
-                76
-        ));
+        //ArrayList<Location> blueBeacons = new ArrayList<>();
+        //blueBeacons.add(new Location(getWorld(), -34,80,237));
+        //blueBeacons.add(new Location(getWorld(), -34,80,275));
+//
+//
+        //ArrayList<Location> redBeacons = new ArrayList<>();
+        //// LMAO BRUH
+        //redBeacons.add(new Location(getWorld(), 18,80,275));
+        //redBeacons.add(new Location(getWorld(), 18,80,237));
+//
+        //// TODO this is a test so remove this
+        //loadedMaps.add(new LoadedMap(
+        //    "TestMap",
+        //        blueBeacons,
+        //        redBeacons,
+        //        new Location(getWorld(),-72,81,256),
+        //        new Location(getWorld(),57,81,256),
+        //        new Location(getWorld(),-4,121,257),
+        //        89,
+        //        76,
+        //        76
+        //));
 
     }
 }
