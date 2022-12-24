@@ -6,10 +6,7 @@ import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.GameEndTask;
 import eu.cosup.cores.tasks.StartCountdownTask;
 import org.bukkit.*;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 

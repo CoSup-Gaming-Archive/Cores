@@ -4,15 +4,11 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.json.simple.ItemList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,17 +69,7 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     public static void teleportPlayerToSpawn(Player player) {
-
-        TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
-
-        if (teamColor == TeamColor.RED) {
-            player.teleport(Game.getGameInstance().getSelectedMap().getTeamRedSpawns());
-        }
-
-        if (teamColor == TeamColor.BLUE) {
-            player.teleport(Game.getGameInstance().getSelectedMap().getTeamBlueSpawns());
-        }
-
+        player.teleport(Game.getGameInstance().getSelectedMap().getSpawnByPlayer(player));
     }
 
     public static void givePlayerArmor(Player player) {

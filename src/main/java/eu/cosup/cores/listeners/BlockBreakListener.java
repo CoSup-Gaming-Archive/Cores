@@ -18,7 +18,7 @@ public class BlockBreakListener implements Listener {
 
     private static List<String> breakableList = Cores.getInstance().getConfig().getStringList("whitelist-break");
 
-    // TODO clean this up a bit
+    // TODO maybe clean this up a bit
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
 
@@ -54,7 +54,6 @@ public class BlockBreakListener implements Listener {
 
             // it was no accident
 
-
             Team loserTeam = Game.getGameInstance().getTeamManager().getTeamByColor(beaconTeamColor);
 
             // minus beacon count
@@ -79,15 +78,11 @@ public class BlockBreakListener implements Listener {
                     Game.getGameInstance().finishGame(TeamColor.RED);
                 }
             }
-
             return;
         }
-
-
         if (!BlockBreakListener.blockWhitelisted(block)) {
             event.setCancelled(true);
         }
-
     }
 
     public static boolean blockWhitelisted(Block block) {

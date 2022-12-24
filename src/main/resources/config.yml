@@ -1,5 +1,5 @@
-whitelist-break : [IRON_BLOCK]
-whitelist-craft : [IRON_INGOT]
+whitelist-break : [IRON_BLOCK] #also place
+whitelist-craft : [IRON_INGOT] #also throw
 required-player-count : 2
 start-countdown : 15
 respawn-delay : 5

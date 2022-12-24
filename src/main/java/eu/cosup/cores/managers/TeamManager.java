@@ -1,10 +1,7 @@
 package eu.cosup.cores.managers;
 
-import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

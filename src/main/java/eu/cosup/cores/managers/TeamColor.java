@@ -1,10 +1,8 @@
 package eu.cosup.cores.managers;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 
-import java.util.ArrayList;
 
 public enum TeamColor {
 

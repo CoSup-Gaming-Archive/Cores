@@ -5,15 +5,10 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.SpectatorTask;
 import org.bukkit.GameMode;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerDeathListener implements Listener {
@@ -34,7 +29,8 @@ public class PlayerDeathListener implements Listener {
         event.setCancelled(true);
 
         if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
-            // not really necessary
+
+            // after game ends and stuff
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
             event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
             return;

@@ -3,11 +3,8 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.managers.Team;
-import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 

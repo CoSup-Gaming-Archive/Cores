@@ -1,12 +1,11 @@
 package eu.cosup.cores.data;
 
-import eu.cosup.cores.managers.Team;
+import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.TeamColor;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class LoadedMap {
@@ -43,8 +42,6 @@ public class LoadedMap {
         this.deathHeight = deathHeight;
 
     }
-
-
 
     public String getName() {
         return name;
@@ -104,5 +101,25 @@ public class LoadedMap {
 
         // in case the beacon is from noone
         return null;
+    }
+
+    public Location getSpawnByTeamColor(TeamColor teamColor) {
+
+        if (teamColor == TeamColor.RED) {
+            return getTeamRedSpawns();
+        }
+
+        if (teamColor == TeamColor.BLUE) {
+            return getTeamBlueSpawns();
+        }
+
+        return getSpectatorSpawn();
+    }
+
+    public Location getSpawnByPlayer(Player player) {
+
+        TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
+
+        return getSpawnByTeamColor(teamColor);
     }
 }

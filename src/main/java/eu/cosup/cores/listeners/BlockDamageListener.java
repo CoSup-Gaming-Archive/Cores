@@ -1,6 +1,5 @@
 package eu.cosup.cores.listeners;
 
-import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockDamageEvent;
