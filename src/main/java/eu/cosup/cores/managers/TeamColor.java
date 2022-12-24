@@ -1,6 +1,10 @@
 package eu.cosup.cores.managers;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
+
+import java.util.ArrayList;
 
 public enum TeamColor {
 
@@ -13,9 +17,22 @@ public enum TeamColor {
         if (teamColor == TeamColor.SPECTATOR) {
             return ChatColor.GRAY;
         }
-
         return ChatColor.valueOf(teamColor.toString());
     }
 
+    // cheeky way maybe there is a better method
+    public static Color getColor(TeamColor teamColor) {
+
+        if (teamColor == TeamColor.RED) {
+
+            return Color.RED;
+        }
+
+        if (teamColor == TeamColor.BLUE) {
+
+            return Color.BLUE;
+        }
+        return Color.GRAY;
+    }
 }
 

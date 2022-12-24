@@ -9,6 +9,8 @@ import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.json.simple.ItemList;
 
@@ -90,11 +92,34 @@ public class ActivateGameTask extends BukkitRunnable {
 
         List<String> armorPeaces = Cores.getInstance().getConfig().getStringList("armor");
 
-        // oooof this could print many error nicht gut
-        player.getInventory().setBoots(new ItemStack(Material.getMaterial(armorPeaces.get(0))));
-        player.getInventory().setLeggings(new ItemStack(Material.getMaterial(armorPeaces.get(1))));
-        player.getInventory().setChestplate(new ItemStack(Material.getMaterial(armorPeaces.get(2))));
-        player.getInventory().setHelmet(new ItemStack(Material.getMaterial(armorPeaces.get(3))));
+        for (String armorPeaceName : armorPeaces) {
+
+            ItemStack armorPeace = new ItemStack(Material.getMaterial(armorPeaceName));
+            ItemMeta meta = armorPeace.hasItemMeta() ? armorPeace.getItemMeta() : Bukkit.getItemFactory().getItemMeta(armorPeace.getType());
+            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+            // from Color:
+            leatherArmorMeta.setColor(TeamColor.getColor(Game.getGameInstance().getTeamManager().whichTeam(player)));
+            armorPeace.setItemMeta(leatherArmorMeta);
+
+            if (armorPeaceName.toLowerCase().contains("helmet")) {
+                player.getInventory().setHelmet(armorPeace);
+            }
+
+
+            if (armorPeaceName.toLowerCase().contains("chestplate")) {
+                player.getInventory().setChestplate(armorPeace);
+            }
+
+
+            if (armorPeaceName.toLowerCase().contains("leggings")) {
+                player.getInventory().setLeggings(armorPeace);
+            }
+
+
+            if (armorPeaceName.toLowerCase().contains("boots")) {
+                player.getInventory().setBoots(armorPeace);
+            }
+        }
     }
 
     public static void givePlayerTools(Player player) {
