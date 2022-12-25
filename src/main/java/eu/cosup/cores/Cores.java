@@ -2,6 +2,7 @@ package eu.cosup.cores;
 
 // TODO remove unused imports in all of the files
 
+import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.listeners.*;
 import org.bukkit.Bukkit;
@@ -46,6 +47,7 @@ public final class Cores extends JavaPlugin {
         // initial creation of game.
         createGame();
 
+        getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
@@ -56,10 +58,11 @@ public final class Cores extends JavaPlugin {
 
         // player quility
         getServer().getPluginManager().registerEvents(new HungerReceiveListener(), this);
-        getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
 
         getServer().getPluginManager().registerEvents(new ItemCraftListener(), this);
 
+        // commands
+        getCommand("spectate").setExecutor(new SpectatorCommand());
     }
 
     public void createGame() {
