@@ -65,6 +65,8 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HungerReceiveListener(), this);
 
         getServer().getPluginManager().registerEvents(new ItemCraftListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
+
 
         // commands
         getCommand("spectate").setExecutor(new SpectatorCommand());

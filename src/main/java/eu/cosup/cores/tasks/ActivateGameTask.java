@@ -5,6 +5,7 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.*;
+import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -156,12 +157,14 @@ public class ActivateGameTask extends BukkitRunnable {
         field.setFloat(net.minecraft.server.Block.BED, 50.0F);
          */
 
+        BlockData beaconBlock = Material.BEACON.createBlockData();
+
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamBlueBeacons()) {
-            Cores.getInstance().getWorld().setBlockData(location, Material.BEACON.createBlockData());
+            Cores.getInstance().getWorld().setBlockData(location, beaconBlock);
         }
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamRedBeacons()) {
-            Cores.getInstance().getWorld().setBlockData(location, Material.BEACON.createBlockData());
+            Cores.getInstance().getWorld().setBlockData(location, beaconBlock);
         }
 
         Bukkit.getLogger().info("Spawned beacons");
