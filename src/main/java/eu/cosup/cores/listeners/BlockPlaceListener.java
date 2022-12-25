@@ -3,6 +3,7 @@ package eu.cosup.cores.listeners;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.utility.BlockUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -45,19 +46,16 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
-        if (!BlockBreakListener.blockWhitelisted(block.getType())) {
+        if (!BlockUtility.blockWhitelisted(block.getType())) {
             event.setCancelled(true);
             return;
         }
 
 
-        for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns()) {
-
-            if (teamSpawn.distance(block.getLocation()) < Cores.getInstance().getConfig().getDouble("spawn-protection-distance")) {
-                event.getPlayer().sendMessage(ChatColor.RED+"Cannot place blocks so close to the spawn");
-                event.setCancelled(true);
-                return;
-            }
+        if (BlockUtility.isLocationProtected(block.getLocation())) {
+            event.setCancelled(true);
+            event.getPlayer().sendMessage(ChatColor.RED+"You cannot place blocks here");
+            return;
         }
     }
 }

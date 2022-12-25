@@ -90,6 +90,16 @@ public class LoadedMap {
         return teamSpawns;
     }
 
+    public ArrayList<Location> getAllBeaconLocations() {
+
+        ArrayList<Location> beaconLocations = new ArrayList<>();
+
+        beaconLocations.addAll(getTeamBlueBeacons());
+        beaconLocations.addAll(getTeamRedBeacons());
+
+        return beaconLocations;
+    }
+
     // returns the team that the beacon belongs to
     public TeamColor whichTeamBeacon(Location beaconLocation) {
 

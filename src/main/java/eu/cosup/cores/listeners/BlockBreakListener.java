@@ -5,6 +5,7 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
+import eu.cosup.cores.utility.BlockUtility;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -16,7 +17,7 @@ import java.util.List;
 
 public class BlockBreakListener implements Listener {
 
-    public static final List<String> blockWhitelist = Cores.getInstance().getConfig().getStringList("block-whitelist");
+
 
     // TODO maybe clean this up a bit
     @EventHandler
@@ -85,23 +86,12 @@ public class BlockBreakListener implements Listener {
         }
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-            if (!BlockBreakListener.blockWhitelisted(block.getType())) {
+            if (!BlockUtility.blockWhitelisted(block.getType())) {
                 event.setCancelled(true);
                 return;
             }
         }
     }
 
-    public static boolean blockWhitelisted(Material material) {
 
-        for (String materialString : blockWhitelist) {
-
-            Material testMaterial = Material.getMaterial(materialString.toUpperCase());
-
-            if (testMaterial == material) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
