@@ -42,7 +42,6 @@ public class LoadedMap {
         this.maxHeight = maxHeight;
         this.minHeight = minHeight;
         this.deathHeight = deathHeight;
-
     }
 
     public String getName() {

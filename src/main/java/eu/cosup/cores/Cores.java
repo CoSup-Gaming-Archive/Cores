@@ -5,10 +5,14 @@ package eu.cosup.cores;
 import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.listeners.*;
+import eu.cosup.cores.managers.ScoreBoardManager;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scoreboard.DisplaySlot;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,6 +28,7 @@ public final class Cores extends JavaPlugin {
     private ArrayList<LoadedMap> loadedMaps = new ArrayList<>();
     private Game game;
     private World world;
+    public ArrayList<Player> playerList=new ArrayList<Player>();
 
     @Override
     public void onEnable() {
@@ -63,6 +68,9 @@ public final class Cores extends JavaPlugin {
 
         // commands
         getCommand("spectate").setExecutor(new SpectatorCommand());
+        ScoreBoardManager sbm=new ScoreBoardManager("main");
+        sbm.setObjective(Bukkit.getScoreboardManager().getMainScoreboard().getObjective("main"));
+        sbm.setDName(ChatColor.translateAlternateColorCodes('&', "&bCores")).addItem(" ").addItem(ChatColor.translateAlternateColorCodes('&', "&9Blue Beacons: &a\u2714 &a\u2714")).addItem(ChatColor.translateAlternateColorCodes('&', "&cRed Beacons: &a\u2714 &a\u2714")).addItem("  ").addItem(ChatColor.translateAlternateColorCodes('&', "   &6CoSup &bGaming")).setSlot(DisplaySlot.SIDEBAR).getObjective();
     }
 
     public void createGame() {
@@ -99,33 +107,33 @@ public final class Cores extends JavaPlugin {
 
     private void loadMaps() {
 
-        // TODO load maps
+        //TODO load maps
 
 
-        // this is just for my world (Sakura map i downloaded from intenret)
-        // TODO remove this this just my testing world
-        //ArrayList<Location> blueBeacons = new ArrayList<>();
-        //blueBeacons.add(new Location(getWorld(), -34,80,237));
-        //blueBeacons.add(new Location(getWorld(), -34,80,275));
+        //this is just for my world (Sakura map i downloaded from intenret)
+        //TODO remove this this just my testing world
+        ArrayList<Location> blueBeacons = new ArrayList<>();
+        blueBeacons.add(new Location(getWorld(), -34,80,237));
+        blueBeacons.add(new Location(getWorld(), -34,80,275));
 //
 //
-        //ArrayList<Location> redBeacons = new ArrayList<>();
-        //// LMAO BRUH
-        //redBeacons.add(new Location(getWorld(), 18,80,275));
-        //redBeacons.add(new Location(getWorld(), 18,80,237));
+        ArrayList<Location> redBeacons = new ArrayList<>();
+        //LMAO BRUH
+        redBeacons.add(new Location(getWorld(), 18,80,275));
+        redBeacons.add(new Location(getWorld(), 18,80,237));
 //
         //// TODO this is a test so remove this
-        //loadedMaps.add(new LoadedMap(
-        //    "TestMap",
-        //        blueBeacons,
-        //        redBeacons,
-        //        new Location(getWorld(),-72,81,256),
-        //        new Location(getWorld(),57,81,256),
-        //        new Location(getWorld(),-4,121,257),
-        //        89,
-        //        76,
-        //        76
-        //));
+        loadedMaps.add(new LoadedMap(
+            "TestMap",
+                blueBeacons,
+                redBeacons,
+                new Location(getWorld(),-72,81,256),
+                new Location(getWorld(),57,81,256),
+                new Location(getWorld(),-4,121,257),
+                89,
+                76,
+                76
+        ));
 
     }
 }

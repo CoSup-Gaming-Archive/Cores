@@ -2,6 +2,7 @@ package eu.cosup.cores.tasks;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
@@ -35,12 +36,16 @@ public class ActivateGameTask extends BukkitRunnable {
 
         Cores.getInstance().getWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         Cores.getInstance().getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        Cores.getInstance().getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        Cores.getInstance().getWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
 
         // im pretty sure this is right
         Cores.getInstance().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
 
+
         // qol for builders
         Cores.getInstance().getWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
+
 
     }
 
@@ -160,5 +165,6 @@ public class ActivateGameTask extends BukkitRunnable {
         }
 
         Bukkit.getLogger().info("Spawned beacons");
+        BeaconInformation.update();
     }
 }

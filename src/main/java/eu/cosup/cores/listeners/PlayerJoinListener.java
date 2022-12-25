@@ -2,18 +2,25 @@ package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.TeamColor;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.awt.*;
+
 public class PlayerJoinListener implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
+        Game.getGameInstance().getPlayerList().add(event.getPlayer());
+        BeaconInformation.update();
+
 
         // if game has already started
         if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {

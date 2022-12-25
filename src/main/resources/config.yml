@@ -1,5 +1,5 @@
 block-whitelist : [IRON_BLOCK, IRON_INGOT, OAK_LOG, OAK_PLANKS, IRON_SWORD, IRON_BOOTS, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_HELMET]
-required-player-count : 2
+required-player-count : 1
 start-countdown : 5
 respawn-delay : 5
 return-to-lobby-delay : 60

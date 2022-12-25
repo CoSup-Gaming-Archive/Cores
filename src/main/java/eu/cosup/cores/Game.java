@@ -14,6 +14,7 @@ public class Game {
 
     private static Game gameInstance;
     private ArrayList<Player> joinedPlayers = new ArrayList<>();
+    private ArrayList<Player> playerList = new ArrayList<>();
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
     private LoadedMap selectedMap;
@@ -80,6 +81,9 @@ public class Game {
 
     public ArrayList<Player> getJoinedPlayers() {
         return joinedPlayers;
+    }
+    public ArrayList<Player> getPlayerList() {
+        return playerList;
     }
 
     // returns boolean -> is the joined players > required players

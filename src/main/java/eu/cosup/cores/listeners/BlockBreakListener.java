@@ -2,6 +2,7 @@ package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
@@ -62,6 +63,7 @@ public class BlockBreakListener implements Listener {
 
             // minus beacon count
             loserTeam.loseBeacon();
+            BeaconInformation.update();
 
             // broadcast that they lost beacon
             Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(loserTeam.getColor())+"A "+loserTeam.getColor()+" beacon"+ChatColor.WHITE+" was destroyed");
