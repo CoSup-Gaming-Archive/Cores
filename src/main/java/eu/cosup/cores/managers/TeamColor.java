@@ -7,14 +7,10 @@ import org.bukkit.Color;
 public enum TeamColor {
 
     RED,
-    BLUE,
-    SPECTATOR;
+    BLUE;
 
     public static ChatColor getChatColor(TeamColor teamColor) {
 
-        if (teamColor == TeamColor.SPECTATOR) {
-            return ChatColor.GRAY;
-        }
         return ChatColor.valueOf(teamColor.toString());
     }
 

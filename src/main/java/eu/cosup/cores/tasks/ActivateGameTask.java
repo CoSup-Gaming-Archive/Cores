@@ -3,7 +3,6 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.TeamColor;
-import it.unimi.dsi.fastutil.Hash;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -11,6 +10,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 public class ActivateGameTask extends BukkitRunnable {
@@ -142,6 +142,14 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     private void spawnBeacons() {
+
+        // TODO make this work
+
+        /*
+        Field field=net.minecraft.server.Block.class.getDeclaredField("strength");
+        field.setAccessible(true);
+        field.setFloat(net.minecraft.server.Block.BED, 50.0F);
+         */
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamBlueBeacons()) {
             Cores.getInstance().getWorld().setBlockData(location, Material.BEACON.createBlockData());

@@ -31,6 +31,8 @@ public class LoadedMap {
 
     public LoadedMap(String name, ArrayList<Location> teamBlueBeacons, ArrayList<Location> teamRedBeacons, Location teamBlueSpawns, Location teamRedSpawns, Location spectatorSpawn, int maxHeight, int minHeight, int deathHeight) {
 
+        // TODO add a rotation aswell so players spawn facing determined location
+
         this.name = name;
         this.teamBlueSpawns = teamBlueSpawns;
         this.teamRedSpawns = teamRedSpawns;
@@ -79,6 +81,15 @@ public class LoadedMap {
         return spectatorSpawn;
     }
 
+    public ArrayList<Location> getTeamSpawns() {
+        ArrayList<Location> teamSpawns = new ArrayList<>();
+
+        teamSpawns.add(getTeamBlueSpawns());
+        teamSpawns.add(getTeamRedSpawns());
+
+        return teamSpawns;
+    }
+
     // returns the team that the beacon belongs to
     public TeamColor whichTeamBeacon(Location beaconLocation) {
 
@@ -95,10 +106,7 @@ public class LoadedMap {
             if (Objects.equals(location.toVector(), beaconLocation.toVector())) {
                 return TeamColor.RED;
             }
-
         }
-
-
         // in case the beacon is from noone
         return null;
     }

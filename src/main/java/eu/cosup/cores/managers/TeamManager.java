@@ -25,7 +25,7 @@ public class TeamManager {
 
         // filter out spectator noone likes him
         // this wont work in future since parties will be athing im guessing
-        for (Object teamColor : Arrays.stream(TeamColor.values()).filter(teamColor -> teamColor != TeamColor.SPECTATOR).toArray()) {
+        for (TeamColor teamColor : TeamColor.values()) {
 
             Bukkit.getLogger().info(""+teamColor.toString()+" is being registered.");
 
@@ -33,12 +33,12 @@ public class TeamManager {
 
                 if (teamPlayers.size() >= players.size()/2) {
 
-                    if ((TeamColor) teamColor == TeamColor.BLUE) {
-                        teams.add(new Team((TeamColor) teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamBlueBeacons().size()));
+                    if (teamColor == TeamColor.BLUE) {
+                        teams.add(new Team(teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamBlueBeacons().size()));
                     }
 
-                    if ((TeamColor) teamColor == TeamColor.RED) {
-                        teams.add(new Team((TeamColor) teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamRedBeacons().size()));
+                    if (teamColor == TeamColor.RED) {
+                        teams.add(new Team(teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamRedBeacons().size()));
                     }
 
                     teamPlayers = new ArrayList<>();
@@ -49,8 +49,6 @@ public class TeamManager {
 
             }
         }
-
-        teams.add(new Team(TeamColor.SPECTATOR, new ArrayList<>(), 0));
     }
 
     // which team player is in
@@ -69,20 +67,14 @@ public class TeamManager {
     public Team getTeamByColor(TeamColor teamColor) {
 
         for (Team team : teams) {
-
             if (Objects.equals(team.getColor().toString(), teamColor.toString())) {
                 return team;
             }
-
         }
-
         return null;
-
     }
 
     public void addPlayerToTeam(Player player, TeamColor teamColor) {
-
         getTeamByColor(teamColor).addPlayerToTeam(player);
-
     }
 }

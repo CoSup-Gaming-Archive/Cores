@@ -82,17 +82,15 @@ public class Game {
         return joinedPlayers;
     }
 
+    // returns boolean -> is the joined players > required players
     // to check how many players are on the cores game
     public void refreshPlayerCount() {
-
-        Bukkit.getLogger().info(""+joinedPlayers);
 
         // if the game already started
         if (gameStateManager.getGameState() != GameStateManager.GameState.JOINING && gameStateManager.getGameState() != GameStateManager.GameState.STARTING) {
             return;
         }
 
-        // TODO fix this
         if (joinedPlayers.size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
             // this means there is already a countdown going
             if (Game.gameInstance.gameStateManager.getGameState() == GameStateManager.GameState.STARTING) {

@@ -16,7 +16,7 @@ import java.util.List;
 
 public class BlockBreakListener implements Listener {
 
-    private static List<String> breakableList = Cores.getInstance().getConfig().getStringList("whitelist-break");
+    public static final List<String> blockWhitelist = Cores.getInstance().getConfig().getStringList("block-whitelist");
 
     // TODO maybe clean this up a bit
     @EventHandler
@@ -85,20 +85,20 @@ public class BlockBreakListener implements Listener {
         }
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-            if (!BlockBreakListener.blockWhitelisted(block)) {
+            if (!BlockBreakListener.blockWhitelisted(block.getType())) {
                 event.setCancelled(true);
                 return;
             }
         }
     }
 
-    public static boolean blockWhitelisted(Block block) {
+    public static boolean blockWhitelisted(Material material) {
 
-        for (String materialString : breakableList) {
+        for (String materialString : blockWhitelist) {
 
-            Material material = Material.getMaterial(materialString.toUpperCase());
+            Material testMaterial = Material.getMaterial(materialString.toUpperCase());
 
-            if (material == block.getType()) {
+            if (testMaterial == material) {
                 return true;
             }
         }

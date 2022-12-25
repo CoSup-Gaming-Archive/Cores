@@ -1,6 +1,7 @@
 package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,7 +18,7 @@ public class PlayerMoveListener implements Listener {
         if (Game.getGameInstance().getSelectedMap().getDeathHeight() > playerY) {
             // he die
 
-            if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+            if (event.getPlayer().getGameMode() != GameMode.CREATIVE && event.getPlayer().getGameMode() != GameMode.SPECTATOR) {
                 event.getPlayer().setHealth(0);
             }
         }
