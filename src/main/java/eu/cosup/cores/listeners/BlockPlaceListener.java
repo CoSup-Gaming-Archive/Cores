@@ -3,6 +3,7 @@ package eu.cosup.cores.listeners;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,10 @@ public class BlockPlaceListener implements Listener {
         Player player = event.getPlayer();
 
         Block block = event.getBlock();
+
+        if (player.getGameMode() == GameMode.CREATIVE) {
+            return;
+        }
 
         if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
             event.setCancelled(true);

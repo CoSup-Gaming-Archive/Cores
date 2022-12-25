@@ -27,7 +27,10 @@ public class BlockBreakListener implements Listener {
 
         // if the game doesnt start
         if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
-            event.setCancelled(true);
+            if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+                event.setCancelled(true);
+                return;
+            }
         }
 
         // in case it is a beacon
@@ -80,8 +83,12 @@ public class BlockBreakListener implements Listener {
             }
             return;
         }
-        if (!BlockBreakListener.blockWhitelisted(block)) {
-            event.setCancelled(true);
+
+        if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+            if (!BlockBreakListener.blockWhitelisted(block)) {
+                event.setCancelled(true);
+                return;
+            }
         }
     }
 
