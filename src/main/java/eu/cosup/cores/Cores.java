@@ -70,9 +70,6 @@ public final class Cores extends JavaPlugin {
 
         // commands
         getCommand("spectate").setExecutor(new SpectatorCommand());
-        ScoreBoardManager sbm=new ScoreBoardManager("main");
-        sbm.setObjective(Bukkit.getScoreboardManager().getMainScoreboard().getObjective("main"));
-        sbm.setDName(ChatColor.translateAlternateColorCodes('&', "&bCores")).addItem(" ").addItem(ChatColor.translateAlternateColorCodes('&', "&9Blue Beacons: &a\u2714 &a\u2714")).addItem(ChatColor.translateAlternateColorCodes('&', "&cRed Beacons: &a\u2714 &a\u2714")).addItem("  ").addItem(ChatColor.translateAlternateColorCodes('&', "   &6CoSup &bGaming")).setSlot(DisplaySlot.SIDEBAR).getObjective();
     }
 
     public void createGame() {

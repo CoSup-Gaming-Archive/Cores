@@ -1,7 +1,7 @@
 package eu.cosup.cores.managers;
 
+import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.utility.someMethods;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -11,64 +11,62 @@ import javax.annotation.Nullable;
 
 public class BeaconInformation {
     public static void update(){
-        //Bukkit.getLogger().info(String.valueOf(Game.getGameInstance().getPlayerList().size()));
-        for (Player p: Bukkit.getOnlinePlayers()){
-            /*Team t=Game.getGameInstance().getTeamManager().getTeamByColor(Game.getGameInstance().getTeamManager().whichTeam(p));
-            String onTeam="";
-            if (t==null){
-                onTeam="&7You Specate";
-            } else {
-                onTeam=TeamColor.getChatColor(t.getColor())+"You're team "+t.toString();
-            }*/
-            p.setPlayerListHeaderFooter(ChatColor.translateAlternateColorCodes('&', "&l&6CoSup&b Gaming"), ChatColor.translateAlternateColorCodes('&', "\n"+getText(TeamColor.BLUE, null)+"\n"+getText(TeamColor.RED, null)+"\n\n&bCores"));
-            Bukkit.getLogger().info("updated for player "+p.getName());
+
+        // player list
+        for (Player p: Cores.getInstance().getServer().getOnlinePlayers()){
+            p.setPlayerListHeaderFooter(
+                    ChatColor.translateAlternateColorCodes('&', "&l&6CoSup&b Gaming"),
+                    ChatColor.translateAlternateColorCodes('&', "\n"
+                    +getBeaconText(TeamColor.BLUE)+"\n"
+                    +getBeaconText(TeamColor.RED)+"\n\n&bCores"));
         }
-        ScoreBoardManager sbm=new ScoreBoardManager("e");
-        sbm.setObjective(Bukkit.getScoreboardManager().getMainScoreboard().getObjective("main"));
-        sbm.clearObjective();
-        sbm.setDName(ChatColor.translateAlternateColorCodes('&', "&bCores")).addItem(" ").addItem(ChatColor.translateAlternateColorCodes('&', getText(TeamColor.BLUE, null))).addItem(ChatColor.translateAlternateColorCodes('&', getText(TeamColor.RED, null))).addItem("  ").addItem(ChatColor.translateAlternateColorCodes('&', "   &6CoSup &bGaming")).setSlot(DisplaySlot.SIDEBAR).getObjective();
-        sbm.setSlot(DisplaySlot.SIDEBAR).getObjective();
-        //sb
+
+        // scoreboard
+        ScoreBoardManager scoreBoardManager = new ScoreBoardManager("beacons");
+        scoreBoardManager.clearObjective();
+        scoreBoardManager.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&bCores"));
+        scoreBoardManager.addItem("");
+        scoreBoardManager.addItem(ChatColor.translateAlternateColorCodes('&', getBeaconText(TeamColor.BLUE)));
+        scoreBoardManager.addItem(ChatColor.translateAlternateColorCodes('&', getBeaconText(TeamColor.RED)));
+        scoreBoardManager.addItem("");
+        scoreBoardManager.addItem(ChatColor.translateAlternateColorCodes('&', "   &6CoSup &bGaming"));
+        scoreBoardManager.setSlot(DisplaySlot.SIDEBAR);
+        scoreBoardManager.getObjective();
+
     }
-    public static String getText(TeamColor teamColor, @Nullable Integer beacons){
-        if (teamColor!=TeamColor.RED && teamColor!=TeamColor.BLUE){
-            return null;
-        }
-        String f="";
-        if (teamColor.equals(TeamColor.RED)){
-            f="&cRed Beacons: ";
-            Integer b;
-            if (beacons!=null){
-                b=beacons;
-            } else {
-                b= someMethods.getBeaconCount(TeamColor.RED);
-            }
+    public static String getBeaconText(TeamColor teamColor){
 
-            if (b==0){
-                f+="&c\u2716 &c\u2716";
-            } else if (b==1){
-                f+="&a\u2714 &c\u2716";
-            } else if (b==2){
-                f+="&a\u2714 &a\u2714";
-            }
-        } else if (teamColor.equals(TeamColor.BLUE)){
-            f="&9Blue Beacons: ";
-            Integer b;
-            if (beacons!=null){
-                b=beacons;
-            } else {
-                b=someMethods.getBeaconCount(TeamColor.BLUE);
-            }
-
-            if (b==0){
-                f+="&c\u2716 &c\u2716";
-            } else if (b==1){
-                f+="&a\u2714 &c\u2716";
-            } else if (b==2){
-                f+="&a\u2714 &a\u2714";
-            }
+        if (TeamColor.getChatColor(teamColor) == ChatColor.GRAY){
+            return "";
         }
 
-        return f;
+        String displayString="";
+
+        if (teamColor.equals(TeamColor.RED)) {
+            displayString = "&cRed Beacons: ";
+        }
+
+        if (teamColor.equals(TeamColor.BLUE)) {
+            displayString = "&9Blue Beacons: ";
+        }
+
+        // we dont want null errors
+        if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
+            return displayString;
+        }
+
+        int beaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getBeaconCount();
+        int maxBeaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getMaxBeaconCount();
+        int missingBeaconCount = maxBeaconCount - beaconCount;
+
+        for (int i = 0; i < beaconCount; i++) {
+            displayString+="&a\u2714";
+        }
+
+        for (int i = 0; i < missingBeaconCount; i++) {
+            displayString+="&c\u2716";
+        }
+
+        return displayString;
     }
 }

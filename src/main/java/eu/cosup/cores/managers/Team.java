@@ -9,11 +9,13 @@ public class Team {
     ArrayList<Player> players;
     private final TeamColor color;
     private int beaconCount;
+    private int maxBeaconCount;
 
     public Team(TeamColor teamColor, ArrayList<Player> players, int beaconCount) {
         this.players = players;
         this.color = teamColor;
         this.beaconCount = beaconCount;
+        maxBeaconCount = beaconCount;
     }
 
     public ArrayList<Player> getPlayers() {
@@ -24,8 +26,13 @@ public class Team {
         return color;
     }
 
+
     public int getBeaconCount() {
         return beaconCount;
+    }
+
+    public int getMaxBeaconCount() {
+        return maxBeaconCount;
     }
 
     public void loseBeacon() {

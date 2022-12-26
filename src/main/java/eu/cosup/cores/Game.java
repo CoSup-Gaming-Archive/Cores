@@ -58,6 +58,9 @@ public class Game {
 
     // loading and joining phase
     private void initGame() {
+
+        BeaconInformation.update();
+
         gameStateManager.setGameState(GameStateManager.GameState.LOADING);
 
         // TODO load maps here

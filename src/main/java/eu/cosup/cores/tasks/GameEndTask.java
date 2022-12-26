@@ -60,7 +60,6 @@ public class GameEndTask extends BukkitRunnable {
                 Cores.getInstance().createGame();
 
                 // basicaly kill all players
-                Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> player.setHealth(0));
 
                 Cores.getInstance().getGame().refreshPlayerCount();
 
