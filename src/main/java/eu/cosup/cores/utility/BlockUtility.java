@@ -12,6 +12,7 @@ public class BlockUtility {
 
     private static final List<String> blockWhitelist = Cores.getInstance().getConfig().getStringList("block-whitelist");
 
+    // Invert this method
     public static boolean blockWhitelisted(Material material) {
 
         for (String materialString : blockWhitelist) {
