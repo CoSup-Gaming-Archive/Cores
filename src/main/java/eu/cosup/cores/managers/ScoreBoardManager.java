@@ -25,7 +25,11 @@ public class ScoreBoardManager {
 
         try {
             // try registering the objective
-            this.objective = Cores.getInstance().getServer().getScoreboardManager().getMainScoreboard().registerNewObjective(name, "dummy", "name");
+            this.objective = Cores.getInstance().getServer().getScoreboardManager().getMainScoreboard().registerNewObjective(
+                    name,
+                    Criteria.create("dummy"),
+                    Component.text("name")
+            );
         } catch (IllegalArgumentException ignored) {
             // if the objective already exists
             this.objective = Cores.getInstance().getServer().getScoreboardManager().getMainScoreboard().getObjective(name);
