@@ -17,12 +17,10 @@ public enum TeamColor {
     public static Color getColor(TeamColor teamColor) {
 
         if (teamColor == TeamColor.RED) {
-
             return Color.RED;
         }
 
         if (teamColor == TeamColor.BLUE) {
-
             return Color.BLUE;
         }
         return Color.GRAY;
