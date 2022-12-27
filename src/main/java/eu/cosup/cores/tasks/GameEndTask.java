@@ -5,7 +5,9 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
@@ -46,7 +48,11 @@ public class GameEndTask extends BukkitRunnable {
 
         }
 
-        Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(winner) + "" + winner + " is the winner team congratulations!");
+        // KeinOptifine: TODO: same as in the other places: dont use deprecated methods and convert this to a component
+        // tree using kyoris adventure component api
+
+        String msg = TeamColor.getChatColor(winner) + "" + winner + " is the winner team congratulations!";
+        Cores.getInstance().getServer().broadcast(LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(msg));
 
         Bukkit.getLogger().warning("New game in: " + Cores.getInstance().getConfig().getInt("return-to-lobby-delay"));
         new BukkitRunnable() {
@@ -64,7 +70,6 @@ public class GameEndTask extends BukkitRunnable {
                 Cores.getInstance().createGame();
 
                 // basicaly kill all players
-
                 Cores.getInstance().getGame().refreshPlayerCount();
 
             }
