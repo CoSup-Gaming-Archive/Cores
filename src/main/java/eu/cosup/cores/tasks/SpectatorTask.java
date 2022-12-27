@@ -12,6 +12,7 @@ import org.bukkit.util.Vector;
 
 public class SpectatorTask extends BukkitRunnable {
 
+    // final?
     private Player player;
 
     public SpectatorTask(Player player) {
