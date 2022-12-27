@@ -37,8 +37,13 @@ public class BlockUtility {
         // players cannot place one block above beacon so this should fix it.
         for (Location beaconLocation : Game.getGameInstance().getSelectedMap().getAllBeaconLocations()) {
 
-            if (location.distance(beaconLocation) <= 1) {
-                return true;
+            // this means you cannot place above beacon so you dont block the beam
+            if (location.getBlockX() == beaconLocation.getBlockX()) {
+                if (location.getZ() == location.getZ()) {
+                    if (location.getY() >= location.getY()) {
+                        return true;
+                    }
+                }
             }
         }
         return false;
