@@ -17,6 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameEndTask extends BukkitRunnable {
 
+    // TODO: final or WIP?
     private TeamColor winner;
 
     public GameEndTask(TeamColor winner) {
