@@ -3,6 +3,7 @@ package eu.cosup.cores.managers;
 import eu.cosup.cores.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -74,7 +75,7 @@ public class TeamManager {
         return null;
     }
 
-    public void addPlayerToTeam(Player player, TeamColor teamColor) {
+    public void addPlayerToTeam(@NotNull Player player, TeamColor teamColor) {
         getTeamByColor(teamColor).addPlayerToTeam(player);
     }
 }

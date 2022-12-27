@@ -1,6 +1,7 @@
 package eu.cosup.cores.managers;
 
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -50,11 +51,13 @@ public class Team {
         return false;
     }
 
-    public void addPlayerToTeam(Player player) {
+    public void addPlayerToTeam(@NotNull Player player) {
 
-        if (player == null) {
-            throw new NullPointerException("Player was null nonono");
-        }
+        // this is not necessary because you can just add @NotNull to the parameter
+
+        // if (player == null) {
+        //     throw new NullPointerException("Player was null nonono");
+        // }
 
         players.add(player);
 
