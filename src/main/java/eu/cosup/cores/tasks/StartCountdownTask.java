@@ -3,6 +3,9 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -58,12 +61,22 @@ public class StartCountdownTask extends BukkitRunnable {
 
                         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ACTIVE);
                         Game.getGameInstance().activateGame();
-                        Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "STARTING");
+                        // KeinOptifine: This is how you are supposed to do it:
+                        Cores.getInstance().getServer().broadcast(
+                                Component.text("STARTING").color(NamedTextColor.YELLOW)
+                        );
 
                         return;
                     }
 
-                    Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "Starting in " + finalI);
+                    // This is how youre supposed to do it
+                    Cores.getInstance().getServer().broadcast(
+                            Component.text("Starting in " + finalI)
+                                    .color(NamedTextColor.YELLOW)
+                    );
+                    // This is how it was before
+                    //Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "Starting in " + finalI);
+
                 }
             }.runTaskLater(Cores.getInstance(), (startCountdown - i) * 20L);
             countTasks.add(task);
