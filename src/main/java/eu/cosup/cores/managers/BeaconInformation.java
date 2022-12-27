@@ -2,6 +2,7 @@ package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,11 +15,18 @@ public class BeaconInformation {
 
         // player list
         for (Player p : Cores.getInstance().getServer().getOnlinePlayers()) {
-            p.setPlayerListHeaderFooter(
-                    ChatColor.translateAlternateColorCodes('&', "&l&6CoSup&b Gaming"),
-                    ChatColor.translateAlternateColorCodes('&', "\n"
-                            + getBeaconText(TeamColor.BLUE) + "\n"
-                            + getBeaconText(TeamColor.RED) + "\n\n&bCores"));
+
+            // KeinOptifine: This has the same problem as the other thing:
+            // definetley convert this to a component tree using the new kyori Component system
+
+            String header = ChatColor.translateAlternateColorCodes('&', "&l&6CoSup&b Gaming");
+            String footer = ChatColor.translateAlternateColorCodes('&', "\n" + getBeaconText(TeamColor.BLUE) + "\n" + getBeaconText(TeamColor.RED) + "\n\n&bCores");
+
+
+            p.sendPlayerListHeaderAndFooter(
+                    LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(header),
+                    LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(footer)
+            );
         }
 
         // scoreboard
