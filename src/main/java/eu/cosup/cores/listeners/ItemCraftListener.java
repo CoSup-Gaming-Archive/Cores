@@ -10,7 +10,6 @@ public class ItemCraftListener implements Listener {
 
     @EventHandler
     private void onItemCraft(CraftItemEvent event) {
-
         if (!BlockUtility.blockWhitelisted(event.getRecipe().getResult().getType())) {
             event.setCancelled(true);
         }
