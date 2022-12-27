@@ -27,11 +27,8 @@ public class Game {
 
         this.selectedMap = selectedMap;
 
-        refreshPlayerCount();
-
-        // TODO add load map chunks with probably async task
-
         joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
+        refreshPlayerCount();
 
         initGame();
     }
@@ -46,10 +43,6 @@ public class Game {
 
     public TeamManager getTeamManager() {
         return teamManager;
-    }
-
-    public int getPlayerCount() {
-        return joinedPlayers.size();
     }
 
     public LoadedMap getSelectedMap() {

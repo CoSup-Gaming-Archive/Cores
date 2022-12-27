@@ -10,6 +10,7 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameEndTask extends BukkitRunnable {
@@ -47,6 +48,7 @@ public class GameEndTask extends BukkitRunnable {
 
         Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(winner)+""+winner+" is the winner team congratulations!");
 
+        Bukkit.getLogger().warning("New game in: "+Cores.getInstance().getConfig().getInt("return-to-lobby-delay"));
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -54,6 +56,8 @@ public class GameEndTask extends BukkitRunnable {
                 // you should return players to lobby before restarting
                 Bukkit.getLogger().severe("Restarting game");
 
+                // the only solution at the moment later wil fix
+                Cores.getInstance().getServer().shutdown();
 
                 // TODO test this
                 // create the new game

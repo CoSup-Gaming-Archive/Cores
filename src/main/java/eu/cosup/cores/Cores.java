@@ -2,19 +2,22 @@ package eu.cosup.cores;
 
 // TODO remove unused imports in all of the files
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
+import eu.cosup.cores.data.WorldLoader;
 import eu.cosup.cores.listeners.*;
 import eu.cosup.cores.managers.ScoreBoardManager;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public final class Cores extends JavaPlugin {
@@ -28,8 +31,8 @@ public final class Cores extends JavaPlugin {
     private ArrayList<LoadedMap> loadedMaps = new ArrayList<>();
     private Game game;
     private World world;
-    public ArrayList<Player> playerList=new ArrayList<Player>();
 
+    // earlier than onEnable
     @Override
     public void onEnable() {
         instance = this;
@@ -45,12 +48,16 @@ public final class Cores extends JavaPlugin {
         loadMaps();
 
         if (loadedMaps.size() == 0) {
-            getLogger().severe("No schematics found...");
+            Bukkit.getLogger().severe("Were not able to load any maps");
             return;
         }
 
         // initial creation of game.
-        createGame();
+        if (!createGame()) {
+            return;
+        }
+
+        // past this point all of the listeners will be initialized and it is expectted that everything works fine
 
         getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -72,8 +79,15 @@ public final class Cores extends JavaPlugin {
         getCommand("spectate").setExecutor(new SpectatorCommand());
     }
 
-    public void createGame() {
-        game = new Game(selectMap());
+    public boolean createGame() {
+        LoadedMap selectedMap = selectMap();
+        if (selectedMap == null) {
+            Bukkit.getLogger().severe("We were not able to create a game.");
+            return false;
+        }
+        game = new Game(selectedMap);
+        Bukkit.getLogger().warning("Succesfully started a game.");
+        return true;
     }
 
     private LoadedMap selectMap() {
@@ -85,7 +99,16 @@ public final class Cores extends JavaPlugin {
 
         // if there are more maps to choose from
         if (loadedMaps.size() > 1) {
-            selectedMap = loadedMaps.get(random.nextInt()*loadedMaps.size()-1);
+            int selection = random.nextInt(loadedMaps.size());
+            Bukkit.getLogger().warning("Choosing from: "+loadedMaps+" chose:"+selection);
+            selectedMap = loadedMaps.get(selection);
+        }
+
+        Bukkit.getLogger().info("Selected map: "+selectedMap.getName());
+
+        if (!WorldLoader.loadNewWorld(selectedMap.getName())) {
+            Bukkit.getLogger().severe("Not able to load map");
+            return null;
         }
 
         return selectedMap;
@@ -99,6 +122,9 @@ public final class Cores extends JavaPlugin {
     public World getWorld() {
         return world;
     }
+    public void setWorld(World world) {
+        this.world = world;
+    }
 
     public Game getGame() {
         return game;
@@ -106,33 +132,17 @@ public final class Cores extends JavaPlugin {
 
     private void loadMaps() {
 
-        //TODO load maps
+        // we just have to have the name of the world and then we can load it from config by name
+        ArrayList<LoadedMap> loadedMapsConfig = LoadedMap.getLoadedMapsFromConfig();
+        if (loadedMapsConfig != null) {
+            loadedMaps = loadedMapsConfig;
+        }
 
+        WorldLoader.getWorldNames();
 
-        //this is just for my world (Sakura map i downloaded from intenret)
-        //TODO remove this this just my testing world
-        ArrayList<Location> blueBeacons = new ArrayList<>();
-        blueBeacons.add(new Location(getWorld(), -34,80,237));
-        blueBeacons.add(new Location(getWorld(), -34,80,275));
-//
-//
-        ArrayList<Location> redBeacons = new ArrayList<>();
-        //LMAO BRUH
-        redBeacons.add(new Location(getWorld(), 18,80,275));
-        redBeacons.add(new Location(getWorld(), 18,80,237));
-//
-        //// TODO this is a test so remove this
-        loadedMaps.add(new LoadedMap(
-            "TestMap",
-                blueBeacons,
-                redBeacons,
-                new Location(getWorld(),-72,81,256),
-                new Location(getWorld(),57,81,256),
-                new Location(getWorld(),-4,121,257),
-                89,
-                76,
-                76
-        ));
-
+        // this is to sort out the maps that dont exist in the folder
+        List<LoadedMap> tempLoadedMaps = loadedMaps.stream().filter(loadedMap -> WorldLoader.getWorldNames().contains(loadedMap.getName())).toList();
+        loadedMaps = new ArrayList<>();
+        loadedMaps.addAll(tempLoadedMaps);
     }
 }

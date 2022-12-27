@@ -51,9 +51,13 @@ public class BlockBreakListener implements Listener {
 
             // so no own kill
             if (playerTeamColor == beaconTeamColor) {
-                player.sendMessage("You cannot break your own beacon you dum dum");
-                event.setCancelled(true);
-                return;
+                // creative players can destroy their own beacons
+                // mostly for testing
+                if (player.getGameMode() != GameMode.CREATIVE) {
+                    player.sendMessage("You cannot break your own beacon you dum dum");
+                    event.setCancelled(true);
+                    return;
+                }
             }
 
 

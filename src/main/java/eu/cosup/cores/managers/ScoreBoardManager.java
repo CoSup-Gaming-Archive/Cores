@@ -27,7 +27,6 @@ public class ScoreBoardManager{
             // if the objective already exists
             this.objective = Cores.getInstance().getServer().getScoreboardManager().getMainScoreboard().getObjective(name);
         }
-        Bukkit.getLogger().info(""+objective);
     }
 
     public void setDisplayName(String name){

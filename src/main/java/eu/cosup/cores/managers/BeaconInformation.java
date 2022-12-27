@@ -60,10 +60,12 @@ public class BeaconInformation {
         int missingBeaconCount = maxBeaconCount - beaconCount;
 
         for (int i = 0; i < beaconCount; i++) {
+            // this is the ✔ symbol
             displayString+="&a\u2714";
         }
 
         for (int i = 0; i < missingBeaconCount; i++) {
+            // this is the ✖ symbol
             displayString+="&c\u2716";
         }
 
