@@ -41,35 +41,31 @@ public class BeaconInformation {
             return "";
         }
 
-        String displayString = "";
+        StringBuilder displayString = new StringBuilder();
 
         if (teamColor.equals(TeamColor.RED)) {
-            displayString = "&cRed Beacons: ";
+            displayString = new StringBuilder("&cRed Beacons: ");
         }
 
         if (teamColor.equals(TeamColor.BLUE)) {
-            displayString = "&9Blue Beacons: ";
+            displayString = new StringBuilder("&9Blue Beacons: ");
         }
 
         // we dont want null errors
         if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
-            return displayString;
+            return displayString.toString();
         }
 
         int beaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getBeaconCount();
         int maxBeaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getMaxBeaconCount();
         int missingBeaconCount = maxBeaconCount - beaconCount;
 
-        for (int i = 0; i < beaconCount; i++) {
-            // this is the ✔ symbol
-            displayString += "&a\u2714";
-        }
+        // this is the ✔ symbol
+        displayString.append("&a\u2714".repeat(Math.max(0, beaconCount)));
 
-        for (int i = 0; i < missingBeaconCount; i++) {
-            // this is the ✖ symbol
-            displayString += "&c\u2716";
-        }
+        // this is the ✖ symbol
+        displayString.append("&c\u2716".repeat(Math.max(0, missingBeaconCount)));
 
-        return displayString;
+        return displayString.toString();
     }
 }
