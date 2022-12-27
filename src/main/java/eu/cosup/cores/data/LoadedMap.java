@@ -228,7 +228,8 @@ public class LoadedMap {
 
         ArrayList<Location> teamBlueBeacons = new ArrayList<>();
         try {
-            customConfig.getList(name + ".teamBlueBeacons").forEach(o -> teamBlueBeacons.add((Location) o));
+            Objects.requireNonNull(customConfig.getList(name + ".teamBlueBeacons"))
+                    .forEach(o -> teamBlueBeacons.add((Location) o));
         } catch (NullPointerException exception) {
             exception.printStackTrace();
             Bukkit.getLogger().severe("Couldnt load blue team beacons for " + name);
@@ -237,7 +238,8 @@ public class LoadedMap {
 
         ArrayList<Location> teamRedBeacons = new ArrayList<>();
         try {
-            customConfig.getList(name + ".teamRedBeacons").forEach(o -> teamRedBeacons.add((Location) o));
+            Objects.requireNonNull(customConfig.getList(name + ".teamRedBeacons"))
+                    .forEach(o -> teamRedBeacons.add((Location) o));
         } catch (NullPointerException exception) {
             exception.printStackTrace();
             Bukkit.getLogger().severe("Couldnt load red team beacons for " + name);
