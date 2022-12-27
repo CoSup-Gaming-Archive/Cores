@@ -23,11 +23,13 @@ public class BlockBreakListener implements Listener {
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
 
+        Game gameInstance = Game.getGameInstance();
+
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
         // if the game doesnt start
-        if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
+        if (gameInstance.getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
             if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
                 event.setCancelled(true);
                 return;
@@ -37,9 +39,9 @@ public class BlockBreakListener implements Listener {
         // in case it is a beacon
         if (block.getType() == Material.BEACON) {
 
-            TeamColor beaconTeamColor = Game.getGameInstance().getSelectedMap().whichTeamBeacon(block.getLocation());
+            TeamColor beaconTeamColor = gameInstance.getSelectedMap().whichTeamBeacon(block.getLocation());
 
-            TeamColor playerTeamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
+            TeamColor playerTeamColor = gameInstance.getTeamManager().whichTeam(player);
 
             Bukkit.getLogger().info("beacon: " + beaconTeamColor + "   player: " + playerTeamColor);
 
@@ -62,7 +64,7 @@ public class BlockBreakListener implements Listener {
 
             // it was no accident
 
-            Team loserTeam = Game.getGameInstance().getTeamManager().getTeamByColor(beaconTeamColor);
+            Team loserTeam = gameInstance.getTeamManager().getTeamByColor(beaconTeamColor);
 
             // minus beacon count
             loserTeam.loseBeacon();
@@ -80,11 +82,11 @@ public class BlockBreakListener implements Listener {
                 // there is a clear winner
 
                 if (beaconTeamColor == TeamColor.RED) {
-                    Game.getGameInstance().finishGame(TeamColor.BLUE);
+                    gameInstance.finishGame(TeamColor.BLUE);
                 }
 
                 if (beaconTeamColor == TeamColor.BLUE) {
-                    Game.getGameInstance().finishGame(TeamColor.RED);
+                    gameInstance.finishGame(TeamColor.RED);
                 }
             }
             return;
