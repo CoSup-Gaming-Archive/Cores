@@ -40,8 +40,8 @@ public class BlockUtility {
 
             // this means you cannot place above beacon so you dont block the beam
             if (location.getBlockX() == beaconLocation.getBlockX()) {
-                if (location.getZ() == location.getZ()) {
-                    if (location.getY() >= location.getY()) {
+                if (location.getBlockZ() == beaconLocation.getBlockZ()) {
+                    if (location.getBlockY() >= beaconLocation.getBlockY()) {
                         return true;
                     }
                 }
