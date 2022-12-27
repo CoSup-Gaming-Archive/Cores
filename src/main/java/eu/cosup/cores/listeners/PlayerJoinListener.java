@@ -18,21 +18,23 @@ public class PlayerJoinListener implements Listener {
 
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
-        Game.getGameInstance().getPlayerList().add(event.getPlayer());
+        Game game = Game.getGameInstance();
+        
+        game.getPlayerList().add(event.getPlayer());
         BeaconInformation.update();
 
 
         // if game has already started
-        if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
+        if (game.getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
             // if player is not in a team
 
-            TeamColor playerTeam = Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer());
+            TeamColor playerTeam = game.getTeamManager().whichTeam(event.getPlayer());
 
             if (playerTeam == null) {
 
                 event.getPlayer().sendMessage(ChatColor.RED + "You joined as spectator since there are enough players already!");
                 event.getPlayer().setGameMode(GameMode.SPECTATOR);
-                event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
+                event.getPlayer().teleport(game.getSelectedMap().getSpectatorSpawn());
                 return;
             }
 
@@ -41,9 +43,9 @@ public class PlayerJoinListener implements Listener {
             return;
         }
 
-        if (Game.getGameInstance().getJoinedPlayers().size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
-            Game.getGameInstance().getJoinedPlayers().add(event.getPlayer());
-            Game.getGameInstance().refreshPlayerCount();
+        if (game.getJoinedPlayers().size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
+            game.getJoinedPlayers().add(event.getPlayer());
+            game.refreshPlayerCount();
             event.getPlayer().sendMessage(ChatColor.YELLOW + "You joined!");
             // idk if this is good code but whatever
         } else {
@@ -52,7 +54,7 @@ public class PlayerJoinListener implements Listener {
         }
 
         event.getPlayer().setGameMode(GameMode.SPECTATOR);
-        event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
+        event.getPlayer().teleport(game.getSelectedMap().getSpectatorSpawn());
 
     }
 }
