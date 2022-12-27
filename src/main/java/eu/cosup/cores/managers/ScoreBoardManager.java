@@ -42,6 +42,7 @@ public class ScoreBoardManager {
         displayStrings.add(item);
     }
 
+    // TODO: Return value of this method is never used. Remove it?
     public Objective getObjective() {
         int displayStringCount = displayStrings.size() - 1;
         for (int i = 0; i < displayStrings.size(); i++) {
