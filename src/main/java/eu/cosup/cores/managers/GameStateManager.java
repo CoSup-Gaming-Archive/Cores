@@ -13,12 +13,10 @@ public class GameStateManager {
     }
 
     public enum GameState {
-
         LOADING,
         JOINING,
         STARTING,
         ACTIVE,
         ENDING
-
     }
 }
