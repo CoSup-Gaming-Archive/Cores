@@ -35,6 +35,7 @@ public class BlockBreakListener implements Listener {
                 return;
             }
         }
+        // why not make a single if block for the above stuff?
 
         // in case it is a beacon
         if (block.getType() == Material.BEACON) {
@@ -98,6 +99,8 @@ public class BlockBreakListener implements Listener {
                 return;
             }
         }
+
+        // ? Combine the if statements into one block. I didnt change cus maybe this is WIP
     }
 
 
