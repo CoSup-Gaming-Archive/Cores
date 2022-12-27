@@ -63,11 +63,7 @@ public class GameEndTask extends BukkitRunnable {
                 // you should return players to lobby before restarting
                 Bukkit.getLogger().severe("Restarting game");
 
-                // the only solution at the moment later wil fix
-                Cores.getInstance().getServer().shutdown();
-
-                // TODO test this
-                // create the new game
+                // create new game instance
                 Cores.getInstance().createGame();
 
                 // basicaly kill all players
