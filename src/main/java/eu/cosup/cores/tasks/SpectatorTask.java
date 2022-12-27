@@ -36,7 +36,6 @@ public class SpectatorTask extends BukkitRunnable {
         new BukkitRunnable() {
             @Override
             public void run() {
-
                 if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ENDING) {
                     cancel();
                     return;
