@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 public final class Cores extends JavaPlugin {
@@ -77,7 +78,7 @@ public final class Cores extends JavaPlugin {
 
 
         // commands
-        getCommand("spectate").setExecutor(new SpectatorCommand());
+        Objects.requireNonNull(getCommand("spectate")).setExecutor(new SpectatorCommand());
     }
 
     public boolean createGame() {
