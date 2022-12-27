@@ -21,7 +21,10 @@ public class PlayerDeathListener implements Listener {
 
         for (ItemStack itemStack : player.getInventory()) {
             if (itemStack != null) {
-                player.setItemInHand(itemStack);
+                // Use this:
+                player.getInventory().setItem(EquipmentSlot.HAND, itemStack);
+                // instead of this:
+                //player.setItemInHand(itemStack);
                 player.dropItem(true);
                 player.getInventory().removeItem(itemStack);
             }
