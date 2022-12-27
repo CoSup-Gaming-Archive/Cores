@@ -35,5 +35,8 @@ public class ItemThrowListener implements Listener {
         // do we want despawning in the tournament?
         //event.getItemDrop().setUnlimitedLifetime(true);
 
+        // KeinOptifine: definetly worth checking, but we probably cant/dont need to prevent despawning, because the maps are small
+        // enough that a player is always close by, which means the items will not despawn.
+
     }
 }
