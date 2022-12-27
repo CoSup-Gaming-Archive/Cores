@@ -26,7 +26,6 @@ public class PlayerInteractListener implements Listener {
         Block block = event.getClickedBlock();
 
         if (block.getType() == Material.BEACON) {
-
             if (event.getAction().isLeftClick()) {
                 return;
             }
