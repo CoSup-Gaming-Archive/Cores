@@ -15,12 +15,10 @@ public class SpectatorCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage("only player please");
             return false;
         }
-
-        Player player = (Player) sender;
 
         if (Game.getGameInstance() == null) {
             player.sendMessage("There is no game happening");
