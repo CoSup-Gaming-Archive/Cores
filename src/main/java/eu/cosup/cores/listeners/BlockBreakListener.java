@@ -7,6 +7,8 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
 import eu.cosup.cores.utility.BlockUtility;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -71,8 +73,18 @@ public class BlockBreakListener implements Listener {
             loserTeam.loseBeacon();
             BeaconInformation.update();
 
+            // KeinOptifine: I converted this to use the new broadcast system in a lazy way using the legacy component
+            // serializer. this means there is still some work to be done: even tho this works i would prefer if we used
+            // up to date standard practice (i know the new component system sucks but were using it anyway). This means
+            // we need to convert this to a component tree using the new kyoris component api.
+
             // broadcast that they lost beacon
-            Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(loserTeam.getColor()) + "A " + loserTeam.getColor() + " beacon" + ChatColor.WHITE + " was destroyed");
+            String msg = TeamColor.getChatColor(loserTeam.getColor()) + "A " + loserTeam.getColor() + " beacon"
+                    + ChatColor.WHITE + " was destroyed";
+            // KeinOptifine: TODO: Convert this initialization to a component tree system
+            Cores.getInstance().getServer().broadcast(LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(msg));
+            // KeinOptifine: TODO: and then use the following instead:
+            // Cores.getInstance().getServer().broadcast(Component.text(msg));
 
             // cheeky way of getting the beacon to not drop anything
             block.setType(Material.AIR);
