@@ -87,20 +87,27 @@ public class Game {
     public void refreshPlayerCount() {
 
         // if the game already started
-        if (gameStateManager.getGameState() != GameStateManager.GameState.JOINING && gameStateManager.getGameState() != GameStateManager.GameState.STARTING) {
+        if (
+            gameStateManager.getGameState() != GameStateManager.GameState.JOINING && 
+            gameStateManager.getGameState() != GameStateManager.GameState.STARTING
+        ) {
             return;
         }
 
         if (joinedPlayers.size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
             // this means there is already a countdown going
             if (Game.gameInstance.gameStateManager.getGameState() == GameStateManager.GameState.STARTING) {
-
                 Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.JOINING);
 
-                Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"Stopping!");
+                Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "Stopping!");
             }
             // omg teach me proper formatting cuz god dayum this one is ugly
-            Cores.getInstance().getServer().broadcastMessage(ChatColor.RED+"Not enough players: ("+joinedPlayers.size()+"/"+Cores.getInstance().getConfig().getInt("required-player-count")+")");
+            // KeinOptifine 27.12.22: youre right. dont worry sivtu will create a style guide and we will adapt all the chatmessages when time has come
+            Cores.getInstance().getServer().broadcastMessage(
+                ChatColor.RED + "Not enough players: (" + 
+                joinedPlayers.size() + "/" + 
+                Cores.getInstance().getConfig().getInt("required-player-count") + ")"
+            );
             return;
         }
 
