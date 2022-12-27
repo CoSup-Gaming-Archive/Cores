@@ -46,9 +46,9 @@ public class GameEndTask extends BukkitRunnable {
 
         }
 
-        Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(winner)+""+winner+" is the winner team congratulations!");
+        Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(winner) + "" + winner + " is the winner team congratulations!");
 
-        Bukkit.getLogger().warning("New game in: "+Cores.getInstance().getConfig().getInt("return-to-lobby-delay"));
+        Bukkit.getLogger().warning("New game in: " + Cores.getInstance().getConfig().getInt("return-to-lobby-delay"));
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -68,7 +68,7 @@ public class GameEndTask extends BukkitRunnable {
                 Cores.getInstance().getGame().refreshPlayerCount();
 
             }
-        }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("return-to-lobby-delay")*20L);
+        }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("return-to-lobby-delay") * 20L);
 
     }
 

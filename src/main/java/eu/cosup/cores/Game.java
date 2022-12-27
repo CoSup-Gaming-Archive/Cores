@@ -78,6 +78,7 @@ public class Game {
     public ArrayList<Player> getJoinedPlayers() {
         return joinedPlayers;
     }
+
     public ArrayList<Player> getPlayerList() {
         return playerList;
     }
@@ -88,8 +89,8 @@ public class Game {
 
         // if the game already started
         if (
-            gameStateManager.getGameState() != GameStateManager.GameState.JOINING && 
-            gameStateManager.getGameState() != GameStateManager.GameState.STARTING
+                gameStateManager.getGameState() != GameStateManager.GameState.JOINING &&
+                        gameStateManager.getGameState() != GameStateManager.GameState.STARTING
         ) {
             return;
         }
@@ -104,9 +105,9 @@ public class Game {
             // omg teach me proper formatting cuz god dayum this one is ugly
             // KeinOptifine 27.12.22: youre right. dont worry sivtu will create a style guide and we will adapt all the chatmessages when time has come
             Cores.getInstance().getServer().broadcastMessage(
-                ChatColor.RED + "Not enough players: (" + 
-                joinedPlayers.size() + "/" + 
-                Cores.getInstance().getConfig().getInt("required-player-count") + ")"
+                    ChatColor.RED + "Not enough players: (" +
+                            joinedPlayers.size() + "/" +
+                            Cores.getInstance().getConfig().getInt("required-player-count") + ")"
             );
             return;
         }

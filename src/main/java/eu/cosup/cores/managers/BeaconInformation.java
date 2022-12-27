@@ -10,15 +10,15 @@ import org.bukkit.scoreboard.DisplaySlot;
 import javax.annotation.Nullable;
 
 public class BeaconInformation {
-    public static void update(){
+    public static void update() {
 
         // player list
-        for (Player p: Cores.getInstance().getServer().getOnlinePlayers()){
+        for (Player p : Cores.getInstance().getServer().getOnlinePlayers()) {
             p.setPlayerListHeaderFooter(
                     ChatColor.translateAlternateColorCodes('&', "&l&6CoSup&b Gaming"),
                     ChatColor.translateAlternateColorCodes('&', "\n"
-                    +getBeaconText(TeamColor.BLUE)+"\n"
-                    +getBeaconText(TeamColor.RED)+"\n\n&bCores"));
+                            + getBeaconText(TeamColor.BLUE) + "\n"
+                            + getBeaconText(TeamColor.RED) + "\n\n&bCores"));
         }
 
         // scoreboard
@@ -34,13 +34,14 @@ public class BeaconInformation {
         scoreBoardManager.getObjective();
 
     }
-    public static String getBeaconText(TeamColor teamColor){
 
-        if (TeamColor.getChatColor(teamColor) == ChatColor.GRAY){
+    public static String getBeaconText(TeamColor teamColor) {
+
+        if (TeamColor.getChatColor(teamColor) == ChatColor.GRAY) {
             return "";
         }
 
-        String displayString="";
+        String displayString = "";
 
         if (teamColor.equals(TeamColor.RED)) {
             displayString = "&cRed Beacons: ";
@@ -61,12 +62,12 @@ public class BeaconInformation {
 
         for (int i = 0; i < beaconCount; i++) {
             // this is the ✔ symbol
-            displayString+="&a\u2714";
+            displayString += "&a\u2714";
         }
 
         for (int i = 0; i < missingBeaconCount; i++) {
             // this is the ✖ symbol
-            displayString+="&c\u2716";
+            displayString += "&c\u2716";
         }
 
         return displayString;

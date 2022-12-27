@@ -57,14 +57,14 @@ public class StartCountdownTask extends BukkitRunnable {
 
                         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ACTIVE);
                         Game.getGameInstance().activateGame();
-                        Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"STARTING");
+                        Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "STARTING");
 
                         return;
                     }
 
-                    Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW+"Starting in " + finalI);
+                    Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "Starting in " + finalI);
                 }
-            }.runTaskLater(Cores.getInstance(), (startCountdown-i)*20L);
+            }.runTaskLater(Cores.getInstance(), (startCountdown - i) * 20L);
             countTasks.add(task);
         }
     }

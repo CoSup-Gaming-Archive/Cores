@@ -160,20 +160,20 @@ public class LoadedMap {
 
         YamlConfiguration customConfig = YamlConfiguration.loadConfiguration(configFile);
 
-        customConfig.set(name+".maxHeight", maxHeight);
-        customConfig.set(name+".minHeight", minHeight);
-        customConfig.set(name+".deathHeight", deathHeight);
+        customConfig.set(name + ".maxHeight", maxHeight);
+        customConfig.set(name + ".minHeight", minHeight);
+        customConfig.set(name + ".deathHeight", deathHeight);
 
-        customConfig.set(name+".teamBlueSpawns", teamBlueSpawns);
-        customConfig.set(name+".teamRedSpawns", teamRedSpawns);
+        customConfig.set(name + ".teamBlueSpawns", teamBlueSpawns);
+        customConfig.set(name + ".teamRedSpawns", teamRedSpawns);
 
-        customConfig.set(name+".teamBlueBeacons", teamBlueBeacons);
-        customConfig.set(name+".teamRedBeacons", teamRedBeacons);
+        customConfig.set(name + ".teamBlueBeacons", teamBlueBeacons);
+        customConfig.set(name + ".teamRedBeacons", teamRedBeacons);
 
-        customConfig.set(name+".spectatorSpawn", spectatorSpawn);
+        customConfig.set(name + ".spectatorSpawn", spectatorSpawn);
 
 
-        try{
+        try {
             customConfig.save(configFile);
         } catch (IOException exception) {
             Bukkit.getLogger().severe("Were not able to save map to config");
@@ -196,51 +196,51 @@ public class LoadedMap {
             return null;
         }
 
-        int maxHeight = customConfig.getInt(name+".maxHeight");
-        int minHeight = customConfig.getInt(name+".minHeight");
-        int deathHeight = customConfig.getInt(name+".deathHeight");
+        int maxHeight = customConfig.getInt(name + ".maxHeight");
+        int minHeight = customConfig.getInt(name + ".minHeight");
+        int deathHeight = customConfig.getInt(name + ".deathHeight");
 
         // idk this is not mandatory
         if (minHeight == maxHeight) {
-            Bukkit.getLogger().severe(name+"   minHeight cannot be the same as the maxHeight plase change that");
+            Bukkit.getLogger().severe(name + "   minHeight cannot be the same as the maxHeight plase change that");
             return null;
         }
 
-        Location teamBlueSpawns = customConfig.getLocation(name+".teamBlueSpawns");
-        Location teamRedSpawns = customConfig.getLocation(name+".teamRedSpawns");
-        Location spectatorSpawn = customConfig.getLocation(name+".spectatorSpawn");
+        Location teamBlueSpawns = customConfig.getLocation(name + ".teamBlueSpawns");
+        Location teamRedSpawns = customConfig.getLocation(name + ".teamRedSpawns");
+        Location spectatorSpawn = customConfig.getLocation(name + ".spectatorSpawn");
 
         // should probably split this up
         if (teamBlueSpawns == null) {
-            Bukkit.getLogger().severe("blue spawn for "+name+" was not loaded corectly");
+            Bukkit.getLogger().severe("blue spawn for " + name + " was not loaded corectly");
             return null;
         }
 
         if (teamRedSpawns == null) {
-            Bukkit.getLogger().severe("red spawns for "+name+" was not loaded corretly");
+            Bukkit.getLogger().severe("red spawns for " + name + " was not loaded corretly");
             return null;
         }
 
         if (spectatorSpawn == null) {
-            Bukkit.getLogger().severe("spectator spawn for "+name+" was not loaded corectly");
+            Bukkit.getLogger().severe("spectator spawn for " + name + " was not loaded corectly");
             return null;
         }
 
         ArrayList<Location> teamBlueBeacons = new ArrayList<>();
         try {
-            customConfig.getList(name+".teamBlueBeacons").forEach(o -> teamBlueBeacons.add((Location) o));
+            customConfig.getList(name + ".teamBlueBeacons").forEach(o -> teamBlueBeacons.add((Location) o));
         } catch (NullPointerException exception) {
             exception.printStackTrace();
-            Bukkit.getLogger().severe("Couldnt load blue team beacons for "+name);
+            Bukkit.getLogger().severe("Couldnt load blue team beacons for " + name);
             return null;
         }
 
         ArrayList<Location> teamRedBeacons = new ArrayList<>();
         try {
-            customConfig.getList(name+".teamRedBeacons").forEach(o -> teamRedBeacons.add((Location) o));
+            customConfig.getList(name + ".teamRedBeacons").forEach(o -> teamRedBeacons.add((Location) o));
         } catch (NullPointerException exception) {
             exception.printStackTrace();
-            Bukkit.getLogger().severe("Couldnt load red team beacons for "+name);
+            Bukkit.getLogger().severe("Couldnt load red team beacons for " + name);
             return null;
         }
 

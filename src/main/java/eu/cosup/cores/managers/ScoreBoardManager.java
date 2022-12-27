@@ -11,11 +11,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ScoreBoardManager{
+public class ScoreBoardManager {
 
     private Objective objective;
     ArrayList<String> displayStrings = new ArrayList<>();
-    public ScoreBoardManager(String name){
+
+    public ScoreBoardManager(String name) {
         if (name.length() == 0) {
             return;
         }
@@ -29,25 +30,27 @@ public class ScoreBoardManager{
         }
     }
 
-    public void setDisplayName(String name){
+    public void setDisplayName(String name) {
         objective.setDisplayName(name);
     }
-    public void setSlot(DisplaySlot displaySlot){
+
+    public void setSlot(DisplaySlot displaySlot) {
         objective.setDisplaySlot(displaySlot);
     }
-    public void addItem(String item){
+
+    public void addItem(String item) {
         displayStrings.add(item);
     }
 
-    public Objective getObjective(){
-        int displayStringCount = displayStrings.size()-1;
-        for (int i = 0; i<displayStrings.size(); i++){
-            this.objective.getScore(displayStrings.get(i)).setScore(displayStringCount-i);
+    public Objective getObjective() {
+        int displayStringCount = displayStrings.size() - 1;
+        for (int i = 0; i < displayStrings.size(); i++) {
+            this.objective.getScore(displayStrings.get(i)).setScore(displayStringCount - i);
         }
         return objective;
     }
 
-    public void clearObjective(){
+    public void clearObjective() {
         String id = objective.getName();
         Scoreboard scoreboard = objective.getScoreboard();
         String name = objective.getDisplayName();

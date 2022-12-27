@@ -31,7 +31,6 @@ public class ItemThrowListener implements Listener {
         }
 
 
-
         // TODO decide question bellow
         // do we want despawning in the tournament?
         //event.getItemDrop().setUnlimitedLifetime(true);

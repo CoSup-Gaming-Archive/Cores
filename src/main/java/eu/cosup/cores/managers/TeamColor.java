@@ -10,7 +10,6 @@ public enum TeamColor {
     BLUE;
 
     public static ChatColor getChatColor(TeamColor teamColor) {
-
         return ChatColor.valueOf(teamColor.toString());
     }
 

@@ -19,7 +19,6 @@ import java.util.List;
 public class BlockBreakListener implements Listener {
 
 
-
     // TODO maybe clean this up a bit
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
@@ -42,7 +41,7 @@ public class BlockBreakListener implements Listener {
 
             TeamColor playerTeamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
 
-            Bukkit.getLogger().info("beacon: "+beaconTeamColor+"   player: "+playerTeamColor);
+            Bukkit.getLogger().info("beacon: " + beaconTeamColor + "   player: " + playerTeamColor);
 
             if (beaconTeamColor == null || playerTeamColor == null) {
                 event.setCancelled(true);
@@ -70,7 +69,7 @@ public class BlockBreakListener implements Listener {
             BeaconInformation.update();
 
             // broadcast that they lost beacon
-            Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(loserTeam.getColor())+"A "+loserTeam.getColor()+" beacon"+ChatColor.WHITE+" was destroyed");
+            Cores.getInstance().getServer().broadcastMessage(TeamColor.getChatColor(loserTeam.getColor()) + "A " + loserTeam.getColor() + " beacon" + ChatColor.WHITE + " was destroyed");
 
             // cheeky way of getting the beacon to not drop anything
             block.setType(Material.AIR);

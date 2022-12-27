@@ -35,13 +35,13 @@ public class BlockPlaceListener implements Listener {
         }
 
         if (Game.getGameInstance().getSelectedMap().getMaxHeight() < block.getY()) {
-            player.sendMessage(ChatColor.RED+"Cannot place blocks here");
+            player.sendMessage(ChatColor.RED + "Cannot place blocks here");
             event.setCancelled(true);
             return;
         }
 
         if (Game.getGameInstance().getSelectedMap().getMinHeight() > block.getY()) {
-            player.sendMessage(ChatColor.RED+"Cannot place blocks here");
+            player.sendMessage(ChatColor.RED + "Cannot place blocks here");
             event.setCancelled(true);
             return;
         }
@@ -54,7 +54,7 @@ public class BlockPlaceListener implements Listener {
 
         if (BlockUtility.isLocationProtected(block.getLocation())) {
             event.setCancelled(true);
-            event.getPlayer().sendMessage(ChatColor.RED+"You cannot place blocks here");
+            event.getPlayer().sendMessage(ChatColor.RED + "You cannot place blocks here");
             return;
         }
     }

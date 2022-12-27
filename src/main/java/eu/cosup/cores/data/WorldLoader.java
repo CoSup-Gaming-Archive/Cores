@@ -26,7 +26,7 @@ public class WorldLoader {
 
         Bukkit.unloadWorld("world", false);
 
-        try{
+        try {
             FileUtils.forceDelete(new File("world"));
         } catch (IOException exception) {
             exception.printStackTrace();
@@ -37,7 +37,7 @@ public class WorldLoader {
         try {
             // not good to write directory out like this
             // get it through a function
-            FileUtils.copyDirectory(new File("plugins/Cores/maps/"+name), new File("world"));
+            FileUtils.copyDirectory(new File("plugins/Cores/maps/" + name), new File("world"));
         } catch (IOException exception) {
             Bukkit.getLogger().severe("Couldnt copy the folder from maps directory now you should probably worry because this is really bad.");
             exception.printStackTrace();
@@ -48,7 +48,7 @@ public class WorldLoader {
 
         Cores.getInstance().setWorld(world);
 
-        Bukkit.getLogger().info("Loaded: "+name);
+        Bukkit.getLogger().info("Loaded: " + name);
         return true;
     }
 

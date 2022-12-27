@@ -30,13 +30,13 @@ public class PlayerJoinListener implements Listener {
 
             if (playerTeam == null) {
 
-                event.getPlayer().sendMessage(ChatColor.RED+"You joined as spectator since there are enough players already!");
+                event.getPlayer().sendMessage(ChatColor.RED + "You joined as spectator since there are enough players already!");
                 event.getPlayer().setGameMode(GameMode.SPECTATOR);
                 event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
                 return;
             }
 
-            event.getPlayer().sendMessage(TeamColor.getChatColor(playerTeam)+"You joined as "+playerTeam);
+            event.getPlayer().sendMessage(TeamColor.getChatColor(playerTeam) + "You joined as " + playerTeam);
             event.getPlayer().setHealth(0);
             return;
         }
@@ -44,11 +44,11 @@ public class PlayerJoinListener implements Listener {
         if (Game.getGameInstance().getJoinedPlayers().size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
             Game.getGameInstance().getJoinedPlayers().add(event.getPlayer());
             Game.getGameInstance().refreshPlayerCount();
-            event.getPlayer().sendMessage(ChatColor.YELLOW+"You joined!");
-        // idk if this is good code but whatever
+            event.getPlayer().sendMessage(ChatColor.YELLOW + "You joined!");
+            // idk if this is good code but whatever
         } else {
             // the player will join as spectator
-            event.getPlayer().sendMessage(ChatColor.RED+"You joined as spectator since there are enough players already!");
+            event.getPlayer().sendMessage(ChatColor.RED + "You joined as spectator since there are enough players already!");
         }
 
         event.getPlayer().setGameMode(GameMode.SPECTATOR);

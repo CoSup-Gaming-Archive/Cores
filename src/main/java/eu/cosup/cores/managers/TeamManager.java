@@ -27,11 +27,11 @@ public class TeamManager {
         // this wont work in future since parties will be athing im guessing
         for (TeamColor teamColor : TeamColor.values()) {
 
-            Bukkit.getLogger().info(""+teamColor.toString()+" is being registered.");
+            Bukkit.getLogger().info(teamColor.toString() + " is being registered.");
 
             for (Player player : players) {
 
-                if (teamPlayers.size() >= players.size()/2) {
+                if (teamPlayers.size() >= players.size() / 2) {
 
                     if (teamColor == TeamColor.BLUE) {
                         teams.add(new Team(teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamBlueBeacons().size()));

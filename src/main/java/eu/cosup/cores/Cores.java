@@ -23,6 +23,7 @@ import java.util.Random;
 public final class Cores extends JavaPlugin {
 
     private static Cores instance;
+
     //very nice comment
     public static Cores getInstance() {
         return instance;
@@ -100,11 +101,11 @@ public final class Cores extends JavaPlugin {
         // if there are more maps to choose from
         if (loadedMaps.size() > 1) {
             int selection = random.nextInt(loadedMaps.size());
-            Bukkit.getLogger().warning("Choosing from: "+loadedMaps+" chose:"+selection);
+            Bukkit.getLogger().warning("Choosing from: " + loadedMaps + " chose:" + selection);
             selectedMap = loadedMaps.get(selection);
         }
 
-        Bukkit.getLogger().info("Selected map: "+selectedMap.getName());
+        Bukkit.getLogger().info("Selected map: " + selectedMap.getName());
 
         if (!WorldLoader.loadNewWorld(selectedMap.getName())) {
             Bukkit.getLogger().severe("Not able to load map");
@@ -122,6 +123,7 @@ public final class Cores extends JavaPlugin {
     public World getWorld() {
         return world;
     }
+
     public void setWorld(World world) {
         this.world = world;
     }

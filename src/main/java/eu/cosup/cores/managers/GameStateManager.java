@@ -11,6 +11,7 @@ public class GameStateManager {
     public GameState getGameState() {
         return gameState;
     }
+
     public enum GameState {
 
         LOADING,

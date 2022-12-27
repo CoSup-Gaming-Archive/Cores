@@ -35,7 +35,7 @@ public class SpectatorCommand implements CommandExecutor {
 
         if (!Game.getGameInstance().getJoinedPlayers().contains(player)) {
 
-            player.sendMessage(ChatColor.YELLOW+"You joined the game.");
+            player.sendMessage(ChatColor.YELLOW + "You joined the game.");
             Game.getGameInstance().getJoinedPlayers().add(player);
             Game.getGameInstance().refreshPlayerCount();
             return true;
@@ -43,7 +43,7 @@ public class SpectatorCommand implements CommandExecutor {
 
         Game.getGameInstance().getJoinedPlayers().remove(player);
         Game.getGameInstance().refreshPlayerCount();
-        player.sendMessage(ChatColor.GRAY+"You are now a spectator");
+        player.sendMessage(ChatColor.GRAY + "You are now a spectator");
 
         return true;
     }
