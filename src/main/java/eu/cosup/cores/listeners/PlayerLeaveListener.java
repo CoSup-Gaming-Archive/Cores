@@ -13,9 +13,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class PlayerLeaveListener implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {
-        Game.getGameInstance().getPlayerList().remove(event.getPlayer());
+        Game game = Game.getGameInstance();
+        
+        game.getPlayerList().remove(event.getPlayer());
         BeaconInformation.update();
-        Game.getGameInstance().getJoinedPlayers().remove(event.getPlayer());
-        Game.getGameInstance().refreshPlayerCount();
+        game.getJoinedPlayers().remove(event.getPlayer());
+        game.refreshPlayerCount();
     }
 }
