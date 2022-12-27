@@ -34,18 +34,20 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     private void prepareEnviroment() {
+        
+        Cores cores = Cores.getInstance();
 
-        Cores.getInstance().getWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-        Cores.getInstance().getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
-        Cores.getInstance().getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        Cores.getInstance().getWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        cores.getWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        cores.getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        cores.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        cores.getWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
 
         // im pretty sure this is right
-        Cores.getInstance().getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
+        cores.getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
 
 
         // qol for builders
-        Cores.getInstance().getWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
+        cores.getWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
 
 
     }
@@ -117,28 +119,30 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     public static void givePlayerTools(Player player) {
+        Cores cores = Cores.getInstance();
 
         int i = 0;
-        for (String itemName : Cores.getInstance().getConfig().getConfigurationSection("hotbar").getKeys(false)) {
+        for (String itemName : cores.getConfig().getConfigurationSection("hotbar").getKeys(false)) {
 
             // this is ugly
             // TODO make this less ugly
-            player.getInventory().setItem(i, new ItemStack(Material.getMaterial(itemName), Cores.getInstance().getConfig().getConfigurationSection("hotbar").getInt(itemName)));
+            player.getInventory().setItem(i, new ItemStack(Material.getMaterial(itemName), cores.getConfig().getConfigurationSection("hotbar").getInt(itemName)));
 
             i++;
         }
     }
 
     public static boolean isItemDefault(Material item) {
+        Cores cores = Cores.getInstance();
 
-        for (String itemName : Cores.getInstance().getConfig().getConfigurationSection("hotbar").getKeys(false)) {
+        for (String itemName : cores.getConfig().getConfigurationSection("hotbar").getKeys(false)) {
 
             if (item == Material.getMaterial(itemName)) {
                 return true;
             }
         }
 
-        for (String inventoryItem : Cores.getInstance().getConfig().getStringList("armor")) {
+        for (String inventoryItem : cores.getConfig().getStringList("armor")) {
 
             if (Material.getMaterial(inventoryItem) == item) {
                 return true;
@@ -148,6 +152,8 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     private void spawnBeacons() {
+
+        Cores cores = Cores.getInstance();
 
         // TODO make this work
 
@@ -160,11 +166,11 @@ public class ActivateGameTask extends BukkitRunnable {
         BlockData beaconBlock = Material.BEACON.createBlockData();
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamBlueBeacons()) {
-            Cores.getInstance().getWorld().setBlockData(location, beaconBlock);
+            cores.getWorld().setBlockData(location, beaconBlock);
         }
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamRedBeacons()) {
-            Cores.getInstance().getWorld().setBlockData(location, beaconBlock);
+            cores.getWorld().setBlockData(location, beaconBlock);
         }
 
         Bukkit.getLogger().info("Spawned beacons");
