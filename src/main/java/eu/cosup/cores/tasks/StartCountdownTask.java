@@ -14,6 +14,7 @@ public class StartCountdownTask extends BukkitRunnable {
 
     private int startCountdown;
     private boolean stopped = false;
+    // TODO: never queried plus potentially final?
     private ArrayList<BukkitTask> countTasks = new ArrayList<>();
 
     public StartCountdownTask() {
