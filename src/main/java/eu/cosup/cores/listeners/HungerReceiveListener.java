@@ -6,10 +6,10 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 
 public class HungerReceiveListener implements Listener {
 
-    // TODO im not so sure this works (im pretty sure it does)
     @EventHandler
     private void onPlayerGetHungry(FoodLevelChangeEvent event) {
-        event.getEntity().setFoodLevel(Integer.MAX_VALUE);
+        // event.getEntity().setFoodLevel(Integer.MAX_VALUE);
+        event.getEntity().setFoodLevel(20); // how about this instead
     }
 
 }
