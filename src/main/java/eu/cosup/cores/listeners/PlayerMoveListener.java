@@ -18,7 +18,10 @@ public class PlayerMoveListener implements Listener {
         if (Game.getGameInstance().getSelectedMap().getDeathHeight() > playerY) {
             // he die
 
-            if (event.getPlayer().getGameMode() != GameMode.CREATIVE && event.getPlayer().getGameMode() != GameMode.SPECTATOR) {
+            if (
+                    event.getPlayer().getGameMode() != GameMode.CREATIVE
+                            && event.getPlayer().getGameMode() != GameMode.SPECTATOR
+            ) {
                 event.getPlayer().setHealth(0);
             }
         }
