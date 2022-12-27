@@ -9,10 +9,11 @@ public class BlockDamageListener implements Listener {
     @EventHandler
     private void onBlockDamage(BlockDamageEvent event) {
 
-        //// TODO implement this properly
-        //if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-        //    event.setCancelled(true);
-        //}
+        // TODO implement this properly
+
+        // if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
+        //     event.setCancelled(true);
+        // }
 
     }
 
