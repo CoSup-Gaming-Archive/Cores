@@ -1,8 +1,10 @@
 package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -54,9 +56,16 @@ public class ScoreBoardManager {
     public void clearObjective() {
         String id = objective.getName();
         Scoreboard scoreboard = objective.getScoreboard();
-        String name = objective.getDisplayName();
+        Component name = objective.displayName();
         objective.unregister();
-        objective = scoreboard.registerNewObjective(id, "dummy", name);
+
+        if (scoreboard == null) {
+            // TODO: Handle this case
+        }
+
+        // TODO: and if the case is handled then remove the following line:
+        assert scoreboard != null;
+        objective = scoreboard.registerNewObjective(id, Criteria.create("dummy"), name);
     }
 }
 
