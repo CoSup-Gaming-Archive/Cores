@@ -87,7 +87,7 @@ public class BlockBreakListener implements Listener {
             // Cores.getInstance().getServer().broadcast(Component.text(msg));
 
             // cheeky way of getting the beacon to not drop anything
-            block.setType(Material.AIR);
+            block.setType(Material.BARRIER);
             event.setCancelled(true);
 
             if (loserTeam.getBeaconCount() <= 0) {
