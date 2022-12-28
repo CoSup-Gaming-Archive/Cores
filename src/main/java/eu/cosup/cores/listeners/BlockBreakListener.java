@@ -7,7 +7,9 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
 import eu.cosup.cores.utility.BlockUtility;
+import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -21,7 +23,6 @@ import java.util.List;
 public class BlockBreakListener implements Listener {
 
 
-    // TODO maybe clean this up a bit
     @EventHandler
     private void onBlockBreak(BlockBreakEvent event) {
 
@@ -46,8 +47,6 @@ public class BlockBreakListener implements Listener {
 
             TeamColor playerTeamColor = gameInstance.getTeamManager().whichTeam(player);
 
-            Bukkit.getLogger().info("beacon: " + beaconTeamColor + "   player: " + playerTeamColor);
-
             if (beaconTeamColor == null || playerTeamColor == null) {
                 event.setCancelled(true);
                 return;
@@ -58,7 +57,6 @@ public class BlockBreakListener implements Listener {
                 // creative players can destroy their own beacons
                 // mostly for testing
                 if (player.getGameMode() != GameMode.CREATIVE) {
-                    player.sendMessage("You cannot break your own beacon you dum dum");
                     event.setCancelled(true);
                     return;
                 }
@@ -66,25 +64,17 @@ public class BlockBreakListener implements Listener {
 
 
             // it was no accident
-
             Team loserTeam = gameInstance.getTeamManager().getTeamByColor(beaconTeamColor);
 
             // minus beacon count
             loserTeam.loseBeacon();
             BeaconInformation.update();
 
-            // KeinOptifine: I converted this to use the new broadcast system in a lazy way using the legacy component
-            // serializer. this means there is still some work to be done: even tho this works i would prefer if we used
-            // up to date standard practice (i know the new component system sucks but were using it anyway). This means
-            // we need to convert this to a component tree using the new kyoris component api.
-
             // broadcast that they lost beacon
-            String msg = TeamColor.getChatColor(loserTeam.getColor()) + "A " + loserTeam.getColor() + " beacon"
-                    + ChatColor.WHITE + " was destroyed";
-            // KeinOptifine: TODO: Convert this initialization to a component tree system
-            Cores.getInstance().getServer().broadcast(LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(msg));
-            // KeinOptifine: TODO: and then use the following instead:
-            // Cores.getInstance().getServer().broadcast(Component.text(msg));
+            Component msg = Component.text().content("A ").color(TextColor.color(ColorUtility.getStdTextColor("yellow")))
+                    .append(Component.text().content("BEACON").color(ColorUtility.getStdTextColor(loserTeam.getColor().toString())))
+                    .append(Component.text().content(" was destroyed!").color(ColorUtility.getStdTextColor("yellow"))).build();
+            Cores.getInstance().getServer().broadcast(msg);
 
             // cheeky way of getting the beacon to not drop anything
             block.setType(Material.BARRIER);
@@ -111,9 +101,5 @@ public class BlockBreakListener implements Listener {
                 return;
             }
         }
-
-        // ? Combine the if statements into one block. I didnt change cus maybe this is WIP
     }
-
-
 }

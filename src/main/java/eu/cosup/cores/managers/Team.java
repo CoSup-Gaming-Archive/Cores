@@ -50,16 +50,4 @@ public class Team {
         }
         return false;
     }
-
-    public void addPlayerToTeam(@NotNull Player player) {
-
-        // this is not necessary because you can just add @NotNull to the parameter
-
-        // if (player == null) {
-        //     throw new NullPointerException("Player was null nonono");
-        // }
-
-        players.add(player);
-
-    }
 }

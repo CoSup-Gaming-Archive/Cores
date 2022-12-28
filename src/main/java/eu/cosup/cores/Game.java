@@ -5,6 +5,8 @@ import eu.cosup.cores.managers.*;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.GameEndTask;
 import eu.cosup.cores.tasks.StartCountdownTask;
+import eu.cosup.cores.utility.ColorUtility;
+import net.kyori.adventure.text.Component;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 
@@ -90,7 +92,7 @@ public class Game {
         // if the game already started
         if (
                 gameStateManager.getGameState() != GameStateManager.GameState.JOINING &&
-                        gameStateManager.getGameState() != GameStateManager.GameState.STARTING
+                gameStateManager.getGameState() != GameStateManager.GameState.STARTING
         ) {
             return;
         }
@@ -100,15 +102,18 @@ public class Game {
             if (Game.gameInstance.gameStateManager.getGameState() == GameStateManager.GameState.STARTING) {
                 Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.JOINING);
 
-                Cores.getInstance().getServer().broadcastMessage(ChatColor.YELLOW + "Stopping!");
+                Component msg = Component.text().content("Stopping!").color(ColorUtility.getStdTextColor("yellow")).build();
+
+                Cores.getInstance().getServer().broadcast(msg);
             }
             // omg teach me proper formatting cuz god dayum this one is ugly
             // KeinOptifine 27.12.22: youre right. dont worry sivtu will create a style guide and we will adapt all the chatmessages when time has come
-            Cores.getInstance().getServer().broadcastMessage(
-                    ChatColor.RED + "Not enough players: (" +
-                            joinedPlayers.size() + "/" +
-                            Cores.getInstance().getConfig().getInt("required-player-count") + ")"
-            );
+            Component msg = Component.text().content("Not enough players: (").color(ColorUtility.getStdTextColor("red"))
+                            .append(Component.text().content(String.valueOf(joinedPlayers.size()))).color(ColorUtility.getStdTextColor("red"))
+                            .append(Component.text().content("/").color(ColorUtility.getStdTextColor("red")))
+                            .append(Component.text().content(String.valueOf(Cores.getInstance().getConfig().getInt("required-player-count"))).color(ColorUtility.getStdTextColor("red"))
+                            .append(Component.text().content(")").color(ColorUtility.getStdTextColor("red")))).build();
+            Cores.getInstance().getServer().broadcast(msg);
             return;
         }
 

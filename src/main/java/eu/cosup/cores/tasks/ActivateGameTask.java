@@ -37,17 +37,17 @@ public class ActivateGameTask extends BukkitRunnable {
         
         Cores cores = Cores.getInstance();
 
-        cores.getWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-        cores.getWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
-        cores.getWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        cores.getWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        cores.getGameWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        cores.getGameWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        cores.getGameWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        cores.getGameWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
 
         // im pretty sure this is right
-        cores.getWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
+        cores.getGameWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
 
 
         // qol for builders
-        cores.getWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
+        cores.getGameWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
 
 
     }
@@ -166,11 +166,11 @@ public class ActivateGameTask extends BukkitRunnable {
         BlockData beaconBlock = Material.BEACON.createBlockData();
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamBlueBeacons()) {
-            cores.getWorld().setBlockData(location, beaconBlock);
+            cores.getGameWorld().setBlockData(location, beaconBlock);
         }
 
         for (Location location : Game.getGameInstance().getSelectedMap().getTeamRedBeacons()) {
-            cores.getWorld().setBlockData(location, beaconBlock);
+            cores.getGameWorld().setBlockData(location, beaconBlock);
         }
 
         Bukkit.getLogger().info("Spawned beacons");

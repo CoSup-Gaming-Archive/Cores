@@ -2,9 +2,13 @@ package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.utility.ColorUtility;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 
@@ -45,10 +49,6 @@ public class BeaconInformation {
 
     public static String getBeaconText(TeamColor teamColor) {
 
-        if (TeamColor.getChatColor(teamColor) == ChatColor.GRAY) {
-            return "";
-        }
-
         StringBuilder displayString = new StringBuilder();
 
         if (teamColor.equals(TeamColor.RED)) {
@@ -56,6 +56,9 @@ public class BeaconInformation {
         }
 
         if (teamColor.equals(TeamColor.BLUE)) {
+            // TODO make component system work for this
+            Component msg = Component.text().content("Blue Beacons: ").color(ColorUtility.getStdTextColor("blue")).build();
+
             displayString = new StringBuilder("&9Blue Beacons: ");
         }
 

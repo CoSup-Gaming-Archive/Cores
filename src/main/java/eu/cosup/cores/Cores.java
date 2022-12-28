@@ -4,6 +4,7 @@ package eu.cosup.cores;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import eu.cosup.cores.commands.ForceStartCommand;
 import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.data.WorldLoader;
@@ -32,7 +33,7 @@ public final class Cores extends JavaPlugin {
 
     private ArrayList<LoadedMap> loadedMaps = new ArrayList<>();
     private Game game;
-    private World world;
+    private World gameWorld;
     private World lobbyWorld;
 
     // earlier than onEnable
@@ -40,7 +41,7 @@ public final class Cores extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        world = Bukkit.getWorlds().get(0);
+        gameWorld = Bukkit.getWorlds().get(0);
         lobbyWorld = Bukkit.getWorld("world_nether");
 
         reloadConfig();
@@ -81,6 +82,8 @@ public final class Cores extends JavaPlugin {
 
         // commands
         Objects.requireNonNull(getCommand("spectate")).setExecutor(new SpectatorCommand());
+        Objects.requireNonNull(getCommand("forcestart")).setExecutor(new ForceStartCommand());
+
     }
 
     public boolean createGame() {
@@ -123,16 +126,16 @@ public final class Cores extends JavaPlugin {
         instance = null;
     }
 
-    public World getWorld() {
-        return world;
+    public World getGameWorld() {
+        return gameWorld;
     }
 
     public World getLobbyWorld() {
         return lobbyWorld;
     }
 
-    public void setWorld(World world) {
-        this.world = world;
+    public void setGameWorld(World gameWorld) {
+        this.gameWorld = gameWorld;
     }
 
     public Game getGame() {

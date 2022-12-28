@@ -74,9 +74,4 @@ public class TeamManager {
         }
         return null;
     }
-
-    // TODO: Unused method. remove or WIP?
-    public void addPlayerToTeam(@NotNull Player player, TeamColor teamColor) {
-        getTeamByColor(teamColor).addPlayerToTeam(player);
-    }
 }

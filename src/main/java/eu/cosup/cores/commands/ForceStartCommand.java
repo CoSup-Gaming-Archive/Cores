@@ -4,6 +4,7 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.StartCountdownTask;
+import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -21,7 +22,7 @@ public class ForceStartCommand implements CommandExecutor {
         }
 
         new StartCountdownTask().runTask(Cores.getInstance());
-        Cores.getInstance().getServer().broadcast(Component.text(sender.getName()+" issued a force start."));
+        Cores.getInstance().getServer().broadcast(Component.text(sender.getName()+" issued a force start.").color(ColorUtility.getStdTextColor("red")));
 
         return true;
     }

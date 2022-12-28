@@ -2,6 +2,8 @@ package eu.cosup.cores.commands;
 
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.utility.ColorUtility;
+import net.kyori.adventure.text.Component;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -16,24 +18,28 @@ public class SpectatorCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
         if (!(sender instanceof Player player)) {
-            sender.sendMessage("only player please");
+            Component msg = Component.text().content("only player please").build();
+            sender.sendMessage(msg);
             return false;
         }
 
         if (Game.getGameInstance() == null) {
-            player.sendMessage("There is no game happening");
+            Component msg = Component.text().content("There is no game happening").color(ColorUtility.getStdTextColor("yellow")).build();
+            player.sendMessage(msg);
             return true;
         }
 
         // creative players can change team
         if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
-            player.sendMessage("You cannot change to spectator mid game");
+            Component msg = Component.text().content("You cannot become spectator mid game").color(ColorUtility.getStdTextColor("red")).build();
+            player.sendMessage(msg);
             return true;
         }
 
         if (!Game.getGameInstance().getJoinedPlayers().contains(player)) {
 
-            player.sendMessage(ChatColor.YELLOW + "You joined the game.");
+            Component msg = Component.text().content("You joined the game").color(ColorUtility.getStdTextColor("yellow")).build();
+            player.sendMessage(msg);
             Game.getGameInstance().getJoinedPlayers().add(player);
             Game.getGameInstance().refreshPlayerCount();
             return true;
@@ -41,7 +47,8 @@ public class SpectatorCommand implements CommandExecutor {
 
         Game.getGameInstance().getJoinedPlayers().remove(player);
         Game.getGameInstance().refreshPlayerCount();
-        player.sendMessage(ChatColor.GRAY + "You are now a spectator");
+        Component msg = Component.text().content("You are now a spectator").color(ColorUtility.getStdTextColor("gray")).build();
+        player.sendMessage(msg);
 
         return true;
     }

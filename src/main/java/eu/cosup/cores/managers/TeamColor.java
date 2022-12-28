@@ -1,5 +1,6 @@
 package eu.cosup.cores.managers;
 
+import eu.cosup.cores.utility.ColorUtility;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 
@@ -9,19 +10,15 @@ public enum TeamColor {
     RED,
     BLUE;
 
-    public static ChatColor getChatColor(TeamColor teamColor) {
-        return ChatColor.valueOf(teamColor.toString());
-    }
-
     // cheeky way maybe there is a better method
     public static Color getColor(TeamColor teamColor) {
 
         if (teamColor == TeamColor.RED) {
-            return Color.fromRGB(240, 36, 63);
+            return ColorUtility.getStdColor("red");
         }
 
         if (teamColor == TeamColor.BLUE) {
-            return Color.fromRGB(50, 79, 227);
+            return ColorUtility.getStdColor("blue");
         }
         return Color.GRAY;
     }

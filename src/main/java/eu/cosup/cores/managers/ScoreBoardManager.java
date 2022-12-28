@@ -48,13 +48,11 @@ public class ScoreBoardManager {
         displayStrings.add(item);
     }
 
-    // TODO: Return value of this method is never used. Remove it?
-    public Objective getObjective() {
+    public void getObjective() {
         int displayStringCount = displayStrings.size() - 1;
         for (int i = 0; i < displayStrings.size(); i++) {
             this.objective.getScore(displayStrings.get(i)).setScore(displayStringCount - i);
         }
-        return objective;
     }
 
     public void clearObjective() {

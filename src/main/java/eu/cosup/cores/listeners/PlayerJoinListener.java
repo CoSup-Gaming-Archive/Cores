@@ -5,6 +5,8 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.TeamColor;
+import eu.cosup.cores.utility.ColorUtility;
+import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -32,13 +34,17 @@ public class PlayerJoinListener implements Listener {
 
             if (playerTeam == null) {
 
-                event.getPlayer().sendMessage(ChatColor.RED + "You joined as spectator since there are enough players already!");
+                Component msg = Component.text().content("You joined as spectator since the game already started").color(ColorUtility.getStdTextColor("red")).build();
+                event.getPlayer().sendMessage(msg);
                 event.getPlayer().setGameMode(GameMode.SPECTATOR);
                 event.getPlayer().teleport(game.getSelectedMap().getSpectatorSpawn());
                 return;
             }
 
-            event.getPlayer().sendMessage(TeamColor.getChatColor(playerTeam) + "You joined as " + playerTeam);
+            Component msg = Component.text().content("You joined as").color(ColorUtility.getStdTextColor("yellow"))
+                            .append(Component.text().content(playerTeam.toString()).color(ColorUtility.getStdTextColor(playerTeam.toString()))).build();
+            event.getPlayer().sendMessage(msg);
+
             event.getPlayer().setHealth(0);
             return;
         }
@@ -46,11 +52,11 @@ public class PlayerJoinListener implements Listener {
         if (game.getJoinedPlayers().size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
             game.getJoinedPlayers().add(event.getPlayer());
             game.refreshPlayerCount();
-            event.getPlayer().sendMessage(ChatColor.YELLOW + "You joined!");
             // idk if this is good code but whatever
         } else {
             // the player will join as spectator
-            event.getPlayer().sendMessage(ChatColor.RED + "You joined as spectator since there are enough players already!");
+            Component msg = Component.text().content("You joined as spectator since there are already enough players in the game").color(ColorUtility.getStdTextColor("yellow")).build();
+            event.getPlayer().sendMessage(msg);
         }
 
         event.getPlayer().setGameMode(GameMode.SPECTATOR);

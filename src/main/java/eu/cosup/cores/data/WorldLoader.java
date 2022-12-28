@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
+import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.generator.BlockPopulator;
 import org.bukkit.util.FileUtil;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +32,9 @@ public class WorldLoader {
         } catch (IOException exception) {
             exception.printStackTrace();
             Bukkit.getLogger().severe("Couldnt delete directory");
-            return false;
         }
 
         try {
-            // not good to write directory out like this
-            // get it through a function
             FileUtils.copyDirectory(new File("plugins/Cores/maps/" + name), new File("world"));
         } catch (IOException exception) {
             Bukkit.getLogger().severe("Couldnt copy the folder from maps directory now you should probably worry because this is really bad.");
@@ -44,9 +42,8 @@ public class WorldLoader {
             return false;
         }
 
-        World world = Bukkit.createWorld(new WorldCreator("world"));
-
-        Cores.getInstance().setWorld(world);
+        World world = Bukkit.createWorld(new WorldCreator("world").environment(World.Environment.CUSTOM));
+        Cores.getInstance().setGameWorld(world);
 
         Bukkit.getLogger().info("Loaded: " + name);
         return true;
