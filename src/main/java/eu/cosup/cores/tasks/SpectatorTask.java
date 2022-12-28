@@ -1,19 +1,15 @@
 package eu.cosup.cores.tasks;
 
-import com.destroystokyo.paper.Title;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.TeamColor;
 import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
-import net.md_5.bungee.api.chat.BaseComponent;
+import net.kyori.adventure.title.Title;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -36,8 +32,6 @@ public class SpectatorTask extends BukkitRunnable {
 
     @Override
     public void run() {
-
-        player.sendTitle(new Title(ChatColor.RED+"You died"));
 
         if (killer instanceof Player killerPlayer) {
             killerPlayer.playSound(killer.getLocation(), Sound.BLOCK_GILDED_BLACKSTONE_HIT, 1, 3);
@@ -63,10 +57,15 @@ public class SpectatorTask extends BukkitRunnable {
                 public void run() {
                     player.clearTitle();
                     // TODO make this work for title
-                    Component msg = Component.text().content("Respawning in" ).color(ColorUtility.getStdTextColor("red"))
+                    Component msg = Component.text().content("Respawning in " ).color(ColorUtility.getStdTextColor("red"))
                             .append(Component.text().content(String.valueOf(Cores.getInstance().getConfig().getInt("respawn-delay")-finalI))).build();
 
-                    player.sendTitle(new Title(ChatColor.RED+"Respawning in "+(Cores.getInstance().getConfig().getInt("respawn-delay") - finalI)));
+                    // Creates a simple title with the default values for fade-in, stay on screen and fade-out durations
+                    Title title = Title.title(msg, Component.text().build());
+
+                    // Send the title to your audience
+                    player.showTitle(title);
+
                     player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_STEP, 1, finalI);
                 }
             }.runTaskLater(Cores.getInstance(), i*20L);
