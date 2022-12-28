@@ -72,7 +72,7 @@ public class BeaconInformation {
         displayString.append("&a\u2714".repeat(Math.max(0, beaconCount)));
 
         // this is the ✖ symbol
-        displayString.append("&c\u2716".repeat(Math.max(0, missingBeaconCount)));
+        displayString.append("&7\u2716".repeat(Math.max(0, missingBeaconCount)));
 
         return displayString.toString();
     }
