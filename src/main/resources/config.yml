@@ -4,6 +4,11 @@ start-countdown : 5
 respawn-delay : 5
 return-to-lobby-delay : 60
 spawn-protection-distance : 5
+std-colors :
+  std-red : "255,66,66"
+  std-blue : "61,58,232"
+  std-yellow : "255,246,82"
+  std-gray : "112,112,112"
 
 armor : ["LEATHER_BOOTS", "LEATHER_LEGGINGS", "LEATHER_CHESTPLATE", "LEATHER_HELMET"]
 hotbar :
