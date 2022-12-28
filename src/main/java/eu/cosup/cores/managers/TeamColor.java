@@ -17,11 +17,11 @@ public enum TeamColor {
     public static Color getColor(TeamColor teamColor) {
 
         if (teamColor == TeamColor.RED) {
-            return Color.RED;
+            return Color.fromRGB(240, 36, 63);
         }
 
         if (teamColor == TeamColor.BLUE) {
-            return Color.BLUE;
+            return Color.fromRGB(50, 79, 227);
         }
         return Color.GRAY;
     }
