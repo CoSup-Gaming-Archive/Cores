@@ -4,4 +4,6 @@ main: eu.cosup.cores.Cores
 api-version: 1.19
 commands:
   spectate:
-    aliases: /sp
+    aliases: sp
+  forcestart:
+    aliases: fs

@@ -33,6 +33,7 @@ public final class Cores extends JavaPlugin {
     private ArrayList<LoadedMap> loadedMaps = new ArrayList<>();
     private Game game;
     private World world;
+    private World lobbyWorld;
 
     // earlier than onEnable
     @Override
@@ -40,6 +41,7 @@ public final class Cores extends JavaPlugin {
         instance = this;
 
         world = Bukkit.getWorlds().get(0);
+        lobbyWorld = Bukkit.getWorld("world_nether");
 
         reloadConfig();
         getConfig().options().copyDefaults(true);
@@ -123,6 +125,10 @@ public final class Cores extends JavaPlugin {
 
     public World getWorld() {
         return world;
+    }
+
+    public World getLobbyWorld() {
+        return lobbyWorld;
     }
 
     public void setWorld(World world) {
