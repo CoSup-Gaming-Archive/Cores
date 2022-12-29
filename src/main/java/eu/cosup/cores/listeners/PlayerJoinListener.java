@@ -4,6 +4,7 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.managers.NameTagEditor;
 import eu.cosup.cores.managers.TeamColor;
 import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
@@ -24,7 +25,8 @@ public class PlayerJoinListener implements Listener {
         
         game.getPlayerList().add(event.getPlayer());
         BeaconInformation.update();
-
+        NameTagEditor nameTagEditor = new NameTagEditor(event.getPlayer());
+        nameTagEditor.setNameColor(ChatColor.GRAY).setPrefix("Spectator ").setTabName(ChatColor.translateAlternateColorCodes('&', "&7"+event.getPlayer().getName()));
 
         // if game has already started
         if (game.getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {

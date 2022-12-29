@@ -77,6 +77,7 @@ public final class Cores extends JavaPlugin {
         Objects.requireNonNull(getCommand("spectate")).setExecutor(new SpectatorCommand());
         Objects.requireNonNull(getCommand("forcestart")).setExecutor(new ForceStartCommand());
 
+
     }
 
     public boolean createGame() {
