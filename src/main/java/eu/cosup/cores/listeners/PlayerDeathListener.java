@@ -4,6 +4,7 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.PlayerDamageManager;
+import eu.cosup.cores.managers.TeamManager;
 import eu.cosup.cores.tasks.SpectatorTask;
 import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
@@ -46,6 +47,11 @@ public class PlayerDeathListener implements Listener {
         }
 
         Player killer = PlayerDamageManager.getPlayerLastDamage(event.getPlayer());
+
+        // same as before no null pointer exeptions
+        if (Game.getGameInstance().getTeamManager().whichTeam(killer) == null) {
+            killer = null;
+        }
 
         TextComponent.Builder killerText = Component.text().content(player.getName()).color(ColorUtility.getStdTextColor(Game.getGameInstance().getTeamManager().whichTeam(player).toString()));
 
