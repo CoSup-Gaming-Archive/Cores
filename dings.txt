@@ -1,0 +1,5 @@
+TODO:
+- Countdown titles for Respawning
+- Lighter colors
+- Does the game end if the Beacon is broken or only if also the team is killed?
+- Beacon breaking time?

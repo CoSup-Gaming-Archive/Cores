@@ -22,5 +22,15 @@ public enum TeamColor {
         }
         return Color.GRAY;
     }
+    public static ChatColor getChatColor(TeamColor teamColor){
+        if (teamColor == TeamColor.RED) {
+            return ChatColor.RED;
+        }
+
+        if (teamColor == TeamColor.BLUE) {
+            return ChatColor.BLUE;
+        }
+        return ChatColor.GRAY;
+    }
 }
 

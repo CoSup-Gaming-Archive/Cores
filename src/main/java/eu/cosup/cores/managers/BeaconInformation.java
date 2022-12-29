@@ -18,7 +18,8 @@ public class BeaconInformation {
     public static void update() {
 
         Component header = Component.text().content("Cosup Gaming").build();
-        Component footer = (Component.text().content("Blue beacons: ").color(ColorUtility.getStdTextColor("blue")))
+        Component footer = (Component.text().content("\n"))
+                .append((Component.text().content("Blue beacons: ").color(ColorUtility.getStdTextColor("blue"))))
                 .append(Component.text().content(getAliveSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("green")))
                 .append(Component.text().content(getDeadSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("gray")))
 
@@ -43,11 +44,11 @@ public class BeaconInformation {
         scoreBoardManager.addItem(Component.text().content(" ").build());
         scoreBoardManager.addItem(Component.text().content("Blue beacons: ").color(ColorUtility.getStdTextColor("blue"))
                 .append(Component.text().content(getAliveSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("green")))
-                .append(Component.text().content(getDeadSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("red")))
+                .append(Component.text().content(getDeadSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("gray")))
                 .build());
         scoreBoardManager.addItem(Component.text().content("Red beacons: ").color(ColorUtility.getStdTextColor("red"))
                 .append(Component.text().content(getAliveSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("green")))
-                .append(Component.text().content(getDeadSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("red")))
+                .append(Component.text().content(getDeadSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("gray")))
                 .build());
 
         scoreBoardManager.addItem(Component.text().content(" ").build());

@@ -4,6 +4,8 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.BeaconInformation;
 import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.managers.NameTagEditor;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -14,7 +16,10 @@ public class PlayerLeaveListener implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {
         Game game = Game.getGameInstance();
-        
+        NameTagEditor nameTagEditor = new NameTagEditor(event.getPlayer());
+        nameTagEditor.setNameColor(ChatColor.RESET).setPrefix("").setTabName(event.getPlayer().getName());
+
+
         game.getPlayerList().remove(event.getPlayer());
         BeaconInformation.update();
         game.getJoinedPlayers().remove(event.getPlayer());

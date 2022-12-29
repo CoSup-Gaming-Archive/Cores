@@ -3,6 +3,7 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.BeaconInformation;
+import eu.cosup.cores.managers.NameTagEditor;
 import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
@@ -60,7 +61,9 @@ public class ActivateGameTask extends BukkitRunnable {
 
     // ooo so juicy
     public static void preparePlayerFull(Player player) {
-
+        TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
+        NameTagEditor nameTagEditor = new NameTagEditor(player);
+        nameTagEditor.setNameColor(TeamColor.getChatColor(teamColor)).setPrefix(teamColor.toString()+" ").setTabName(TeamColor.getChatColor(teamColor)+player.getName()).setChatName((TeamColor.getChatColor(teamColor)+player.getName()));
         preparePlayerStats(player);
         givePlayerArmor(player);
         givePlayerTools(player);
