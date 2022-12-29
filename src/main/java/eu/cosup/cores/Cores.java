@@ -64,7 +64,6 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
         getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
 
