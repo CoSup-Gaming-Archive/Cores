@@ -5,6 +5,7 @@ import eu.cosup.cores.managers.PlayerDamageManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,6 +17,11 @@ public class EntityDamageByEntityListener implements Listener {
     private void onEntityDamageEntity(EntityDamageByEntityEvent event) {
 
         if (!(event.getDamager() instanceof Player)) {
+            return;
+        }
+
+        // creative players can hit anyone
+        if (((Player) event.getDamager()).getGameMode() == GameMode.CREATIVE) {
             return;
         }
 
