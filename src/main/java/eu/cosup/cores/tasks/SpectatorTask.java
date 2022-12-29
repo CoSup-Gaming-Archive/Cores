@@ -17,31 +17,14 @@ import org.bukkit.util.Vector;
 
 public class SpectatorTask extends BukkitRunnable {
 
-    // final?
-    private Player player;
-    private Entity killer;
+    private final Player player;
 
     public SpectatorTask(Player player) {
         this.player = player;
-        if (player.getLastDamageCause() == null) {
-            killer = player;
-            return;
-        }
-        killer = player.getLastDamageCause().getEntity();
     }
 
     @Override
     public void run() {
-
-        if (killer instanceof Player killerPlayer) {
-            killerPlayer.playSound(killer.getLocation(), Sound.BLOCK_GILDED_BLACKSTONE_HIT, 1, 3);
-
-        }
-
-        Cores.getInstance().getServer().sendMessage(Component.text().
-                content(player.getName()).color(ColorUtility.getStdTextColor("red"))
-                .append(Component.text().content(" was killed by ").color(ColorUtility.getStdTextColor("yellow")))
-                .append(Component.text().content(killer.getName())).color(ColorUtility.getStdTextColor("red")));
 
         TeamColor team = Game.getGameInstance().getTeamManager().whichTeam(player);
         player.setGameMode(GameMode.SPECTATOR);
@@ -59,10 +42,8 @@ public class SpectatorTask extends BukkitRunnable {
                     Component msg = Component.text().content("Respawning in " ).color(ColorUtility.getStdTextColor("red"))
                             .append(Component.text().content(String.valueOf(Cores.getInstance().getConfig().getInt("respawn-delay")-finalI))).build();
 
-                    // Creates a simple title with the default values for fade-in, stay on screen and fade-out durations
                     Title title = Title.title(msg, Component.text().build());
 
-                    // Send the title to your audience
                     player.showTitle(title);
 
                     player.playSound(player.getLocation(), Sound.BLOCK_AMETHYST_BLOCK_STEP, 1, finalI);
