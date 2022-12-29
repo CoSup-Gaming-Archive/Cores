@@ -7,7 +7,9 @@ import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.data.WorldLoader;
 import eu.cosup.cores.listeners.*;
+import eu.cosup.cores.managers.NameTagEditor;
 import org.bukkit.*;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -118,6 +120,10 @@ public final class Cores extends JavaPlugin {
     @Override
     public void onDisable() {
         instance = null;
+        for (Player player: Game.getGameInstance().getPlayerList()){
+            NameTagEditor nameTagEditor = new NameTagEditor(player);
+            nameTagEditor.setNameColor(ChatColor.RESET).setPrefix("").setTabName(player.getName());
+        }
     }
 
     public World getGameWorld() {
