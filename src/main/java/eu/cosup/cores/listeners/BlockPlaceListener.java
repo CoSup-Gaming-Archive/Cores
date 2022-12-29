@@ -60,5 +60,20 @@ public class BlockPlaceListener implements Listener {
             event.getPlayer().sendMessage(msg);
             return;
         }
+
+        if (event.getBlock().getLocation().getBlockX() > Game.getGameInstance().getSelectedMap().getxMax() ||
+            event.getBlock().getLocation().getBlockX() < Game.getGameInstance().getSelectedMap().getxMin()) {
+
+            event.setCancelled(true);
+            return;
+        }
+
+        if (event.getBlock().getLocation().getBlockZ() > Game.getGameInstance().getSelectedMap().getzMax() ||
+            event.getBlock().getLocation().getBlockZ() < Game.getGameInstance().getSelectedMap().getzMin()) {
+
+            event.setCancelled(true);
+            return;
+        }
+
     }
 }

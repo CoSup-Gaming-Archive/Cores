@@ -2,6 +2,10 @@ TestMap:
   maxHeight: 89
   minHeight: 76
   deathHeight: 76
+  xMin: -95
+  xMax: 256
+  zMin: 224
+  zMax: 289
   teamBlueSpawns:
     ==: org.bukkit.Location
     world: world

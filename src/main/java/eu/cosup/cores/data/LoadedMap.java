@@ -20,22 +20,28 @@ public class LoadedMap {
 
     // object for the loaded map
 
-    private String name;
-    private ArrayList<Location> teamBlueBeacons;
-    private ArrayList<Location> teamRedBeacons;
-    private Location spectatorSpawn;
+    private final String name;
+    private final ArrayList<Location> teamBlueBeacons;
+    private final ArrayList<Location> teamRedBeacons;
+    private final Location spectatorSpawn;
 
     // these heighs are how high and how low players can place blocks
-    private int maxHeight;
-    private int minHeight;
+    private final int maxHeight;
+    private final int minHeight;
 
     // we dont want to players to fall down too much
-    private int deathHeight;
+    private final int deathHeight;
 
-    private Location teamBlueSpawns;
-    private Location teamRedSpawns;
+    private final Location teamBlueSpawns;
+    private final Location teamRedSpawns;
 
-    public LoadedMap(String name, ArrayList<Location> teamBlueBeacons, ArrayList<Location> teamRedBeacons, Location teamBlueSpawns, Location teamRedSpawns, Location spectatorSpawn, int maxHeight, int minHeight, int deathHeight) {
+    private final int xMax;
+    private final int xMin;
+    private final int zMax;
+    private final int zMin;
+
+    public LoadedMap(String name, ArrayList<Location> teamBlueBeacons, ArrayList<Location> teamRedBeacons, Location teamBlueSpawns, Location teamRedSpawns, Location spectatorSpawn, int maxHeight, int minHeight, int deathHeight
+                    , int xMax, int xMin, int zMax, int zMin) {
 
         // TODO add a rotation aswell so players spawn facing determined location
 
@@ -48,6 +54,10 @@ public class LoadedMap {
         this.maxHeight = maxHeight;
         this.minHeight = minHeight;
         this.deathHeight = deathHeight;
+        this.xMax = xMax;
+        this.xMin = xMin;
+        this.zMax = zMax;
+        this.zMin = zMin;
     }
 
     public String getName() {
@@ -103,6 +113,22 @@ public class LoadedMap {
         beaconLocations.addAll(getTeamRedBeacons());
 
         return beaconLocations;
+    }
+
+    public int getxMax() {
+        return xMax;
+    }
+
+    public int getxMin() {
+        return xMin;
+    }
+
+    public int getzMax() {
+        return zMax;
+    }
+
+    public int getzMin() {
+        return zMin;
     }
 
     // returns the team that the beacon belongs to
@@ -172,6 +198,10 @@ public class LoadedMap {
 
         customConfig.set(name + ".spectatorSpawn", spectatorSpawn);
 
+        customConfig.set(name + ".xMax", xMax);
+        customConfig.set(name + ".zMax", zMax);
+        customConfig.set(name + ".zMin", zMin);
+        customConfig.set(name + ".xMin", xMin);
 
         try {
             customConfig.save(configFile);
@@ -246,6 +276,16 @@ public class LoadedMap {
             return null;
         }
 
+        int xMax = customConfig.getInt(name + ".xMax");
+        int zMax = customConfig.getInt(name + ".zMax");
+        int zMin = customConfig.getInt(name + ".zMin");
+        int xMin = customConfig.getInt(name + ".xMin");
+
+        if (xMax == xMin || zMax == zMin) {
+            Bukkit.getLogger().severe("Acording to your configuration for "+name+" players not by able to place blocks anywhere");
+            Bukkit.getLogger().severe("Make sure you have the correct version of maps.yml (check in repository)");
+        }
+
         return new LoadedMap(
                 name,
                 teamBlueBeacons,
@@ -255,7 +295,11 @@ public class LoadedMap {
                 spectatorSpawn,
                 maxHeight,
                 minHeight,
-                deathHeight
+                deathHeight,
+                xMax,
+                xMin,
+                zMax,
+                zMin
         );
     }
 

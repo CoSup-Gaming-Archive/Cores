@@ -2,21 +2,14 @@ package eu.cosup.cores;
 
 // TODO remove unused imports in all of the files
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import eu.cosup.cores.commands.ForceStartCommand;
 import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.data.WorldLoader;
 import eu.cosup.cores.listeners.*;
-import eu.cosup.cores.managers.ScoreBoardManager;
 import org.bukkit.*;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scoreboard.DisplaySlot;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -41,7 +34,7 @@ public final class Cores extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        gameWorld = Bukkit.getWorlds().get(0);
+        gameWorld = Bukkit.getWorld("world");
         lobbyWorld = Bukkit.getWorld("world_nether");
 
         reloadConfig();
