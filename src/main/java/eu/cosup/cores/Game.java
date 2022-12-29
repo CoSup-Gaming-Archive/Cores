@@ -56,10 +56,8 @@ public class Game {
 
         BeaconInformation.update();
 
+        // this really just a useless state
         gameStateManager.setGameState(GameStateManager.GameState.LOADING);
-
-        // TODO load maps here
-        // then switch to joining
 
         gameStateManager.setGameState(GameStateManager.GameState.JOINING);
     }

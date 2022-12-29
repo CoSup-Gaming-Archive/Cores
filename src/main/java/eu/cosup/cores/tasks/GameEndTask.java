@@ -16,8 +16,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameEndTask extends BukkitRunnable {
 
-    // TODO: final or WIP?
-    private TeamColor winner;
+    private final TeamColor winner;
 
     public GameEndTask(TeamColor winner) {
 
@@ -47,9 +46,6 @@ public class GameEndTask extends BukkitRunnable {
             }
 
         }
-
-        // KeinOptifine: TODO: same as in the other places: dont use deprecated methods and convert this to a component
-        // tree using kyoris adventure component api
 
         Component msg = Component.text().content(winner.toString()).color(ColorUtility.getStdTextColor(winner.toString()))
                 .append(Component.text().content(" is the winner!").color(ColorUtility.getStdTextColor("yellow"))).build();

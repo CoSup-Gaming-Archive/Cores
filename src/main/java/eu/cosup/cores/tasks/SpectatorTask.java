@@ -56,7 +56,6 @@ public class SpectatorTask extends BukkitRunnable {
                 @Override
                 public void run() {
                     player.clearTitle();
-                    // TODO make this work for title
                     Component msg = Component.text().content("Respawning in " ).color(ColorUtility.getStdTextColor("red"))
                             .append(Component.text().content(String.valueOf(Cores.getInstance().getConfig().getInt("respawn-delay")-finalI))).build();
 

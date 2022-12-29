@@ -10,8 +10,7 @@ public class Team {
     ArrayList<Player> players;
     private final TeamColor color;
     private int beaconCount;
-    // TODO: final?
-    private int maxBeaconCount;
+    private final int maxBeaconCount;
 
     public Team(TeamColor teamColor, ArrayList<Player> players, int beaconCount) {
         this.players = players;

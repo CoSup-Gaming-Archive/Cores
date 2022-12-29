@@ -2,7 +2,11 @@ package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Criteria;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -16,13 +20,20 @@ import java.util.Map;
 public class ScoreBoardManager {
 
     private Objective objective;
-    ArrayList<String> displayStrings = new ArrayList<>();
+
+    private String name;
+    ArrayList<Component> displayStrings = new ArrayList<>();
 
     public ScoreBoardManager(String name) {
         if (name.length() == 0) {
             return;
         }
 
+        this.name = name;
+        registerScoreBoard(name);
+    }
+
+    private void registerScoreBoard(String name) {
         try {
             // try registering the objective
             this.objective = Cores.getInstance().getServer().getScoreboardManager().getMainScoreboard().registerNewObjective(
@@ -44,14 +55,20 @@ public class ScoreBoardManager {
         objective.setDisplaySlot(displaySlot);
     }
 
-    public void addItem(String item) {
-        displayStrings.add(item);
+    public void addItem(Component component) {
+        displayStrings.add(component);
     }
 
     public void getObjective() {
         int displayStringCount = displayStrings.size() - 1;
         for (int i = 0; i < displayStrings.size(); i++) {
-            this.objective.getScore(displayStrings.get(i)).setScore(displayStringCount - i);
+
+            Component displayComponent = displayStrings.get(i);
+
+            // we are using hex even though it is not really acurate.
+            String displayText = LegacyComponentSerializer.legacy(LegacyComponentSerializer.HEX_CHAR).serialize(displayComponent);
+
+            this.objective.getScore(ChatColor.translateAlternateColorCodes('#', displayText)).setScore(displayStringCount - i);
         }
     }
 
@@ -62,10 +79,10 @@ public class ScoreBoardManager {
         objective.unregister();
 
         if (scoreboard == null) {
-            // TODO: Handle this case
+            registerScoreBoard(this.name);
         }
 
-        // TODO: and if the case is handled then remove the following line:
+        // TODO idk if this works so i kept the assert
         assert scoreboard != null;
         objective = scoreboard.registerNewObjective(id, Criteria.create("dummy"), name);
     }

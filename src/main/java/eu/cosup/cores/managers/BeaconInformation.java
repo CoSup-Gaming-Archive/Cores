@@ -17,66 +17,78 @@ import javax.annotation.Nullable;
 public class BeaconInformation {
     public static void update() {
 
+        Component header = Component.text().content("Cosup Gaming").build();
+        Component footer = (Component.text().content("Blue beacons: ").color(ColorUtility.getStdTextColor("blue")))
+                .append(Component.text().content(getAliveSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("green")))
+                .append(Component.text().content(getDeadSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("gray")))
+
+                .append(Component.text().content("\n"))
+
+                .append(Component.text().content("Red beacons: ").color(ColorUtility.getStdTextColor("red")))
+                .append(Component.text().content(getAliveSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("green")))
+                .append(Component.text().content(getDeadSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("gray")))
+
+                .build();
+
         // player list
-        for (Player p : Cores.getInstance().getServer().getOnlinePlayers()) {
-
-            // KeinOptifine: This has the same problem as the other thing:
-            // definetley convert this to a component tree using the new kyori Component system
-
-            String header = ChatColor.translateAlternateColorCodes('&', "&l&6CoSup&b Gaming");
-            String footer = ChatColor.translateAlternateColorCodes('&', "\n" + getBeaconText(TeamColor.BLUE) + "\n" + getBeaconText(TeamColor.RED) + "\n\n&bCores");
-
-
-            p.sendPlayerListHeaderAndFooter(
-                    LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(header),
-                    LegacyComponentSerializer.legacy(ChatColor.COLOR_CHAR).deserialize(footer)
-            );
+        for (Player player : Cores.getInstance().getServer().getOnlinePlayers()) {
+            player.sendPlayerListHeaderAndFooter(header, footer);
         }
 
         // scoreboard
         ScoreBoardManager scoreBoardManager = new ScoreBoardManager("beacons");
         scoreBoardManager.clearObjective();
         scoreBoardManager.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&bCores"));
-        scoreBoardManager.addItem("");
-        scoreBoardManager.addItem(ChatColor.translateAlternateColorCodes('&', getBeaconText(TeamColor.BLUE)));
-        scoreBoardManager.addItem(ChatColor.translateAlternateColorCodes('&', getBeaconText(TeamColor.RED)));
-        scoreBoardManager.addItem("");
-        scoreBoardManager.addItem(ChatColor.translateAlternateColorCodes('&', "   &6CoSup &bGaming"));
+
+        scoreBoardManager.addItem(Component.text().content(" ").build());
+        scoreBoardManager.addItem(Component.text().content("Blue beacons: ").color(ColorUtility.getStdTextColor("blue"))
+                .append(Component.text().content(getAliveSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("green")))
+                .append(Component.text().content(getDeadSymbols(TeamColor.BLUE)).color(ColorUtility.getStdTextColor("red")))
+                .build());
+        scoreBoardManager.addItem(Component.text().content("Red beacons: ").color(ColorUtility.getStdTextColor("red"))
+                .append(Component.text().content(getAliveSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("green")))
+                .append(Component.text().content(getDeadSymbols(TeamColor.RED)).color(ColorUtility.getStdTextColor("red")))
+                .build());
+
+        scoreBoardManager.addItem(Component.text().content(" ").build());
+        scoreBoardManager.addItem(Component.text().content("CoSup Gaming").color(ColorUtility.getStdTextColor("gray")).build());
         scoreBoardManager.setSlot(DisplaySlot.SIDEBAR);
         scoreBoardManager.getObjective();
 
     }
 
-    public static String getBeaconText(TeamColor teamColor) {
-
-        StringBuilder displayString = new StringBuilder();
-
-        if (teamColor.equals(TeamColor.RED)) {
-            displayString = new StringBuilder("&cRed Beacons: ");
-        }
-
-        if (teamColor.equals(TeamColor.BLUE)) {
-            // TODO make component system work for this
-            Component msg = Component.text().content("Blue Beacons: ").color(ColorUtility.getStdTextColor("blue")).build();
-
-            displayString = new StringBuilder("&9Blue Beacons: ");
-        }
+    // i cannot be bothered to chage this again.
+    private static String getAliveSymbols(TeamColor teamColor) {
+        StringBuilder aliveSymbols = new StringBuilder();
 
         // we dont want null errors
         if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
-            return displayString.toString();
+            return "";
+        }
+
+        int beaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getBeaconCount();
+
+        // this is the ✔ symbol
+        aliveSymbols.append("\u2714".repeat(Math.max(0, beaconCount)));
+
+        return aliveSymbols.toString();
+    }
+
+    private static String getDeadSymbols(TeamColor teamColor) {
+        StringBuilder deadSymbols = new StringBuilder();
+
+        // we dont want null errors
+        if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
+            return "";
         }
 
         int beaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getBeaconCount();
         int maxBeaconCount = Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getMaxBeaconCount();
         int missingBeaconCount = maxBeaconCount - beaconCount;
 
-        // this is the ✔ symbol
-        displayString.append("&a\u2714".repeat(Math.max(0, beaconCount)));
-
         // this is the ✖ symbol
-        displayString.append("&7\u2716".repeat(Math.max(0, missingBeaconCount)));
+        deadSymbols.append("\u2716".repeat(Math.max(0, missingBeaconCount)));
 
-        return displayString.toString();
+        return deadSymbols.toString();
     }
 }
