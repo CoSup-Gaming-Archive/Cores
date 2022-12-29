@@ -19,7 +19,6 @@ public class ColorUtility {
             if (string.contains(colorName.toLowerCase())) {
 
                 Color color = getColorFromString(configurationSection.getString(string));
-                TextColor.fromCSSHexString("\\u00A76");
                 return TextColor.color(color.getRed(), color.getGreen(), color.getBlue());
 
             }
@@ -57,6 +56,5 @@ public class ColorUtility {
 
         return Color.BLACK;
     }
-
 }
 

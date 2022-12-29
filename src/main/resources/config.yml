@@ -8,8 +8,8 @@ respawn-delay : 5
 return-to-lobby-delay : 60
 spawn-protection-distance : 5
 std-colors :
-  std-red : "255,66,66"
-  std-blue : "61,58,232"
+  std-red : "255,102,102"
+  std-blue : "102,130,255"
   std-yellow : "255,246,82"
   std-gray : "112,112,112"
   std-green : "70,207,77"
