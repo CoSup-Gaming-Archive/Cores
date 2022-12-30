@@ -24,6 +24,8 @@ public class PlayerInteractListener implements Listener {
         }
 
         event.getPlayer().removePotionEffect(PotionEffectType.SLOW_DIGGING);
+        event.getPlayer().removePotionEffect(PotionEffectType.FAST_DIGGING);
+
 
         if (event.getClickedBlock() == null) {
             return;
@@ -39,8 +41,9 @@ public class PlayerInteractListener implements Listener {
                     return;
                 }
 
-                // add fatigue
                 event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, 1, false, false, false));
+                event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 2, false, false, false));
+
                 return;
             }
 
