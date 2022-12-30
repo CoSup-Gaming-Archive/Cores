@@ -28,6 +28,8 @@ public class GameEndTask extends BukkitRunnable {
         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ENDING);
         Team winnerTeam = Game.getGameInstance().getTeamManager().getTeamByColor(winner);
 
+        GameTimerTask.getInstance().cancelTimer();
+
         for (Player player : winnerTeam.getPlayers()) {
 
             Location playerLocation = player.getLocation();

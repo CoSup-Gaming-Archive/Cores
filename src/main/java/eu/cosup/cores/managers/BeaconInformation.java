@@ -2,6 +2,7 @@ package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.tasks.GameTimerTask;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.ChatColor;
@@ -46,10 +47,33 @@ public class BeaconInformation {
                 .build());
 
         scoreBoardManager.addItem(Component.text().content(" ").build());
-        scoreBoardManager.addItem(Component.text().content("CoSup Gaming").color(ColorUtility.getStdTextColor("gray")).build());
+        scoreBoardManager.addItem(Component.text().content(" ").build());
+
+        scoreBoardManager.addItem(Component.text().content(getFormattedTime()).color(NamedTextColor.YELLOW).build());
+
+        scoreBoardManager.addItem(Component.text().content(" ").build());
+        scoreBoardManager.addItem(Component.text().content("CoSup Gaming").color(NamedTextColor.GRAY).build());
         scoreBoardManager.setSlot(DisplaySlot.SIDEBAR);
         scoreBoardManager.getObjective();
+    }
 
+    private static String getFormattedTime() {
+
+        int seconds = GameTimerTask.getSecondsElapsed();
+
+        int hours = (seconds - seconds % 3600) / 3600;
+        int minutes = (seconds - seconds % 60) / 60 - hours*60;
+        seconds = seconds - minutes * 60 - hours*60*60;
+
+        if (hours > 0) {
+            return hours+":"+minutes+":"+seconds;
+        }
+
+        if (minutes > 0) {
+            return minutes+" min "+seconds+" sec";
+        }
+
+        return seconds+" seconds";
     }
 
     // i cannot be bothered to chage this again.
