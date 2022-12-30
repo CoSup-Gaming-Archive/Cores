@@ -7,6 +7,7 @@ import eu.cosup.cores.managers.NameTagEditor;
 import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.*;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,6 +20,9 @@ import java.util.*;
 public class ActivateGameTask extends BukkitRunnable {
 
     private ArrayList<Player> joinedPlayers;
+
+    private static final List<String> armorPeaces = Cores.getInstance().getConfig().getStringList("armor");
+    private static final ConfigurationSection hotbar = Cores.getInstance().getConfig().getConfigurationSection("hotbar");
 
     public ActivateGameTask(ArrayList<Player> joinedPlayers) {
 
@@ -85,10 +89,6 @@ public class ActivateGameTask extends BukkitRunnable {
 
     public static void givePlayerArmor(Player player) {
 
-        // TODO give player colored armor
-
-        List<String> armorPeaces = Cores.getInstance().getConfig().getStringList("armor");
-
         for (String armorPeaceName : armorPeaces) {
 
             ItemStack armorPeace = new ItemStack(Material.getMaterial(armorPeaceName));
@@ -99,7 +99,6 @@ public class ActivateGameTask extends BukkitRunnable {
             armorPeace.setItemMeta(leatherArmorMeta);
 
             // cheeky way but maybe there is a better method
-            // TODO maybe better method
             if (armorPeaceName.toLowerCase().contains("helmet")) {
                 player.getInventory().setHelmet(armorPeace);
             }
@@ -122,14 +121,13 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     public static void givePlayerTools(Player player) {
-        Cores cores = Cores.getInstance();
 
         int i = 0;
-        for (String itemName : cores.getConfig().getConfigurationSection("hotbar").getKeys(false)) {
+        for (String itemName : hotbar.getKeys(false)) {
 
             // this is ugly
             // TODO make this less ugly
-            player.getInventory().setItem(i, new ItemStack(Material.getMaterial(itemName), cores.getConfig().getConfigurationSection("hotbar").getInt(itemName)));
+            player.getInventory().setItem(i, new ItemStack(Material.getMaterial(itemName), hotbar.getInt(itemName)));
 
             i++;
         }
@@ -138,14 +136,14 @@ public class ActivateGameTask extends BukkitRunnable {
     public static boolean isItemDefault(Material item) {
         Cores cores = Cores.getInstance();
 
-        for (String itemName : cores.getConfig().getConfigurationSection("hotbar").getKeys(false)) {
+        for (String itemName : hotbar.getKeys(false)) {
 
             if (item == Material.getMaterial(itemName)) {
                 return true;
             }
         }
 
-        for (String inventoryItem : cores.getConfig().getStringList("armor")) {
+        for (String inventoryItem : armorPeaces) {
 
             if (Material.getMaterial(inventoryItem) == item) {
                 return true;
@@ -157,14 +155,6 @@ public class ActivateGameTask extends BukkitRunnable {
     private void spawnBeacons() {
 
         Cores cores = Cores.getInstance();
-
-        // TODO make this work
-
-        /*
-        Field field=net.minecraft.server.Block.class.getDeclaredField("strength");
-        field.setAccessible(true);
-        field.setFloat(net.minecraft.server.Block.BED, 50.0F);
-         */
 
         BlockData beaconBlock = Material.BEACON.createBlockData();
 
