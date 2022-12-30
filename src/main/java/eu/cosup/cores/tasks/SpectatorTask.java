@@ -4,13 +4,11 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.TeamColor;
-import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -39,7 +37,7 @@ public class SpectatorTask extends BukkitRunnable {
                 @Override
                 public void run() {
                     player.clearTitle();
-                    Component msg = Component.text().content("Respawning in " ).color(ColorUtility.getStdTextColor("red"))
+                    Component msg = Component.text().content("Respawning in " ).color(NamedTextColor.RED)
                             .append(Component.text().content(String.valueOf(Cores.getInstance().getConfig().getInt("respawn-delay")-finalI))).build();
 
                     Title title = Title.title(msg, Component.text().build());
@@ -72,7 +70,7 @@ public class SpectatorTask extends BukkitRunnable {
                 ActivateGameTask.preparePlayerFull(player);
 
 
-                player.sendMessage(Component.text().content("You are alive!").color(ColorUtility.getStdTextColor(team.name())));
+                player.sendMessage(Component.text().content("You are alive!").color(TeamColor.getNamedTextColor(team)));
             }
         }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("respawn-delay") * 20L);
     }

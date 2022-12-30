@@ -5,13 +5,11 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
-import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class GameEndTask extends BukkitRunnable {
@@ -47,8 +45,8 @@ public class GameEndTask extends BukkitRunnable {
 
         }
 
-        Component msg = Component.text().content(winner.toString()).color(ColorUtility.getStdTextColor(winner.toString()))
-                .append(Component.text().content(" is the winner!").color(ColorUtility.getStdTextColor("yellow"))).build();
+        Component msg = Component.text().content(winner.toString()).color(TeamColor.getNamedTextColor(winner))
+                .append(Component.text().content(" is the winner!").color(NamedTextColor.YELLOW)).build();
         Cores.getInstance().getServer().broadcast(msg);
 
         Bukkit.getLogger().warning("New game in: " + Cores.getInstance().getConfig().getInt("return-to-lobby-delay"));

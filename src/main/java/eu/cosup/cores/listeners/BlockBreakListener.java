@@ -7,18 +7,15 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.Team;
 import eu.cosup.cores.managers.TeamColor;
 import eu.cosup.cores.utility.BlockUtility;
-import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-
-import java.util.List;
 
 public class BlockBreakListener implements Listener {
 
@@ -71,9 +68,9 @@ public class BlockBreakListener implements Listener {
             BeaconInformation.update();
 
             // broadcast that they lost beacon
-            Component msg = Component.text().content("A ").color(TextColor.color(ColorUtility.getStdTextColor("yellow")))
-                    .append(Component.text().content("BEACON").color(ColorUtility.getStdTextColor(loserTeam.getColor().toString())))
-                    .append(Component.text().content(" was destroyed!").color(ColorUtility.getStdTextColor("yellow"))).build();
+            Component msg = Component.text().content("A ").color(TextColor.color(NamedTextColor.YELLOW))
+                    .append(Component.text().content("BEACON").color(TeamColor.getNamedTextColor(loserTeam.getColor())))
+                    .append(Component.text().content(" was destroyed!").color(NamedTextColor.YELLOW)).build();
             Cores.getInstance().getServer().broadcast(msg);
 
             // cheeky way of getting the beacon to not drop anything

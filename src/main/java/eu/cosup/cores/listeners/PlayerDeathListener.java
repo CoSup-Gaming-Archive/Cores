@@ -4,18 +4,17 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.PlayerDamageManager;
-import eu.cosup.cores.managers.TeamManager;
+import eu.cosup.cores.managers.TeamColor;
 import eu.cosup.cores.tasks.SpectatorTask;
-import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -53,15 +52,15 @@ public class PlayerDeathListener implements Listener {
             killer = null;
         }
 
-        TextComponent.Builder killerText = Component.text().content(player.getName()).color(ColorUtility.getStdTextColor(Game.getGameInstance().getTeamManager().whichTeam(player).toString()));
+        TextComponent.Builder killerText = Component.text().content(player.getName()).color(TeamColor.getNamedTextColor(Game.getGameInstance().getTeamManager().whichTeam(player)));
 
         // that means player was not damaged by other players
         if (killer == null) {
-            killerText.append(Component.text().content(" committed suicide").color(ColorUtility.getStdTextColor("yellow")));
+            killerText.append(Component.text().content(" committed suicide").color(NamedTextColor.YELLOW));
         } else {
             killerText
-            .append(Component.text().content(" was killed by ").color(ColorUtility.getStdTextColor("yellow")))
-            .append(Component.text().content(killer.getName()).color(ColorUtility.getStdTextColor(Game.getGameInstance().getTeamManager().whichTeam((Player) killer).toString())));
+            .append(Component.text().content(" was killed by ").color(NamedTextColor.YELLOW))
+            .append(Component.text().content(killer.getName()).color(TeamColor.getNamedTextColor(Game.getGameInstance().getTeamManager().whichTeam(killer))));
             PlayerDamageManager.setPlayerLastDamage(event.getPlayer(), null);
         }
 

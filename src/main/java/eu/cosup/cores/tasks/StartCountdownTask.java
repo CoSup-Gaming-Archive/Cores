@@ -3,17 +3,11 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
-
-import java.util.ArrayList;
 
 public class StartCountdownTask extends BukkitRunnable {
 
@@ -56,7 +50,7 @@ public class StartCountdownTask extends BukkitRunnable {
                         Game.getGameInstance().activateGame();
                         // KeinOptifine: This is how you are supposed to do it:
                         Cores.getInstance().getServer().broadcast(
-                                Component.text("STARTING").color(ColorUtility.getStdTextColor("yellow"))
+                                Component.text("STARTING").color(NamedTextColor.YELLOW)
                         );
 
                         return;
@@ -65,7 +59,7 @@ public class StartCountdownTask extends BukkitRunnable {
                     // This is how youre supposed to do it
                     Cores.getInstance().getServer().broadcast(
                             Component.text("Starting in " + finalI)
-                                    .color(ColorUtility.getStdTextColor("yellow"))
+                                    .color(NamedTextColor.YELLOW)
                     );
 
                 }

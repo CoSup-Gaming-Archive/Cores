@@ -1,17 +1,12 @@
 package eu.cosup.cores.listeners;
 
-import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.utility.BlockUtility;
-import eu.cosup.cores.utility.ColorUtility;
 import net.kyori.adventure.text.Component;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
-import org.bukkit.Location;
 import org.bukkit.block.Block;
-import org.bukkit.block.CommandBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,7 +30,7 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
-        Component msg = Component.text().content("You cannot place blocks here").color(ColorUtility.getStdTextColor("red")).build();
+        Component msg = Component.text().content("You cannot place blocks here").color(NamedTextColor.RED).build();
 
         if (Game.getGameInstance().getSelectedMap().getMaxHeight() < block.getY()) {
             player.sendMessage(msg);
