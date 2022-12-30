@@ -1,7 +1,6 @@
 package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Game;
-import eu.cosup.cores.managers.TeamColor;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

@@ -1,7 +1,6 @@
 package eu.cosup.cores.managers;
 
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 

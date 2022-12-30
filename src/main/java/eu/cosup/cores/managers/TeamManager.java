@@ -3,10 +3,8 @@ package eu.cosup.cores.managers;
 import eu.cosup.cores.Game;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class TeamManager {

@@ -3,19 +3,12 @@ package eu.cosup.cores.data;
 import eu.cosup.cores.Cores;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
-import org.bukkit.event.world.WorldLoadEvent;
-import org.bukkit.generator.BlockPopulator;
-import org.bukkit.util.FileUtil;
-import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class WorldLoader {
 

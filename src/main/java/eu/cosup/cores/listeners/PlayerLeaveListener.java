@@ -1,13 +1,9 @@
 package eu.cosup.cores.listeners;
 
-import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.BeaconInformation;
-import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.NameTagEditor;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;

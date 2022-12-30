@@ -4,7 +4,6 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.PlayerDamageManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextColor;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

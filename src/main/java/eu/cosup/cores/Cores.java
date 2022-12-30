@@ -1,7 +1,5 @@
 package eu.cosup.cores;
 
-// TODO remove unused imports in all of the files
-
 import eu.cosup.cores.commands.ForceStartCommand;
 import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;

@@ -1,9 +1,7 @@
 package eu.cosup.cores.managers;
 
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class PlayerDamageManager {

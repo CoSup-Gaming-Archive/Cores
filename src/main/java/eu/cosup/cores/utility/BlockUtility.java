@@ -2,7 +2,6 @@ package eu.cosup.cores.utility;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 

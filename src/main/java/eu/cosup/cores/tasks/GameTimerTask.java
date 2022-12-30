@@ -3,7 +3,6 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.managers.BeaconInformation;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class GameTimerTask extends BukkitRunnable {
 
