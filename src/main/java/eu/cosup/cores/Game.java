@@ -67,7 +67,7 @@ public class Game {
 
         new ActivateGameTask(joinedPlayers).runTask(Cores.getInstance());
         GameTimerTask.resetTimer();
-        new GameTimerTask(1).runTask(Cores.getInstance());
+        new GameTimerTask().runTask(Cores.getInstance());
 
     }
 

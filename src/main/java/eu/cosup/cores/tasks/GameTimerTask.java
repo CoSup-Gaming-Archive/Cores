@@ -8,11 +8,9 @@ import org.bukkit.scheduler.BukkitTask;
 public class GameTimerTask extends BukkitRunnable {
 
     private static int secondsElapsed;
-    private final int updateTime;
     private static GameTimerTask instance;
 
-    public GameTimerTask(int updateTime) {
-        this.updateTime = updateTime;
+    public GameTimerTask() {
         instance = this;
     }
 
@@ -20,7 +18,7 @@ public class GameTimerTask extends BukkitRunnable {
     public void run() {
         BeaconInformation.update();
         setSecondsElapsed(getSecondsElapsed()+1);
-        new GameTimerTask(updateTime).runTaskLater(Cores.getInstance(), this.updateTime*20L);
+        new GameTimerTask().runTaskLater(Cores.getInstance(), 20L);
     }
 
     public void cancelTimer() {
