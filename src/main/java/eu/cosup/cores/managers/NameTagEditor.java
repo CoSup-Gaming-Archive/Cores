@@ -13,7 +13,6 @@ public class NameTagEditor {
         this.player=player;
         this.team= Bukkit.getScoreboardManager().getMainScoreboard().getTeam(player.getName());
         if (team==null){
-            Bukkit.getLogger().info("createteam");
             this.team=Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(player.getName());
             this.team.addEntry(player.getName());
         }
