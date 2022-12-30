@@ -2,7 +2,7 @@ block-whitelist : [IRON_BLOCK, IRON_INGOT, IRON_SWORD, IRON_BOOTS, IRON_CHESTPLA
                    OAK_LOG, OAK_PLANKS, OAK_BUTTON,
                    DIAMOND_BLOCK, DIAMOND, DIAMOND_PICKAXE, DIAMOND_SWORD, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, DIAMOND_HELMET
                   ]
-required-player-count : 1
+required-player-count : 2
 start-countdown : 5
 respawn-delay : 5
 return-to-lobby-delay : 60
