@@ -55,6 +55,10 @@ public class TeamManager {
     // which team player is in
     public TeamColor whichTeam(Player player) {
 
+        if (player == null) {
+            return null;
+        }
+
         for (Team team : teams) {
             if (team.isPlayerInTeam(player)) {
                 return team.getColor();
