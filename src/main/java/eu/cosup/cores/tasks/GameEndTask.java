@@ -56,17 +56,10 @@ public class GameEndTask extends BukkitRunnable {
             @Override
             public void run() {
 
-                // you should return players to lobby before restarting
-                Bukkit.getLogger().severe("Restarting game");
+                Component msg = Component.text().content("server is shutting down").color(NamedTextColor.RED).build();
+                Cores.getInstance().getServer().broadcast(msg);
 
-                for (Player player : Cores.getInstance().getServer().getOnlinePlayers()) {
-                    player.teleport(Cores.getInstance().getLobbyWorld().getSpawnLocation());
-                }
-
-                // create new game instance
-                Cores.getInstance().createGame();
-
-                Cores.getInstance().getGame().refreshPlayerCount();
+                Cores.getInstance().getServer().shutdown();
 
             }
         }.runTaskLater(Cores.getInstance(), Cores.getInstance().getConfig().getInt("return-to-lobby-delay") * 20L);
