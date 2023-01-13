@@ -3,7 +3,6 @@ package eu.cosup.cores;
 import eu.cosup.cores.commands.ForceStartCommand;
 import eu.cosup.cores.commands.SpectatorCommand;
 import eu.cosup.cores.data.LoadedMap;
-import eu.cosup.cores.data.WorldLoader;
 import eu.cosup.cores.listeners.*;
 import eu.cosup.cores.managers.NameTagEditor;
 import org.bukkit.*;
@@ -42,14 +41,6 @@ public final class Cores extends JavaPlugin {
         getConfig().options().copyHeader(true);
         saveDefaultConfig();
 
-        // load maps here
-        loadMaps();
-
-        if (loadedMaps.size() == 0) {
-            Bukkit.getLogger().severe("Were not able to load any maps");
-            return;
-        }
-
         // initial creation of game.
         if (!createGame()) {
             return;
@@ -83,7 +74,7 @@ public final class Cores extends JavaPlugin {
     }
 
     public boolean createGame() {
-        LoadedMap selectedMap = selectMap();
+        LoadedMap selectedMap = LoadedMap.loadMapFromConfig();
         if (selectedMap == null) {
             Bukkit.getLogger().severe("We were not able to create a game.");
             return false;
@@ -91,30 +82,6 @@ public final class Cores extends JavaPlugin {
         game = new Game(selectedMap);
         Bukkit.getLogger().warning("Succesfully started a game.");
         return true;
-    }
-
-    private LoadedMap selectMap() {
-
-        Random random = new Random();
-
-        // by default we get number 0
-        LoadedMap selectedMap = loadedMaps.get(0);
-
-        // if there are more maps to choose from
-        if (loadedMaps.size() > 1) {
-            int selection = random.nextInt(loadedMaps.size());
-            Bukkit.getLogger().warning("Choosing from: " + loadedMaps + " chose:" + selection);
-            selectedMap = loadedMaps.get(selection);
-        }
-
-        Bukkit.getLogger().info("Selected map: " + selectedMap.getName());
-
-        if (!WorldLoader.loadNewWorld(selectedMap.getName())) {
-            Bukkit.getLogger().severe("Not able to load map");
-            return null;
-        }
-
-        return selectedMap;
     }
 
     @Override
@@ -140,21 +107,5 @@ public final class Cores extends JavaPlugin {
 
     public Game getGame() {
         return game;
-    }
-
-    private void loadMaps() {
-
-        // we just have to have the name of the world and then we can load it from config by name
-        ArrayList<LoadedMap> loadedMapsConfig = LoadedMap.getLoadedMapsFromConfig();
-        if (loadedMapsConfig != null) {
-            loadedMaps = loadedMapsConfig;
-        }
-
-        WorldLoader.getWorldNames();
-
-        // this is to sort out the maps that dont exist in the folder
-        List<LoadedMap> tempLoadedMaps = loadedMaps.stream().filter(loadedMap -> WorldLoader.getWorldNames().contains(loadedMap.getName())).toList();
-        loadedMaps = new ArrayList<>();
-        loadedMaps.addAll(tempLoadedMaps);
     }
 }
