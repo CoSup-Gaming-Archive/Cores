@@ -32,7 +32,7 @@ public class BeaconInformation {
         }
 
         // scoreboard
-        ScoreBoardManager scoreBoardManager = new ScoreBoardManager("beacons");
+        ScoreBoardManager scoreBoardManager = Game.getGameInstance().getScoreBoardManager();
         scoreBoardManager.clearObjective();
         scoreBoardManager.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&bCores"));
 

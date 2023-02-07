@@ -9,6 +9,7 @@ import eu.cosup.cores.tasks.StartCountdownTask;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Score;
 
 import java.util.ArrayList;
 
@@ -20,6 +21,7 @@ public class Game {
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
     private LoadedMap selectedMap;
+    private ScoreBoardManager scoreBoardManager= new ScoreBoardManager("beacons");
 
     public Game(LoadedMap selectedMap) {
         gameInstance = this;
@@ -50,6 +52,7 @@ public class Game {
     public LoadedMap getSelectedMap() {
         return selectedMap;
     }
+    public ScoreBoardManager getScoreBoardManager(){return scoreBoardManager;}
 
     // loading and joining phase
     private void initGame() {
