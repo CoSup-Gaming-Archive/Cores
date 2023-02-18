@@ -17,20 +17,11 @@ public class SideBarInformation {
 
         // scoreboard
         ScoreBoardManager scoreBoardManager = new ScoreBoardManager("bedwars");
+
         scoreBoardManager.clearObjective();
         scoreBoardManager.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&BCores"));
-
-        scoreBoardManager.addItem(Component.text().content(" ").build());
-
         addFormattedTeamStrings(scoreBoardManager);
-        scoreBoardManager.addItem(Component.text().content(" ").build());
-
-
         scoreBoardManager.addItem(Component.text().content(getFormattedTime()).color(NamedTextColor.YELLOW).build());
-        scoreBoardManager.addItem(Component.text().content(" ").build());
-
-
-        scoreBoardManager.addItem(Component.text().content("CoSup Gaming").color(NamedTextColor.GRAY).build());
         scoreBoardManager.setSlot(DisplaySlot.SIDEBAR);
         scoreBoardManager.getObjective();
     }
@@ -55,18 +46,16 @@ public class SideBarInformation {
 
             TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
             scoreBoardManager.addItem(teamText.build());
-            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.GOLD));
-
             if (team.isLeftBeaconAlive()) {
-                scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
+                scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text(" ON").color(NamedTextColor.GREEN)));
             } else {
-                scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2716").color(NamedTextColor.RED)));
+                scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text(" OFF").color(NamedTextColor.RED)));
             }
 
             if (team.isRightBeaconAlive()) {
-                scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
+                scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text(" ON").color(NamedTextColor.GREEN)));
             } else {
-                scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2716").color(NamedTextColor.RED)));
+                scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text(" OFF").color(NamedTextColor.RED)));
             }
 
             scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.GOLD));
