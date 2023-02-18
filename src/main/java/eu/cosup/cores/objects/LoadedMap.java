@@ -108,6 +108,11 @@ public class LoadedMap {
         return null;
     }
 
+    public boolean isLeftBeacon(@NotNull TeamColor teamColor, @NotNull Location location) {
+
+        return getTeamBeacons().get(teamColor).left().toVector().equals(location.toVector());
+    }
+
     public Location getSpawnByColor(TeamColor teamColor) {
         return teamSpawns.get(teamColor);
     }
