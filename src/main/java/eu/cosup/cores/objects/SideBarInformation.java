@@ -55,7 +55,7 @@ public class SideBarInformation {
 
             TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
             scoreBoardManager.addItem(teamText.build());
-            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.YELLOW));
+            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.GOLD));
 
             if (team.isLeftBeaconAlive()) {
                 scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
@@ -69,7 +69,7 @@ public class SideBarInformation {
                 scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2716").color(NamedTextColor.RED)));
             }
 
-            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.YELLOW));
+            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.GOLD));
         }
     }
 }
