@@ -19,6 +19,8 @@ public class Team {
     private final HashMap<String, Boolean> deathList = new HashMap<>();
     private String slug;
     private int beaconCount = 2;
+    private boolean leftBeaconAlive = true;
+    private boolean rightBeaconAlive = true;
 
     public Team(TeamColor teamColor, List<Player> players, boolean isAlive, @NotNull String slug) {
         this.players = players;
@@ -28,6 +30,22 @@ public class Team {
         for (Player player : players) {
             isPlayerDead(player);
         }
+    }
+
+    public void setLeftBeaconAlive(boolean leftBeaconAlive) {
+        this.leftBeaconAlive = leftBeaconAlive;
+    }
+
+    public void setRightBeaconAlive(boolean rightBeaconAlive) {
+        this.rightBeaconAlive = rightBeaconAlive;
+    }
+
+    public boolean isLeftBeaconAlive() {
+        return leftBeaconAlive;
+    }
+
+    public boolean isRightBeaconAlive() {
+        return rightBeaconAlive;
     }
 
     public String getSlug() {

@@ -61,6 +61,12 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         Cores.getInstance().getGameWorld().setType(beaconLocation, Material.AIR);
         beaconTeam.setBeaconCount(beaconTeam.getBeaconCount() - 1);
 
+        if (Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
+            beaconTeam.setLeftBeaconAlive(false);
+        } else if (!Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
+            beaconTeam.setRightBeaconAlive(false);
+        }
+
         for (Player alivePlayer : beaconTeam.getAlivePlayers()) {
             Title title = Title.title(Component.text("Your beacon has been detroyed").color(NamedTextColor.RED), Component.text().build());
             alivePlayer.showTitle(title);

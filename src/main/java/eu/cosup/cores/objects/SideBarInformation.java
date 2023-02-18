@@ -56,29 +56,39 @@ public class SideBarInformation {
             TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
 
             if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
-                teamText
-                .append(getTeamSymbol(team));
+                teamText.append(getTeamSymbol(team));
+
+                scoreBoardManager.addItem(Component.text().build());
+
+                if (team.isLeftBeaconAlive()) {
+                    scoreBoardManager.addItem(Component.text("Left beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
+                } else {
+                    scoreBoardManager.addItem(Component.text("Left beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u00D7").color(NamedTextColor.GREEN)));
+                }
+
+                if (team.isRightBeaconAlive()) {
+                    scoreBoardManager.addItem(Component.text("Right beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
+                } else {
+                    scoreBoardManager.addItem(Component.text("Right beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u00D7").color(NamedTextColor.GREEN)));
+                }
+
+                scoreBoardManager.addItem(Component.text().build());
             }
-
             scoreBoardManager.addItem(teamText.build());
-
         }
     }
 
     private static Component getTeamSymbol(@NotNull Team team) {
+        Component result = Component.text().build();
+
         if (team.isAlive()) {
-
-            Component result = Component.text().build();
-
-            for (int i = 0; i < team.getBeaconCount(); i++) {
-                result = result.append(Component.text().content("\u2714").color(NamedTextColor.GREEN));
-            }
-
-            return result;
+            return result.append(Component.text().content("\u2714").color(NamedTextColor.GREEN));
         }
+
         if (team.getAlivePlayers().size() > 0) {
             return Component.text().content(" "+team.getAlivePlayers().size()).color(NamedTextColor.GREEN).build();
         }
-        return Component.text().content("\u2716").color(NamedTextColor.RED).build();
+
+        return Component.text().content("\u00D7").color(NamedTextColor.RED).build();
     }
 }
