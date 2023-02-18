@@ -1,39 +1,35 @@
 package eu.cosup.cores;
 
-import eu.cosup.cores.commands.ForceStartCommand;
-import eu.cosup.cores.commands.SpectatorCommand;
-import eu.cosup.cores.data.LoadedMap;
+import eu.cosup.cores.listeners.StartGameCommandListener;
 import eu.cosup.cores.listeners.*;
-import eu.cosup.cores.managers.NameTagEditor;
-import org.bukkit.*;
-import org.bukkit.entity.Player;
+import eu.cosup.cores.listeners.custom.*;
+import eu.cosup.cores.listeners.PlayerDeathListener;
+import eu.cosup.cores.listeners.PlayerJoinListener;
+import eu.cosup.cores.listeners.PlayerLeaveListener;
+import eu.cosup.cores.listeners.PlayerMoveListener;
+import eu.cosup.cores.managers.ScoreBoardManager;
+
+import eu.cosup.cores.objects.LoadedMap;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
 
 public final class Cores extends JavaPlugin {
 
     private static Cores instance;
+    private World gameWorld;
+    private Game game;
 
-    //very nice comment
     public static Cores getInstance() {
         return instance;
     }
 
-    private Game game;
-    private World gameWorld;
-    private World lobbyWorld;
-
-    // earlier than onEnable
     @Override
     public void onEnable() {
         instance = this;
 
         gameWorld = Bukkit.getWorld("world");
-        lobbyWorld = Bukkit.getWorld("world_nether");
 
         reloadConfig();
         getConfig().options().copyDefaults(true);
@@ -45,32 +41,41 @@ public final class Cores extends JavaPlugin {
             return;
         }
 
-        // past this point all of the listeners will be initialized and it is expectted that everything works fine
-
-        getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
+        // register all the listeners
+        getServer().getPluginManager().registerEvents(new ItemDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
-        getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
-
-        // player quility
+        getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
         getServer().getPluginManager().registerEvents(new HungerReceiveListener(), this);
-
-        getServer().getPluginManager().registerEvents(new ItemCraftListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerInteractListener(), this);
-
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockPlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityExplodeListener(), this);
+        getServer().getPluginManager().registerEvents(new TNTPlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new PearlTeleportListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerShootFireballListener(), this);
+        getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
 
+        new StartGameCommandListener();
+        new EndGameCommandListener();
+        new GameFreezeListener();
+        new GameUnfreezeListener();
 
-
-        // commands
-        Objects.requireNonNull(getCommand("spectate")).setExecutor(new SpectatorCommand());
-        Objects.requireNonNull(getCommand("forcestart")).setExecutor(new ForceStartCommand());
-
+        new GameChangePhaseListener();
+        new TeamChangeAliveListener();
 
     }
+
+    @Override
+    public void onDisable() {
+        // so this doesnt accidentaly show up next time if the server was to crash
+        ScoreBoardManager scoreBoardManager = new ScoreBoardManager("bedwars");
+        scoreBoardManager.clearObjective();
+        instance = null;
+    }
+
 
     public boolean createGame() {
         LoadedMap selectedMap = LoadedMap.loadMapFromConfig();
@@ -83,25 +88,8 @@ public final class Cores extends JavaPlugin {
         return true;
     }
 
-    @Override
-    public void onDisable() {
-        instance = null;
-        for (Player player: Game.getGameInstance().getPlayerList()){
-            NameTagEditor nameTagEditor = new NameTagEditor(player);
-            nameTagEditor.setNameColor(ChatColor.RESET).setPrefix("").setTabName(player.getName());
-        }
-    }
-
     public World getGameWorld() {
         return gameWorld;
-    }
-
-    public World getLobbyWorld() {
-        return lobbyWorld;
-    }
-
-    public void setGameWorld(World gameWorld) {
-        this.gameWorld = gameWorld;
     }
 
     public Game getGame() {

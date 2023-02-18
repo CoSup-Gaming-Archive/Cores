@@ -1,27 +1,44 @@
 package eu.cosup.cores.listeners;
 
+import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.objects.Team;
+import eu.cosup.cores.tasks.ActivateGameTask;
+import eu.cosup.tournament.common.utility.PlayerUtility;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffectType;
 
 public class PlayerMoveListener implements Listener {
 
     @EventHandler
     private void onPlayerMove(PlayerMoveEvent event) {
 
-        double playerY = event.getTo().getY();
+
+        // prevents ghosting
+        if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
+            if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
+                if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
 
         if (
                 event.getPlayer().getGameMode() == GameMode.CREATIVE
-                        || event.getPlayer().getGameMode() == GameMode.SPECTATOR
+                || event.getPlayer().getGameMode() == GameMode.SPECTATOR
         ) {
             return;
         }
 
         // if player is bellow the threshold
-        if (Game.getGameInstance().getSelectedMap().getDeathHeight() > playerY) {
+        if (Game.getGameInstance().getSelectedMap().getDeathHeight() > event.getTo().getY()) {
             // he die
             event.getPlayer().setHealth(0);
         }
