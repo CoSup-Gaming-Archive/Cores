@@ -55,13 +55,8 @@ public class SideBarInformation {
 
             TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
 
-            if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
-                teamText.append(getTeamSymbol(team));
-
-
-            }
             scoreBoardManager.addItem(teamText.build());
-            scoreBoardManager.addItem(Component.text(" "));
+            scoreBoardManager.addItem(Component.text("\u0020"));
 
 
             if (team.isLeftBeaconAlive()) {
@@ -76,21 +71,7 @@ public class SideBarInformation {
                 scoreBoardManager.addItem(Component.text("Right beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2716").color(NamedTextColor.RED)));
             }
 
-            scoreBoardManager.addItem(Component.text(" "));
+            scoreBoardManager.addItem(Component.text("\u0020"));
         }
-    }
-
-    private static Component getTeamSymbol(@NotNull Team team) {
-        Component result = Component.text().build();
-
-        if (team.isAlive()) {
-            return result.append(Component.text().content("\u2714").color(NamedTextColor.GREEN));
-        }
-
-        if (team.getAlivePlayers().size() > 0) {
-            return Component.text().content(" "+team.getAlivePlayers().size()).color(NamedTextColor.GREEN).build();
-        }
-
-        return Component.text().content("\u00D7").color(NamedTextColor.RED).build();
     }
 }
