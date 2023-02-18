@@ -58,7 +58,6 @@ public class ActivateGameTask extends BukkitRunnable {
         teleportPlayerToSpawn(player);
         Game.getGameInstance().updatePlayersNameTag(player);
         givePlayerTools(player);
-        givePlayerTools(player);
     }
 
     // prepare player stats
