@@ -67,7 +67,14 @@ public class SideBarInformation {
 
     private static Component getTeamSymbol(@NotNull Team team) {
         if (team.isAlive()) {
-            return Component.text().content("\u2714").color(NamedTextColor.GREEN).build();
+
+            Component result = Component.text().build();
+
+            for (int i = 0; i < team.getBeaconCount(); i++) {
+                result = result.append(Component.text().content("\u2714").color(NamedTextColor.GREEN));
+            }
+
+            return result;
         }
         if (team.getAlivePlayers().size() > 0) {
             return Component.text().content(" "+team.getAlivePlayers().size()).color(NamedTextColor.GREEN).build();
