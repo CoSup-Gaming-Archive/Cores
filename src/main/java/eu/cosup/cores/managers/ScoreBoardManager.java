@@ -54,15 +54,14 @@ public class ScoreBoardManager {
     }
 
     public void getObjective() {
-        int displayStringCount = displayStrings.size() - 1;
-        for (int i = 0; i < displayStrings.size(); i++) {
 
-            Component displayComponent = displayStrings.get(i);
-
+        int i = 0;
+        for (Component displayString : displayStrings) {
             // we are using hex even though it is not really acurate.
-            String displayText = LegacyComponentSerializer.legacy(LegacyComponentSerializer.HEX_CHAR).serialize(displayComponent);
+            String displayText = LegacyComponentSerializer.legacy(LegacyComponentSerializer.HEX_CHAR).serialize(displayString);
 
-            this.objective.getScore(ChatColor.translateAlternateColorCodes('#', displayText)).setScore(displayStringCount - i);
+            this.objective.getScore(ChatColor.translateAlternateColorCodes('#', displayText)).setScore(i);
+            i--;
         }
     }
 
