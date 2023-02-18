@@ -54,24 +54,22 @@ public class SideBarInformation {
         for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
 
             TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
-
             scoreBoardManager.addItem(teamText.build());
-            scoreBoardManager.addItem(Component.text("\u0020"));
-
+            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.YELLOW));
 
             if (team.isLeftBeaconAlive()) {
-                scoreBoardManager.addItem(Component.text("Left beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
+                scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
             } else {
-                scoreBoardManager.addItem(Component.text("Left beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2716").color(NamedTextColor.RED)));
+                scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2716").color(NamedTextColor.RED)));
             }
 
             if (team.isRightBeaconAlive()) {
-                scoreBoardManager.addItem(Component.text("Right beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
+                scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2714").color(NamedTextColor.GREEN)));
             } else {
-                scoreBoardManager.addItem(Component.text("Right beacon").color(TeamColor.getNamedTextColor(team.getColor())).append(Component.text("\u2716").color(NamedTextColor.RED)));
+                scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text("\u2716").color(NamedTextColor.RED)));
             }
 
-            scoreBoardManager.addItem(Component.text("\u0020"));
+            scoreBoardManager.addItem(Component.text("------------------").color(NamedTextColor.YELLOW));
         }
     }
 }
