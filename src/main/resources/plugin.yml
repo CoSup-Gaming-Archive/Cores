@@ -1,17 +1,6 @@
-name: Bedwars
+name: Cores
 version: '${version}'
-main: eu.cosup.bedwars.Bedwars
+main: eu.cosup.cores.Cores
 api-version: 1.19
 depend:
   - "Tournament"
-commands:
-  spectate:
-    aliases: [sp]
-  forcestart:
-    aliases: [fs]
-  generator:
-    aliases: [gen]
-  openshop:
-    aliases: [os]
-  openupgrades:
-    aliases: [ou]
