@@ -1,9 +1,7 @@
 package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Game;
-import eu.cosup.cores.managers.BeaconInformation;
-import eu.cosup.cores.managers.NameTagEditor;
-import org.bukkit.ChatColor;
+import eu.cosup.cores.managers.GameStateManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -12,13 +10,21 @@ public class PlayerLeaveListener implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {
         Game game = Game.getGameInstance();
-        NameTagEditor nameTagEditor = new NameTagEditor(event.getPlayer());
-        nameTagEditor.setNameColor(ChatColor.RESET).setPrefix("").setTabName(event.getPlayer().getName());
 
+        if (game.getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
 
-        game.getPlayerList().remove(event.getPlayer());
-        BeaconInformation.update();
-        game.getJoinedPlayers().remove(event.getPlayer());
-        game.refreshPlayerCount();
+            event.getPlayer().setHealth(0);
+
+            // the player is not in a team
+            if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()) == null) {
+                return;
+            }
+
+            if (!Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()).isAlive()) {
+                if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()).getOnlinePlayers().size() < 2) {
+                    Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()).setAlive(false);
+                }
+            }
+        }
     }
 }
