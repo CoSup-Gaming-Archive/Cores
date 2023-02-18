@@ -12,6 +12,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class PlayerMoveListener implements Listener {
@@ -25,6 +26,7 @@ public class PlayerMoveListener implements Listener {
             if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
                 if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) {
                     event.setCancelled(true);
+                    event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 100));
                     return;
                 }
             }
