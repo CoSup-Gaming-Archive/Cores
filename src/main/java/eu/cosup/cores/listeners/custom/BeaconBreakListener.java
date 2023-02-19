@@ -18,11 +18,6 @@ public class BeaconBreakListener implements Listener {
         event.getPlayer().removePotionEffect(PotionEffectType.SLOW_DIGGING);
         event.getPlayer().removePotionEffect(PotionEffectType.FAST_DIGGING);
 
-        for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
-            team.setRightBeaconState(BeaconState.ON);
-            team.setLeftBeaconState(BeaconState.ON);
-        }
-
         if (event.getClickedBlock() == null) {
             return;
         }
@@ -37,13 +32,7 @@ public class BeaconBreakListener implements Listener {
             return;
         }
 
-        if (Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), event.getClickedBlock().getLocation())) {
-            beaconTeam.setLeftBeaconState(BeaconState.ATTACK);
-        } else {
-            beaconTeam.setRightBeaconState(BeaconState.ATTACK);
-        }
-
         event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, 1, false, false, false));
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 1, false, false, false));
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 2, false, false, false));
     }
 }
