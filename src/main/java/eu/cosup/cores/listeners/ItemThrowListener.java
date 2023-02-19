@@ -2,12 +2,20 @@ package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.tasks.ActivateGameTask;
+import eu.cosup.tournament.server.item.ItemBuilder;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.ArrayList;
+
 
 public class ItemThrowListener implements Listener {
 
@@ -15,27 +23,11 @@ public class ItemThrowListener implements Listener {
 
     @EventHandler
     private void onPlayerThrow(PlayerDropItemEvent event) {
-
-        Material thrownMaterialName = event.getItemDrop().getItemStack().getType();
-
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-            if (ActivateGameTask.isItemDefault(thrownMaterialName)) {
+            if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
                 event.setCancelled(true);
                 return;
             }
-
-            if (Game.getGameInstance().getGameStateManager().getGameState() != GameStateManager.GameState.ACTIVE) {
-                event.setCancelled(true);
-            }
         }
-
-
-        // TODO decide question bellow
-        // do we want despawning in the tournament?
-        //event.getItemDrop().setUnlimitedLifetime(true);
-
-        // KeinOptifine: definetly worth checking, but we probably cant/dont need to prevent despawning, because the maps are small
-        // enough that a player is always close by, which means the items will not despawn.
-
     }
 }

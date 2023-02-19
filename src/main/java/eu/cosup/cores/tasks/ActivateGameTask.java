@@ -2,170 +2,106 @@ package eu.cosup.cores.tasks;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.managers.BeaconInformation;
-import eu.cosup.cores.managers.NameTagEditor;
-import eu.cosup.cores.managers.TeamColor;
+import eu.cosup.cores.objects.Team;
+import eu.cosup.cores.objects.TeamColor;
 import org.bukkit.*;
-import org.bukkit.block.data.BlockData;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 public class ActivateGameTask extends BukkitRunnable {
 
-    private ArrayList<Player> joinedPlayers;
-
-    private static final List<String> armorPeaces = Cores.getInstance().getConfig().getStringList("armor");
-    private static final ConfigurationSection hotbar = Cores.getInstance().getConfig().getConfigurationSection("hotbar");
-
-    public ActivateGameTask(ArrayList<Player> joinedPlayers) {
-
-        this.joinedPlayers = joinedPlayers;
-
+    public ActivateGameTask() {
     }
 
     @Override
     public void run() {
-
         prepareEnviroment();
         preparePlayers();
-        spawnBeacons();
     }
 
-    private void prepareEnviroment() {
-        
-        Cores cores = Cores.getInstance();
+    public static void prepareEnviroment() {
 
-        cores.getGameWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
-        cores.getGameWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
-        cores.getGameWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
-        cores.getGameWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        Cores.getInstance().getGameWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
+        Cores.getInstance().getGameWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
+        Cores.getInstance().getGameWorld().setGameRule(GameRule.DO_DAYLIGHT_CYCLE, false);
+        Cores.getInstance().getGameWorld().setGameRule(GameRule.DO_WEATHER_CYCLE, false);
+        Cores.getInstance().getGameWorld().setStorm(false);
 
         // im pretty sure this is right
-        cores.getGameWorld().setGameRule(GameRule.NATURAL_REGENERATION, false);
+        Cores.getInstance().getGameWorld().setGameRule(GameRule.NATURAL_REGENERATION, true);
 
 
         // qol for builders
-        cores.getGameWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
+        Cores.getInstance().getGameWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
 
 
     }
 
     private void preparePlayers() {
-        for (Player player : joinedPlayers) {
-            preparePlayerFull(player);
+        for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
+            team.getPlayers().forEach(ActivateGameTask::preparePlayerFull);
         }
     }
 
     // ooo so juicy
-    public static void preparePlayerFull(Player player) {
-        TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player);
-        NameTagEditor nameTagEditor = new NameTagEditor(player);
-        nameTagEditor.setNameColor(TeamColor.getChatColor(teamColor)).setPrefix(teamColor.toString()+" ").setTabName(TeamColor.getChatColor(teamColor)+player.getName()).setChatName((TeamColor.getChatColor(teamColor)+player.getName()));
+    public static void preparePlayerFull(@NotNull Player player) {
+        player.getInventory().clear();
         preparePlayerStats(player);
         givePlayerArmor(player);
-        givePlayerTools(player);
         teleportPlayerToSpawn(player);
-
+        Game.getGameInstance().updatePlayersNameTag(player);
+        givePlayerTools(player);
     }
 
     // prepare player stats
-    public static void preparePlayerStats(Player player) {
-        player.getInventory().clear();
+    public static void preparePlayerStats(@NotNull Player player) {
         player.setGameMode(GameMode.SURVIVAL);
         player.setFoodLevel(Integer.MAX_VALUE);
         player.setHealth(20);
     }
 
-    public static void teleportPlayerToSpawn(Player player) {
+    public static void teleportPlayerToSpawn(@NotNull Player player) {
         player.teleport(Game.getGameInstance().getSelectedMap().getSpawnByPlayer(player));
     }
 
-    public static void givePlayerArmor(Player player) {
+    public static void givePlayerArmor(@NotNull Player player) {
 
-        for (String armorPeaceName : armorPeaces) {
+        ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
+        ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
+        addColor(leggings, player);
+        addColor(boots, player);
 
-            ItemStack armorPeace = new ItemStack(Material.getMaterial(armorPeaceName));
-            ItemMeta meta = armorPeace.hasItemMeta() ? armorPeace.getItemMeta() : Bukkit.getItemFactory().getItemMeta(armorPeace.getType());
-            LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
-            // from Color:
-            leatherArmorMeta.setColor(TeamColor.getColor(Game.getGameInstance().getTeamManager().whichTeam(player)));
-            armorPeace.setItemMeta(leatherArmorMeta);
+        ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
+        ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
 
-            // cheeky way but maybe there is a better method
-            if (armorPeaceName.toLowerCase().contains("helmet")) {
-                player.getInventory().setHelmet(armorPeace);
-            }
+        addColor(helmet, player);
+        addColor(chestplate, player);
 
-
-            if (armorPeaceName.toLowerCase().contains("chestplate")) {
-                player.getInventory().setChestplate(armorPeace);
-            }
-
-
-            if (armorPeaceName.toLowerCase().contains("leggings")) {
-                player.getInventory().setLeggings(armorPeace);
-            }
-
-
-            if (armorPeaceName.toLowerCase().contains("boots")) {
-                player.getInventory().setBoots(armorPeace);
-            }
-        }
+        player.getInventory().setHelmet(helmet);
+        player.getInventory().setChestplate(chestplate);
+        player.getInventory().setLeggings(leggings);
+        player.getInventory().setBoots(boots);
     }
 
-    public static void givePlayerTools(Player player) {
 
-        int i = 0;
-        for (String itemName : hotbar.getKeys(false)) {
-
-            // this is ugly
-            // TODO make this less ugly
-            player.getInventory().setItem(i, new ItemStack(Material.getMaterial(itemName), hotbar.getInt(itemName)));
-
-            i++;
-        }
+    private static void addColor(@NotNull ItemStack armorPeace, @NotNull Player player) {
+        ItemMeta meta = armorPeace.hasItemMeta() ? armorPeace.getItemMeta() : Bukkit.getItemFactory().getItemMeta(armorPeace.getType());
+        LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
+        // from Color:
+        leatherArmorMeta.setColor(TeamColor.getColor(Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor()));
+        leatherArmorMeta.setUnbreakable(true);
+        armorPeace.setItemMeta(leatherArmorMeta);
     }
 
-    public static boolean isItemDefault(Material item) {
-        Cores cores = Cores.getInstance();
-
-        for (String itemName : hotbar.getKeys(false)) {
-
-            if (item == Material.getMaterial(itemName)) {
-                return true;
-            }
-        }
-
-        for (String inventoryItem : armorPeaces) {
-
-            if (Material.getMaterial(inventoryItem) == item) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void spawnBeacons() {
-
-        Cores cores = Cores.getInstance();
-
-        BlockData beaconBlock = Material.BEACON.createBlockData();
-
-        for (Location location : Game.getGameInstance().getSelectedMap().getTeamBlueBeacons()) {
-            cores.getGameWorld().setBlockData(location, beaconBlock);
-        }
-
-        for (Location location : Game.getGameInstance().getSelectedMap().getTeamRedBeacons()) {
-            cores.getGameWorld().setBlockData(location, beaconBlock);
-        }
-
-        Bukkit.getLogger().info("Spawned beacons");
-        BeaconInformation.update();
+    public static void givePlayerTools(@NotNull Player player) {
+        player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
+        player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
+        player.getInventory().addItem(new ItemStack(Material.IRON_AXE));
     }
 }

@@ -1,15 +1,3 @@
-block-whitelist : [IRON_BLOCK, IRON_INGOT, IRON_SWORD, IRON_BOOTS, IRON_CHESTPLATE, IRON_LEGGINGS, IRON_HELMET,
-                   OAK_LOG, OAK_PLANKS, OAK_BUTTON,
-                   DIAMOND_BLOCK, DIAMOND, DIAMOND_PICKAXE, DIAMOND_SWORD, DIAMOND_CHESTPLATE, DIAMOND_LEGGINGS, DIAMOND_BOOTS, DIAMOND_HELMET
-                  ]
 required-player-count : 2
-start-countdown : 5
-respawn-delay : 5
-return-to-lobby-delay : 60
-spawn-protection-distance : 5
-
-armor : ["LEATHER_BOOTS", "LEATHER_LEGGINGS", "LEATHER_CHESTPLATE", "LEATHER_HELMET"]
-hotbar :
-  STONE_SWORD: 1
-  IRON_PICKAXE : 1
-  OAK_LOG: 16
+return-to-lobby-delay : 25
+respawn-delay : 7

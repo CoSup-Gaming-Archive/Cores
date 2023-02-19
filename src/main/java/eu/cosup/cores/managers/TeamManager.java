@@ -1,73 +1,73 @@
 package eu.cosup.cores.managers;
 
-import eu.cosup.cores.Game;
-import org.bukkit.Bukkit;
+import eu.cosup.cores.Cores;
+import eu.cosup.cores.objects.Team;
+import eu.cosup.cores.objects.TeamColor;
+import eu.cosup.tournament.common.objects.GameTeam;
+import eu.cosup.tournament.server.TournamentServer;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 public class TeamManager {
 
     private ArrayList<Team> teams = new ArrayList<>();
-
     public ArrayList<Team> getTeams() {
         return teams;
     }
 
     // this will probably be thrown away later
-    public void makeTeams(ArrayList<Player> players) {
+    public void makeTeams() {
 
-        // we only have two teams
+        List<GameTeam> gameTeams = TournamentServer.getInstance().getTeams();
 
-        ArrayList<Player> teamPlayers = new ArrayList<>();
-
-        // filter out spectator noone likes him
-        // this wont work in future since parties will be athing im guessing
-        for (TeamColor teamColor : TeamColor.values()) {
-
-            Bukkit.getLogger().info(teamColor.toString() + " is being registered.");
-
-            for (Player player : players) {
-
-                if (teamPlayers.size() >= players.size() / 2) {
-
-                    if (teamColor == TeamColor.BLUE) {
-                        teams.add(new Team(teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamBlueBeacons().size()));
-                    }
-
-                    if (teamColor == TeamColor.RED) {
-                        teams.add(new Team(teamColor, teamPlayers, Game.getGameInstance().getSelectedMap().getTeamRedBeacons().size()));
-                    }
-
-                    teamPlayers = new ArrayList<>();
-
+        for (int i = 0; i < gameTeams.size(); i++) {
+            TeamColor teamColor = TeamColor.values()[i];
+            List<Player> teamPlayers = new ArrayList<>();
+            for (UUID playerUUID : gameTeams.get(i).getPlayerUUIDs()) {
+                Player player = Cores.getInstance().getServer().getPlayer(playerUUID);
+                if (player != null) {
+                    teamPlayers.add(player);
                 }
-
-                teamPlayers.add(player);
-
             }
+            teams.add(new Team(teamColor, teamPlayers, true, gameTeams.get(i).getName()));
         }
     }
 
-    // which team player is in
-    public TeamColor whichTeam(Player player) {
-
-        if (player == null) {
-            return null;
-        }
+    public @Nullable Team getTeamWithName(@NotNull String name) {
 
         for (Team team : teams) {
-            if (team.isPlayerInTeam(player)) {
-                return team.getColor();
+            if (name.toLowerCase().contains(team.getColor().toString().toLowerCase())) {
+                return team;
             }
         }
 
         return null;
-
     }
 
-    public Team getTeamByColor(TeamColor teamColor) {
+    // which team player is in
+    public Team whichTeam(@NotNull UUID playerUUID) {
+
+        for (Team team : teams) {
+
+            if (team.isPlayerInTeam(playerUUID)) {
+                return team;
+            }
+        }
+
+        return null;
+    }
+
+    public @Nullable Team getTeamByColor(TeamColor teamColor) {
+
+        if (teamColor == null) {
+            return null;
+        }
 
         for (Team team : teams) {
             if (Objects.equals(team.getColor().toString(), teamColor.toString())) {
