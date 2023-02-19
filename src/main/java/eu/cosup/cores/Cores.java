@@ -89,6 +89,10 @@ public final class Cores extends JavaPlugin {
         return true;
     }
 
+    public void setGameWorld(World gameWorld) {
+        this.gameWorld = gameWorld;
+    }
+
     public World getGameWorld() {
         return gameWorld;
     }
