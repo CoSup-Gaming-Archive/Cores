@@ -21,7 +21,6 @@ public class ActivateGameTask extends BukkitRunnable {
 
     @Override
     public void run() {
-
         prepareEnviroment();
         preparePlayers();
     }
