@@ -4,19 +4,17 @@ import eu.cosup.cores.Cores;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.ChatColor;
-import org.bukkit.scoreboard.Criteria;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ScoreBoardManager {
 
     private Objective objective;
 
     private String name;
-    ArrayList<Component> displayStrings = new ArrayList<>();
+    private List<Component> displayStrings = new ArrayList<>();
 
     public ScoreBoardManager(String name) {
         if (name.length() == 0) {
@@ -53,19 +51,19 @@ public class ScoreBoardManager {
         displayStrings.add(component);
     }
 
-    public void getObjective() {
+    public void refreshObjective() {
+
 
         int i = 0;
         for (Component displayString : displayStrings) {
-            // we are using hex even though it is not really acurate.
             String displayText = LegacyComponentSerializer.legacy(LegacyComponentSerializer.HEX_CHAR).serialize(displayString);
-
             this.objective.getScore(ChatColor.translateAlternateColorCodes('#', displayText)).setScore(i);
             i--;
         }
     }
 
     public void clearObjective() {
+        displayStrings = new ArrayList<>();
         String id = objective.getName();
         Scoreboard scoreboard = objective.getScoreboard();
         Component name = objective.displayName();
