@@ -1,40 +1,37 @@
 package eu.cosup.cores;
 
-import eu.cosup.cores.data.LoadedMap;
 import eu.cosup.cores.managers.*;
+import eu.cosup.cores.objects.LoadedMap;
+import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.GameEndTask;
 import eu.cosup.cores.tasks.GameTimerTask;
-import eu.cosup.cores.tasks.StartCountdownTask;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
+import eu.cosup.cores.utility.NameTagEditor;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Score;
-
-import java.util.ArrayList;
+import org.jetbrains.annotations.Nullable;
 
 public class Game {
 
     private static Game gameInstance;
-    private ArrayList<Player> joinedPlayers = new ArrayList<>();
-    private ArrayList<Player> playerList = new ArrayList<>();
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
     private LoadedMap selectedMap;
-    private ScoreBoardManager scoreBoardManager= new ScoreBoardManager("beacons");
+    private BlockManager blockManager;
 
     public Game(LoadedMap selectedMap) {
         gameInstance = this;
+        this.selectedMap = selectedMap;
 
         gameStateManager = new GameStateManager();
         teamManager = new TeamManager();
-
-        this.selectedMap = selectedMap;
-
-        joinedPlayers = new ArrayList<>(Cores.getInstance().getServer().getOnlinePlayers());
-        refreshPlayerCount();
+        blockManager = new BlockManager();
 
         initGame();
+    }
+
+    public BlockManager getBlockManager() {
+        return blockManager;
     }
 
     public static Game getGameInstance() {
@@ -49,15 +46,13 @@ public class Game {
         return teamManager;
     }
 
+
     public LoadedMap getSelectedMap() {
         return selectedMap;
     }
-    public ScoreBoardManager getScoreBoardManager(){return scoreBoardManager;}
 
     // loading and joining phase
     private void initGame() {
-
-        BeaconInformation.update();
 
         // this really just a useless state
         gameStateManager.setGameState(GameStateManager.GameState.LOADING);
@@ -68,59 +63,19 @@ public class Game {
     // active phase
     public void activateGame() {
 
-        new ActivateGameTask(joinedPlayers).runTask(Cores.getInstance());
+        new ActivateGameTask().runTask(Cores.getInstance());
         GameTimerTask.resetTimer();
         new GameTimerTask().runTask(Cores.getInstance());
 
     }
+    //Didn't know where else to put it
+    public void updatePlayersNameTag(Player player){
+        TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor();
+        NameTagEditor nameTagEditor = new NameTagEditor(player);
+        nameTagEditor.setNameColor(TeamColor.getChatColor(teamColor)).setPrefix(teamColor.toString()+" ").setSuffix(ChatColor.translateAlternateColorCodes('&', "&7 [&f"+Math.round(player.getHealth())+"&c\u2764&7]")) .setTabName(TeamColor.getChatColor(teamColor)+player.getName()).setChatName((TeamColor.getChatColor(teamColor)+player.getName()));
+    }
 
-    public void finishGame(TeamColor winner) {
-
+    public void finishGame(@Nullable TeamColor winner) {
         new GameEndTask(winner).runTask(Cores.getInstance());
-
-    }
-
-    public ArrayList<Player> getJoinedPlayers() {
-        return joinedPlayers;
-    }
-
-    public ArrayList<Player> getPlayerList() {
-        return playerList;
-    }
-
-    // returns boolean -> is the joined players > required players
-    // to check how many players are on the cores game
-    public void refreshPlayerCount() {
-
-        // if the game already started
-        if (
-                gameStateManager.getGameState() != GameStateManager.GameState.JOINING &&
-                gameStateManager.getGameState() != GameStateManager.GameState.STARTING
-        ) {
-            return;
-        }
-
-        if (joinedPlayers.size() < Cores.getInstance().getConfig().getInt("required-player-count")) {
-            // this means there is already a countdown going
-            if (Game.gameInstance.gameStateManager.getGameState() == GameStateManager.GameState.STARTING) {
-                Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.JOINING);
-
-                Component msg = Component.text().content("Stopping!").color(NamedTextColor.YELLOW).build();
-
-                Cores.getInstance().getServer().broadcast(msg);
-            }
-            // omg teach me proper formatting cuz god dayum this one is ugly
-            // KeinOptifine 27.12.22: youre right. dont worry sivtu will create a style guide and we will adapt all the chatmessages when time has come
-            Component msg = Component.text().content("Not enough players: (").color(NamedTextColor.RED)
-                            .append(Component.text().content(String.valueOf(joinedPlayers.size())).color(NamedTextColor.RED))
-                            .append(Component.text().content("/").color(NamedTextColor.RED))
-                            .append(Component.text().content(String.valueOf(Cores.getInstance().getConfig().getInt("required-player-count"))).color(NamedTextColor.RED)
-                            .append(Component.text().content(")").color(NamedTextColor.RED))).build();
-            Cores.getInstance().getServer().broadcast(msg);
-            return;
-        }
-
-        // just saving so we can cancel it later
-        new StartCountdownTask().runTask(Cores.getInstance());
     }
 }

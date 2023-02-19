@@ -2,8 +2,5 @@ name: Cores
 version: '${version}'
 main: eu.cosup.cores.Cores
 api-version: 1.19
-commands:
-  spectate:
-    aliases: sp
-  forcestart:
-    aliases: fs
+depend:
+  - "Tournament"

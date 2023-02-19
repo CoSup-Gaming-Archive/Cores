@@ -7,7 +7,6 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scheduler.BukkitTask;
 
 public class StartCountdownTask extends BukkitRunnable {
 
@@ -28,13 +27,11 @@ public class StartCountdownTask extends BukkitRunnable {
     @Override
     public void run() {
         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.STARTING);
-
-        // yes very nice now
-
+        Game.getGameInstance().getTeamManager().makeTeams();
         for (int i = 0; i <= startCountdown; i++) {
 
             int finalI = i;
-            BukkitTask task = new BukkitRunnable() {
+            new BukkitRunnable() {
                 @Override
                 public void run() {
                     if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.JOINING || stopped) {
@@ -44,19 +41,15 @@ public class StartCountdownTask extends BukkitRunnable {
 
                     // at the alst second
                     if (finalI <= 0) {
-                        Game.getGameInstance().getTeamManager().makeTeams(Game.getGameInstance().getJoinedPlayers());
 
                         Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ACTIVE);
-                        Game.getGameInstance().activateGame();
-                        // KeinOptifine: This is how you are supposed to do it:
+
                         Cores.getInstance().getServer().broadcast(
                                 Component.text("STARTING").color(NamedTextColor.YELLOW)
                         );
-
                         return;
                     }
 
-                    // This is how youre supposed to do it
                     Cores.getInstance().getServer().broadcast(
                             Component.text("Starting in " + finalI)
                                     .color(NamedTextColor.YELLOW)

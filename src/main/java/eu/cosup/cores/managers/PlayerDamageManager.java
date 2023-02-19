@@ -6,12 +6,10 @@ import java.util.HashMap;
 
 public class PlayerDamageManager {
 
-    private static HashMap<Player, Player> playerLastDamage = new HashMap<>();
+    private static final HashMap<Player, Player> playerLastDamage = new HashMap<>();
 
     public static void setPlayerLastDamage(Player player, Player damager) {
-
         playerLastDamage.put(player, damager);
-
     }
 
     public static Player getPlayerLastDamage(Player player) {
