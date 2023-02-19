@@ -58,6 +58,7 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerShootFireballListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
         getServer().getPluginManager().registerEvents(new BeaconBreakListener(), this);
+        getServer().getPluginManager().registerEvents(new EnchantingTableListener(), this);
 
         new StartGameCommandListener();
         new EndGameCommandListener();
