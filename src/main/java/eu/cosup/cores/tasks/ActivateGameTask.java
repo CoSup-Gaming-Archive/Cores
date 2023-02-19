@@ -25,7 +25,7 @@ public class ActivateGameTask extends BukkitRunnable {
         preparePlayers();
     }
 
-    private void prepareEnviroment() {
+    public static void prepareEnviroment() {
 
         Cores.getInstance().getGameWorld().setGameRule(GameRule.ANNOUNCE_ADVANCEMENTS, false);
         Cores.getInstance().getGameWorld().setGameRule(GameRule.DO_MOB_SPAWNING, false);
