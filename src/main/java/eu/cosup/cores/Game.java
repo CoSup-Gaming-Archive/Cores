@@ -17,7 +17,6 @@ public class Game {
     private GameStateManager gameStateManager;
     private TeamManager teamManager;
     private LoadedMap selectedMap;
-
     private BlockManager blockManager;
 
     public Game(LoadedMap selectedMap) {
@@ -59,7 +58,6 @@ public class Game {
         gameStateManager.setGameState(GameStateManager.GameState.LOADING);
 
         gameStateManager.setGameState(GameStateManager.GameState.JOINING);
-
     }
 
     // active phase
