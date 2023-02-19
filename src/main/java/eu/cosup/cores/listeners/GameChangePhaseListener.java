@@ -80,7 +80,44 @@ public class GameChangePhaseListener implements GameListener {
                 Game.getGameInstance().finishGame(teams.get(0).getColor());
             }
             if (teams.size() == 2) {
-                // TODO team with more players wins or if its a draw
+
+                Component notificationMessage = Component.text("Team with more players wins!").append(Component.text("-------------------------------------------")).color(NamedTextColor.RED);
+                Cores.getInstance().getServer().broadcast(notificationMessage);
+
+                if (teams.get(0).getAlivePlayers().size() == teams.get(1).getAlivePlayers().size()) {
+
+                    Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
+                        player.showTitle(Title.title(Component.text("Draw").color(NamedTextColor.GRAY), Component.text("No one won").color(NamedTextColor.YELLOW)));
+                    });
+                    Game.getGameInstance().finishGame(null);
+
+                    return;
+                }
+
+                Team winnerTeam;
+                Team loserTeam;
+
+                if (teams.get(0).getAlivePlayers().size() > teams.get(1).getAlivePlayers().size()) {
+                    
+                    winnerTeam = teams.get(0);
+                    loserTeam = teams.get(1);
+                    
+                } else {
+                    winnerTeam = teams.get(1);
+                    loserTeam = teams.get(0);
+                }
+
+                winnerTeam.getAlivePlayers().forEach(winnerTeamPlayer -> {
+                    Title title = Title.title(Component.text("You are the winner").color(NamedTextColor.GREEN), Component.text("Congrats!").color(NamedTextColor.YELLOW));
+                    winnerTeamPlayer.showTitle(title);
+                });
+
+                loserTeam.getAlivePlayers().forEach(loserTeamPlayer -> {
+                    Title title = Title.title(Component.text("Game over").color(NamedTextColor.RED), Component.text("You lost :(").color(NamedTextColor.YELLOW));
+                    loserTeamPlayer.showTitle(title);
+                });
+
+                Game.getGameInstance().finishGame(winnerTeam.getColor());
             }
         }
     }
