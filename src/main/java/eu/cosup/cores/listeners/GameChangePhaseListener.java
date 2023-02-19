@@ -38,15 +38,20 @@ public class GameChangePhaseListener implements GameListener {
 
         if (event.newGamePhase() == GameStateManager.GamePhase.ARENA) {
             Cores.getInstance().setGameWorld(Bukkit.createWorld(new WorldCreator("arena")));
-            new ActivateGameTask().runTask(Cores.getInstance());
-
             // teleport all the player to the arena
-            Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> player.teleport(new Location(
+            Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
+                player.teleport(new Location(
                     Cores.getInstance().getGameWorld(),
                     15.7,
                     -45,
-                    10
-            )));
+                    10));
+
+                player.getInventory().clear();
+                ActivateGameTask.preparePlayerStats(player);
+                ActivateGameTask.givePlayerArmor(player);
+                Game.getGameInstance().updatePlayersNameTag(player);
+                ActivateGameTask.givePlayerTools(player);
+            });
 
             // teleport team one to their spawn
             for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeams().get(0).getAlivePlayers()) {
