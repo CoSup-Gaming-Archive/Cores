@@ -2,6 +2,7 @@ package eu.cosup.cores.tasks;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.objects.BeaconState;
 import eu.cosup.cores.objects.SideBarInformation;
 import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.objects.TeamColor;
@@ -62,13 +63,13 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         beaconTeam.setBeaconCount(beaconTeam.getBeaconCount() - 1);
 
         if (Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
-            beaconTeam.setLeftBeaconAlive(false);
+            beaconTeam.setLeftBeaconState(BeaconState.OFF);
         } else if (!Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
-            beaconTeam.setRightBeaconAlive(false);
+            beaconTeam.setRightBeaconState(BeaconState.OFF);
         }
 
         for (Player alivePlayer : beaconTeam.getAlivePlayers()) {
-            Title title = Title.title(Component.text("Your beacon has been detroyed").color(NamedTextColor.RED), Component.text().build());
+            Title title = Title.title(Component.text("Beacon destroyed").color(NamedTextColor.RED), Component.text().build());
             alivePlayer.showTitle(title);
             alivePlayer.playSound(alivePlayer.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
         }
