@@ -1,2 +1,0 @@
-TODO:
-- Does the game end if the Beacon is broken or only if also the team is killed?
