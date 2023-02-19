@@ -39,18 +39,6 @@ public class TeamManager {
         }
     }
 
-    public ArrayList<Team> getTeamsWithBeds() {
-        ArrayList<Team> aliveTeams = new ArrayList<>();
-
-        for (Team team : teams) {
-            if (team.isAlive()) {
-                aliveTeams.add(team);
-            }
-        }
-
-        return aliveTeams;
-    }
-
     public @Nullable Team getTeamWithName(@NotNull String name) {
 
         for (Team team : teams) {
