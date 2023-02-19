@@ -44,6 +44,10 @@ public class GameTimerTask extends BukkitRunnable {
             Cores.getInstance().getServer().broadcast(Component.text("At 30 minutes the team with more players alive wins").color(NamedTextColor.RED));
         }
 
+        if (secondsElapsed == 1800) {
+            Game.getGameInstance().getGameStateManager().setGameState(GameStateManager.GameState.ENDING);
+        }
+
         new GameTimerTask().runTaskLater(Cores.getInstance(), 20L);
     }
 
