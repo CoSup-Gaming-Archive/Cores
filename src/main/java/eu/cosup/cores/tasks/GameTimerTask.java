@@ -35,7 +35,7 @@ public class GameTimerTask extends BukkitRunnable {
         }
 
         if (secondsElapsed == 900) {
-            Cores.getInstance().getServer().broadcast(Component.text("At 16 minutes the arena will start").color(NamedTextColor.RED));
+            Cores.getInstance().getServer().broadcast(Component.text("At 17 minutes the arena will start").color(NamedTextColor.RED));
             Game.getGameInstance().getGameStateManager().setGamePhase(GameStateManager.GamePhase.BEACON_DESTRUCTION);
         }
 

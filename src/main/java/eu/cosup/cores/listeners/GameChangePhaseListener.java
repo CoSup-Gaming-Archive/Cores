@@ -8,13 +8,13 @@ import eu.cosup.cores.interfaces.GameListener;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.objects.TeamColor;
+import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
@@ -37,7 +37,38 @@ public class GameChangePhaseListener implements GameListener {
     public void firedChangeGamePhaseEvent(@NotNull ChangeGamePhaseEvent event) {
 
         if (event.newGamePhase() == GameStateManager.GamePhase.ARENA) {
+            Cores.getInstance().setGameWorld(Cores.getInstance().getServer().getWorld("arena"));
+            new ActivateGameTask().runTask(Cores.getInstance());
 
+            // teleport all the player to the arena
+            Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> player.teleport(new Location(
+                    Cores.getInstance().getGameWorld(),
+                    15.7,
+                    -45,
+                    10
+            )));
+
+            // teleport team one to their spawn
+            for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeams().get(0).getAlivePlayers()) {
+
+                alivePlayer.teleport(new Location(
+                        Cores.getInstance().getGameWorld(),
+                        -8.6,
+                        -58,
+                        9.3
+                ));
+            }
+
+            // teleport team two to their spawn
+            for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeams().get(1).getAlivePlayers()) {
+
+                alivePlayer.teleport(new Location(
+                        Cores.getInstance().getGameWorld(),
+                        36,
+                        -58,
+                        9.6
+                ));
+            }
         }
 
         if (event.newGamePhase() == GameStateManager.GamePhase.BEACON_DESTRUCTION) {
@@ -51,13 +82,13 @@ public class GameChangePhaseListener implements GameListener {
             }
 
             for (Pair<Location, Location> beaconLocations : Game.getGameInstance().getSelectedMap().getTeamBeacons().values()) {
-                new TeamLoseBeaconTask(beaconLocations.first(), null);
-                new TeamLoseBeaconTask(beaconLocations.second(), null);
+                new TeamLoseBeaconTask(beaconLocations.left(), null);
+                new TeamLoseBeaconTask(beaconLocations.right(), null);
             }
 
             Cores.getInstance().getGameWorld().playSound(
                     Game.getGameInstance().getSelectedMap().getSpectatorSpawn(),
-                    Sound.ENTITY_ENDER_DRAGON_AMBIENT,
+                    Sound.ENTITY_LIGHTNING_BOLT_IMPACT,
                     20,
                     1
             );
