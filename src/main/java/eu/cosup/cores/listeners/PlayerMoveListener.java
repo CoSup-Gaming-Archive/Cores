@@ -48,7 +48,7 @@ public class PlayerMoveListener implements Listener {
                     for (TeamColor teamColor : Game.getGameInstance().getSelectedMap().getTeamBeacons().keySet()) {
                         Pair<Location, Location> beaconLocations = Game.getGameInstance().getSelectedMap().getTeamBeacons().get(teamColor);
 
-                        if (teamColor.equals(Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor())) {
+                        if (teamColor == Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor()) {
                             continue;
                         }
 
