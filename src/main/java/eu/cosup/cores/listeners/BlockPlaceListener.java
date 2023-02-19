@@ -40,6 +40,10 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            return;
+        }
+
         if (Game.getGameInstance().getSelectedMap().getMinHeight() > block.getY()) {
             player.sendMessage(msg);
             event.setCancelled(true);
@@ -66,17 +70,7 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
-        // for the lols if this actualy happens
-        if (event.getBlock().getType().toString().toLowerCase().contains("bed")) {
-            event.getPlayer().sendMessage("You cheater how you get bed?!?!");
-            Bukkit.getLogger().severe("Someone just tried placing a bed lol");
-            event.getPlayer().getInventory().remove(event.getBlock().getType());
-            event.setCancelled(true);
-            return;
-        }
-
         Game.getGameInstance().getBlockManager().addBlock(block);
-
     }
 
     @EventHandler

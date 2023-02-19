@@ -39,7 +39,7 @@ public class BlockBreakListener implements Listener {
                 Material.DIAMOND_BLOCK
         );
 
-        if ((event.getBlock().getType().toString().contains("OAK") && !event.getBlock().getType().toString().contains("DARK")) || allowedBlocks.contains(event.getBlock().getType())) {
+        if (allowedBlocks.contains(event.getBlock().getType())) {
             return;
         }
 

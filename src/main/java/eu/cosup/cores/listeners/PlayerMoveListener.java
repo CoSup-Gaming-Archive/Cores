@@ -31,6 +31,7 @@ public class PlayerMoveListener implements Listener {
             @Override
             public void run() {
 
+                // we dont want to do this in arena
                 List<TeamColor> leftBeaconsChange = new ArrayList<>();
                 List<TeamColor> rightBeaconsChange = new ArrayList<>();
 
@@ -44,9 +45,17 @@ public class PlayerMoveListener implements Listener {
 
                 });
 
+                if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+                    return;
+                }
+
                 for (Player player : Cores.getInstance().getServer().getOnlinePlayers()) {
                     for (TeamColor teamColor : Game.getGameInstance().getSelectedMap().getTeamBeacons().keySet()) {
                         Pair<Location, Location> beaconLocations = Game.getGameInstance().getSelectedMap().getTeamBeacons().get(teamColor);
+
+                        if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()) == null) {
+                            continue;
+                        }
 
                         if (teamColor == Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor()) {
                             continue;
@@ -99,6 +108,10 @@ public class PlayerMoveListener implements Listener {
             return;
         }
 
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            return;
+        }
+
         // if player is bellow the threshold
         if (Game.getGameInstance().getSelectedMap().getDeathHeight() > event.getTo().getY()) {
             // he die
@@ -118,11 +131,5 @@ public class PlayerMoveListener implements Listener {
             event.getPlayer().setHealth(0);
             return;
         }
-
-        if (PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
-            return;
-        }
-
-
     }
 }
