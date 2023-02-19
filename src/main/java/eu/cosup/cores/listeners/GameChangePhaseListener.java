@@ -37,7 +37,7 @@ public class GameChangePhaseListener implements GameListener {
     public void firedChangeGamePhaseEvent(@NotNull ChangeGamePhaseEvent event) {
 
         if (event.newGamePhase() == GameStateManager.GamePhase.ARENA) {
-            Cores.getInstance().setGameWorld(Cores.getInstance().getServer().getWorld("arena"));
+            Cores.getInstance().setGameWorld(Bukkit.createWorld(new WorldCreator("arena")));
             new ActivateGameTask().runTask(Cores.getInstance());
 
             // teleport all the player to the arena
