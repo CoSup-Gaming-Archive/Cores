@@ -40,44 +40,48 @@ public class SideBarInformation {
 
     private static void addFormattedTeamStrings(ScoreBoardManager scoreBoardManager) {
 
+        int i = 0;
         for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
+            i++;
+            StringBuilder extra = new StringBuilder();
+            extra.append("ㅤ".repeat(Math.max(0, i)));
 
             TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
             scoreBoardManager.addItem(teamText.build());
 
             switch (team.getLeftBeaconState()) {
                 case ON -> {
-                    scoreBoardManager.addItem(Component.text("Left ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" ON").color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD)));
+                    scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text(" ✔" + extra).color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD)));
                 }
                 case OFF -> {
-                    scoreBoardManager.addItem(Component.text("Left ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" OFF").color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
+                    scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text(" ✖" + extra).color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
                 }
                 case ATTACK -> {
                     if (GameTimerTask.getSecondsElapsed() % 2 == 0) {
-                        scoreBoardManager.addItem(Component.text("Left ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" \u26A0").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD)));
+                        scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text(" \u26A0" + extra).color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD)));
                     } else {
-                        scoreBoardManager.addItem(Component.text("Left ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" \u26A0").color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
+                        scoreBoardManager.addItem(Component.text("Left beacon").color(NamedTextColor.YELLOW).append(Component.text(" \u26A0" + extra).color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
                     }
                 }
             }
 
             switch (team.getRightBeaconState()) {
                 case ON -> {
-                    scoreBoardManager.addItem(Component.text("Right ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" ON").color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD)));
+                    scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text(" ✔" + extra).color(NamedTextColor.GREEN).decorate(TextDecoration.BOLD)));
                 }
                 case OFF -> {
-                    scoreBoardManager.addItem(Component.text("Right ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" OFF").color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
+                    scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text(" ✖" + extra).color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
                 }
                 case ATTACK -> {
                     if (GameTimerTask.getSecondsElapsed() % 2 == 0) {
-                        scoreBoardManager.addItem(Component.text("Right ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" \u26A0").color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD)));
+                        scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text(" \u26A0" + extra).color(NamedTextColor.YELLOW).decorate(TextDecoration.BOLD)));
                     } else {
-                        scoreBoardManager.addItem(Component.text("Right ").color(NamedTextColor.YELLOW).append(Component.text("beacon").color(TeamColor.getNamedTextColor(team.getColor()))).append(Component.text(" \u26A0").color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
+                        scoreBoardManager.addItem(Component.text("Right beacon").color(NamedTextColor.YELLOW).append(Component.text(" \u26A0" + extra).color(NamedTextColor.RED).decorate(TextDecoration.BOLD)));
                     }
                 }
             }
 
-            scoreBoardManager.addItem(Component.text("------------------").color(TeamColor.getNamedTextColor(team.getColor())));
+            scoreBoardManager.addItem(Component.text("------------------" + extra).color(NamedTextColor.YELLOW));
         }
     }
 }
