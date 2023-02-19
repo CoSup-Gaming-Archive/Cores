@@ -25,13 +25,13 @@ public class GameTimerTask extends BukkitRunnable {
         if (secondsElapsed == 600) {
             Game.getGameInstance().getGameStateManager().setGamePhase(GameStateManager.GamePhase.ARMOR_UPGRADE);
             Cores.getInstance().getServer().broadcast(Component.text("At 15 minutes all beacons will be destroyed").color(NamedTextColor.RED));
-            Cores.getInstance().getServer().broadcast(Component.text("All team received").color(NamedTextColor.YELLOW).append(Component.text(" IRON ARMOR ").color(NamedTextColor.GRAY)));
+            //Cores.getInstance().getServer().broadcast(Component.text("All team received").color(NamedTextColor.YELLOW).append(Component.text(" IRON ARMOR ").color(NamedTextColor.GRAY)));
         }
 
         if (secondsElapsed == 800) {
             Game.getGameInstance().getGameStateManager().setGamePhase(GameStateManager.GamePhase.SWORD_UPGRADE);
             Cores.getInstance().getServer().broadcast(Component.text("At 15 minutes all beacons will be destroyed").color(NamedTextColor.RED));
-            Cores.getInstance().getServer().broadcast(Component.text("All team received").color(NamedTextColor.YELLOW).append(Component.text(" IRON SWORDS ").color(NamedTextColor.GRAY)));
+            //Cores.getInstance().getServer().broadcast(Component.text("All team received").color(NamedTextColor.YELLOW).append(Component.text(" IRON SWORDS ").color(NamedTextColor.GRAY)));
         }
 
         if (secondsElapsed == 900) {
