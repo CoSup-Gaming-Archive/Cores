@@ -6,7 +6,6 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.tasks.SpectatorTask;
 import eu.cosup.tournament.common.utility.PlayerUtility;
-import net.kyori.adventure.text.Component;
 import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

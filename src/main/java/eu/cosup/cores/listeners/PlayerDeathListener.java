@@ -66,8 +66,8 @@ public class PlayerDeathListener implements Listener {
         } else {
             killer.playSound(player.getLocation(), Sound.ENTITY_PLAYER_LEVELUP, 200f, 2f);
             killerText
-            .append(Component.text().content(" was killed by ").color(NamedTextColor.YELLOW))
-            .append(Component.text().content(killer.getName()).color(TeamColor.getNamedTextColor(Game.getGameInstance().getTeamManager().whichTeam(killer.getUniqueId()).getColor())));
+                    .append(Component.text().content(" was killed by ").color(NamedTextColor.YELLOW))
+                    .append(Component.text().content(killer.getName()).color(TeamColor.getNamedTextColor(Game.getGameInstance().getTeamManager().whichTeam(killer.getUniqueId()).getColor())));
             PlayerDamageManager.setPlayerLastDamage(event.getPlayer(), null);
         }
 

@@ -1,7 +1,6 @@
 package eu.cosup.cores.listeners.custom;
 
 import eu.cosup.cores.Game;
-import eu.cosup.cores.objects.BeaconState;
 import eu.cosup.cores.objects.Team;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;

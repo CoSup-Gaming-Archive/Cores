@@ -4,12 +4,9 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.objects.BeaconState;
-import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.objects.TeamColor;
-import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.tournament.common.utility.PlayerUtility;
 import it.unimi.dsi.fastutil.Pair;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -103,7 +100,7 @@ public class PlayerMoveListener implements Listener {
 
         if (
                 event.getPlayer().getGameMode() == GameMode.CREATIVE
-                || event.getPlayer().getGameMode() == GameMode.SPECTATOR
+                        || event.getPlayer().getGameMode() == GameMode.SPECTATOR
         ) {
             return;
         }
@@ -119,14 +116,14 @@ public class PlayerMoveListener implements Listener {
         }
 
         if (event.getPlayer().getLocation().getBlockX() > Game.getGameInstance().getSelectedMap().getxMax() ||
-            event.getPlayer().getLocation().getBlockX() < Game.getGameInstance().getSelectedMap().getxMin()) {
+                event.getPlayer().getLocation().getBlockX() < Game.getGameInstance().getSelectedMap().getxMin()) {
 
             event.getPlayer().setHealth(0);
             return;
         }
 
         if (event.getPlayer().getLocation().getBlockZ() > Game.getGameInstance().getSelectedMap().getzMax() ||
-            event.getPlayer().getLocation().getBlockZ() < Game.getGameInstance().getSelectedMap().getzMin()) {
+                event.getPlayer().getLocation().getBlockZ() < Game.getGameInstance().getSelectedMap().getzMin()) {
 
             event.getPlayer().setHealth(0);
             return;

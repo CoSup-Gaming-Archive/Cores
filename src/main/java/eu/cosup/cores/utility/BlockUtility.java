@@ -25,6 +25,7 @@ public class BlockUtility {
         }
         return false;
     }
+
     public static RayTraceResult rayTrace(Location start, Vector direction, double maxDistance, ArrayList<Material> targetBlocks) {
         if (direction.lengthSquared() < 1e-5 || maxDistance <= 1e-5) return null;
 
@@ -33,7 +34,7 @@ public class BlockUtility {
 
         BlockIterator bIterator = new BlockIterator(start.getWorld(), start.toVector(), direction, 0, (int) Math.ceil(maxDistance));
 
-        while(bIterator.hasNext()) {
+        while (bIterator.hasNext()) {
 
             Block block = bIterator.next();
             // First perform a rough collision check with BlockIterator

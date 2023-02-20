@@ -6,7 +6,6 @@ import eu.cosup.cores.tasks.GameTimerTask;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.DisplaySlot;
 
@@ -35,7 +34,7 @@ public class SideBarInformation {
             return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " elapsed";
         }
 
-        return seconds+" seconds";
+        return seconds + " seconds";
     }
 
     private static void addFormattedTeamStrings(ScoreBoardManager scoreBoardManager) {

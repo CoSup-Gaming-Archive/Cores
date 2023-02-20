@@ -1,14 +1,8 @@
 package eu.cosup.cores;
 
-import eu.cosup.cores.listeners.StartGameCommandListener;
 import eu.cosup.cores.listeners.*;
 import eu.cosup.cores.listeners.custom.*;
-import eu.cosup.cores.listeners.PlayerDeathListener;
-import eu.cosup.cores.listeners.PlayerJoinListener;
-import eu.cosup.cores.listeners.PlayerLeaveListener;
-import eu.cosup.cores.listeners.PlayerMoveListener;
 import eu.cosup.cores.managers.ScoreBoardManager;
-
 import eu.cosup.cores.objects.LoadedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -90,12 +84,12 @@ public final class Cores extends JavaPlugin {
         return true;
     }
 
-    public void setGameWorld(World gameWorld) {
-        this.gameWorld = gameWorld;
-    }
-
     public World getGameWorld() {
         return gameWorld;
+    }
+
+    public void setGameWorld(World gameWorld) {
+        this.gameWorld = gameWorld;
     }
 
     public Game getGame() {

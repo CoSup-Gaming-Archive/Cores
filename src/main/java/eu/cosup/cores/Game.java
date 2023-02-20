@@ -1,6 +1,8 @@
 package eu.cosup.cores;
 
-import eu.cosup.cores.managers.*;
+import eu.cosup.cores.managers.BlockManager;
+import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.managers.TeamManager;
 import eu.cosup.cores.objects.LoadedMap;
 import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.ActivateGameTask;
@@ -30,12 +32,12 @@ public class Game {
         initGame();
     }
 
-    public BlockManager getBlockManager() {
-        return blockManager;
-    }
-
     public static Game getGameInstance() {
         return gameInstance;
+    }
+
+    public BlockManager getBlockManager() {
+        return blockManager;
     }
 
     public GameStateManager getGameStateManager() {
@@ -68,11 +70,12 @@ public class Game {
         new GameTimerTask().runTask(Cores.getInstance());
 
     }
+
     //Didn't know where else to put it
-    public void updatePlayersNameTag(Player player){
+    public void updatePlayersNameTag(Player player) {
         TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor();
         NameTagEditor nameTagEditor = new NameTagEditor(player);
-        nameTagEditor.setNameColor(TeamColor.getChatColor(teamColor)).setPrefix(teamColor.toString()+" ").setSuffix(ChatColor.translateAlternateColorCodes('&', "&7 [&f"+Math.round(player.getHealth())+"&c\u2764&7]")) .setTabName(TeamColor.getChatColor(teamColor)+player.getName()).setChatName((TeamColor.getChatColor(teamColor)+player.getName()));
+        nameTagEditor.setNameColor(TeamColor.getChatColor(teamColor)).setPrefix(teamColor.toString() + " ").setSuffix(ChatColor.translateAlternateColorCodes('&', "&7 [&f" + Math.round(player.getHealth()) + "&c\u2764&7]")).setTabName(TeamColor.getChatColor(teamColor) + player.getName()).setChatName((TeamColor.getChatColor(teamColor) + player.getName()));
     }
 
     public void finishGame(@Nullable TeamColor winner) {

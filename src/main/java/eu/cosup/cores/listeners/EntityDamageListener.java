@@ -10,11 +10,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class EntityDamageListener implements Listener {
     @EventHandler
-    public void onEvent (EntityDamageEvent event){
-        if (!(event.getEntity() instanceof Player player)){
+    public void onEvent(EntityDamageEvent event) {
+        if (!(event.getEntity() instanceof Player player)) {
             return;
         }
-        if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId())==null){
+        if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()) == null) {
             return;
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Cores.getInstance(), () -> {

@@ -78,7 +78,7 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
 
         // broadcast that they lost bed
         Component msg = Component.text().content("A ").color(TextColor.color(NamedTextColor.YELLOW))
-                .append(Component.text().content(TeamColor.getFormattedTeamColor(beaconTeam.getColor())+" beacon").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
+                .append(Component.text().content(TeamColor.getFormattedTeamColor(beaconTeam.getColor()) + " beacon").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
                 .append(Component.text().content(" was destroyed!").color(NamedTextColor.YELLOW)).build();
 
         Cores.getInstance().getServer().broadcast(msg);
