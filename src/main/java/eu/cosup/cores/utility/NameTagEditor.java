@@ -37,7 +37,7 @@ public class NameTagEditor {
             team.setPrefix(addPrefix+team.getPrefix());
         } else {
             team.setPrefix(team.getPrefix()+addPrefix);
-        };
+        }
         return this;
     }
     public NameTagEditor setSuffix(String newSuffix){
@@ -49,7 +49,7 @@ public class NameTagEditor {
             team.setPrefix(addSuffix+team.getPrefix());
         } else {
             team.setPrefix(team.getPrefix()+addSuffix);
-        };
+        }
         return this;
     }
     public Team getTeam(){

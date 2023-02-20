@@ -4,7 +4,10 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.objects.TeamColor;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.GameRule;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -12,17 +15,9 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-
 public class ActivateGameTask extends BukkitRunnable {
 
     public ActivateGameTask() {
-    }
-
-    @Override
-    public void run() {
-        prepareEnviroment();
-        preparePlayers();
     }
 
     public static void prepareEnviroment() {
@@ -41,12 +36,6 @@ public class ActivateGameTask extends BukkitRunnable {
         Cores.getInstance().getGameWorld().setGameRule(GameRule.DO_FIRE_TICK, false);
 
 
-    }
-
-    private void preparePlayers() {
-        for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
-            team.getPlayers().forEach(ActivateGameTask::preparePlayerFull);
-        }
     }
 
     // ooo so juicy
@@ -89,7 +78,6 @@ public class ActivateGameTask extends BukkitRunnable {
         player.getInventory().setBoots(boots);
     }
 
-
     private static void addColor(@NotNull ItemStack armorPeace, @NotNull Player player) {
         ItemMeta meta = armorPeace.hasItemMeta() ? armorPeace.getItemMeta() : Bukkit.getItemFactory().getItemMeta(armorPeace.getType());
         LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) meta;
@@ -103,5 +91,17 @@ public class ActivateGameTask extends BukkitRunnable {
         player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
         player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
         player.getInventory().addItem(new ItemStack(Material.IRON_AXE));
+    }
+
+    @Override
+    public void run() {
+        prepareEnviroment();
+        preparePlayers();
+    }
+
+    private void preparePlayers() {
+        for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
+            team.getPlayers().forEach(ActivateGameTask::preparePlayerFull);
+        }
     }
 }
