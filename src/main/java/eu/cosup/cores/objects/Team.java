@@ -1,6 +1,5 @@
 package eu.cosup.cores.objects;
 
-import eu.cosup.cores.Game;
 import eu.cosup.cores.events.TeamChangeAliveEvent;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -13,10 +12,10 @@ import java.util.UUID;
 
 public class Team {
 
-    private List<Player> players;
     private final TeamColor color;
-    private boolean isAlive;
     private final HashMap<String, Boolean> deathList = new HashMap<>();
+    private List<Player> players;
+    private boolean isAlive;
     private String slug;
     private int beaconCount = 2;
     private BeaconState leftBeaconState = BeaconState.ON;
@@ -36,12 +35,12 @@ public class Team {
         return leftBeaconState;
     }
 
-    public BeaconState getRightBeaconState() {
-        return rightBeaconState;
-    }
-
     public void setLeftBeaconState(BeaconState leftBeaconState) {
         this.leftBeaconState = leftBeaconState;
+    }
+
+    public BeaconState getRightBeaconState() {
+        return rightBeaconState;
     }
 
     public void setRightBeaconState(BeaconState rightBeaconState) {
@@ -103,12 +102,12 @@ public class Team {
         return new ArrayList<>(this.getOnlinePlayers().stream().filter(player -> !deathList.get(player.getName())).toList());
     }
 
+    public boolean isAlive() {
+        return isAlive;
+    }
+
     public void setAlive(boolean alive) {
         isAlive = alive;
         new TeamChangeAliveEvent(alive, color);
-    }
-
-    public boolean isAlive() {
-        return isAlive;
     }
 }

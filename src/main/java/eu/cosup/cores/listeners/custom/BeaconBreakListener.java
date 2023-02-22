@@ -1,7 +1,6 @@
 package eu.cosup.cores.listeners.custom;
 
 import eu.cosup.cores.Game;
-import eu.cosup.cores.objects.BeaconState;
 import eu.cosup.cores.objects.Team;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
@@ -18,6 +17,7 @@ public class BeaconBreakListener implements Listener {
         event.getPlayer().removePotionEffect(PotionEffectType.SLOW_DIGGING);
         event.getPlayer().removePotionEffect(PotionEffectType.FAST_DIGGING);
 
+
         if (event.getClickedBlock() == null) {
             return;
         }
@@ -32,7 +32,7 @@ public class BeaconBreakListener implements Listener {
             return;
         }
 
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, 0, false, false, false));
-        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 2, false, false, false));
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, Integer.MAX_VALUE, 0, false, false, false));
+        event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Integer.MAX_VALUE, 1, false, false, false));
     }
 }

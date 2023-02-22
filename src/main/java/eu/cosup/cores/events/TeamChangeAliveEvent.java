@@ -9,13 +9,13 @@ import java.util.List;
 
 public record TeamChangeAliveEvent(boolean teamAlive, TeamColor teamColor) {
 
+    private static List<TeamListener> listeners = new ArrayList<>();
+
     public TeamChangeAliveEvent(boolean teamAlive, TeamColor teamColor) {
         this.teamAlive = teamAlive;
         this.teamColor = teamColor;
         changeGamePhase();
     }
-
-    private static List<TeamListener> listeners = new ArrayList<>();
 
     public static void addListener(TeamListener listener) {
         listeners.add(listener);

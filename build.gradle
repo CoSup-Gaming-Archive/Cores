@@ -29,6 +29,8 @@ repositories {
         name = 'sonatype'
         url = 'https://oss.sonatype.org/content/groups/public/'
     }
+    maven { url 'https://repo.cloudnetservice.eu/repository/releases/' }
+    // JetBrains screamed at me for not having this here ~Niko
 }
 
 dependencies {

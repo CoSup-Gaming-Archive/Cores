@@ -17,6 +17,7 @@ import java.util.UUID;
 public class TeamManager {
 
     private ArrayList<Team> teams = new ArrayList<>();
+
     public ArrayList<Team> getTeams() {
         return teams;
     }

@@ -23,7 +23,7 @@ public enum TeamColor {
         return Color.BLACK;
     }
 
-    public static NamedTextColor getNamedTextColor(TeamColor teamColor){
+    public static NamedTextColor getNamedTextColor(TeamColor teamColor) {
 
         if (teamColor == RED) {
             return NamedTextColor.RED;
@@ -32,19 +32,20 @@ public enum TeamColor {
         if (teamColor == BLUE) {
             return NamedTextColor.BLUE;
         }
-        
+
         return NamedTextColor.BLACK;
     }
-    public static ChatColor getChatColor(TeamColor teamColor){
-        if (teamColor==RED){
+
+    public static ChatColor getChatColor(TeamColor teamColor) {
+        if (teamColor == RED) {
             return ChatColor.RED;
-        } else if (teamColor==BLUE){
+        } else if (teamColor == BLUE) {
             return ChatColor.BLUE;
         }
         return ChatColor.BLACK;
     }
 
     public static String getFormattedTeamColor(TeamColor teamColor) {
-        return teamColor.toString().substring(0, 1).toUpperCase()+teamColor.toString().substring(1).toLowerCase();
+        return teamColor.toString().substring(0, 1).toUpperCase() + teamColor.toString().substring(1).toLowerCase();
     }
 }

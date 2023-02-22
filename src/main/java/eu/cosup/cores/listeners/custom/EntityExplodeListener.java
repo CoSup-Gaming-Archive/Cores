@@ -28,7 +28,7 @@ public class EntityExplodeListener implements Listener {
             return;
         }
 
-        ArrayList<Material> searchedTargets=new ArrayList<>();
+        ArrayList<Material> searchedTargets = new ArrayList<>();
         searchedTargets.add(Material.RED_STAINED_GLASS);
         searchedTargets.add(Material.YELLOW_STAINED_GLASS);
         searchedTargets.add(Material.BLUE_STAINED_GLASS);
@@ -39,7 +39,7 @@ public class EntityExplodeListener implements Listener {
 
         for (Block block : event.blockList()) {
 
-            if (searchedTargets.contains(block.getType()) || !Game.getGameInstance().getBlockManager().isBlockPlaced(block)){
+            if (searchedTargets.contains(block.getType()) || !Game.getGameInstance().getBlockManager().isBlockPlaced(block)) {
                 nonBreakableBlock.add(block);
                 continue;
             }

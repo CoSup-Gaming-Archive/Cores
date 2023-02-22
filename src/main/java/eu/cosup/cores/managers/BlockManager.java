@@ -10,7 +10,7 @@ public class BlockManager {
 
     private final ArrayList<Block> playerPlacedBlocks = new ArrayList<>();
 
-    public BlockManager(){
+    public BlockManager() {
     }
 
     public void addBlock(Block block) {

@@ -45,9 +45,9 @@ public class GameEndTask extends BukkitRunnable {
             int x = baseCenter.getBlockX();
             int y = baseCenter.getBlockY();
             int z = baseCenter.getBlockZ();
-            for (int xIndex = -8; xIndex<8; xIndex++){
-                for (int yIndex = -8; yIndex<8; yIndex++){
-                    for (int zIndex = -8; zIndex<8; zIndex++) {
+            for (int xIndex = -8; xIndex < 8; xIndex++) {
+                for (int yIndex = -8; yIndex < 8; yIndex++) {
+                    for (int zIndex = -8; zIndex < 8; zIndex++) {
                         int bx = x + xIndex;
                         int by = y + yIndex;
                         int bz = z + zIndex;
@@ -58,11 +58,11 @@ public class GameEndTask extends BukkitRunnable {
                     }
                 }
             }
-            for (int xi = -2; xi<=2; xi++){
-                for (int yi = 0; yi<=y-2; yi++){
-                    for (int zi = -2; zi<=2; zi++){
+            for (int xi = -2; xi <= 2; xi++) {
+                for (int yi = 0; yi <= y - 2; yi++) {
+                    for (int zi = -2; zi <= 2; zi++) {
                         double distance = Math.sqrt(Math.pow(xi, 2) + Math.pow(zi, 2));
-                        if (distance<=2.3) {
+                        if (distance <= 2.3) {
                             if (yi == y - 2) {
                                 baseCenter.getWorld().getBlockAt(baseCenter.getBlockX() + xi, yi, baseCenter.getBlockZ() + zi).setType(Material.GOLD_BLOCK);
                             } else if (yi == y - 3) {
@@ -74,11 +74,11 @@ public class GameEndTask extends BukkitRunnable {
                     }
                 }
             }
-            for (Player player: winnerTeam.getOnlinePlayers()){
+            for (Player player : winnerTeam.getOnlinePlayers()) {
                 player.teleport(baseCenter);
             }
-            for (Player player: Bukkit.getOnlinePlayers()){
-                if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId())!=winnerTeam){
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()) != winnerTeam) {
                     player.setGameMode(GameMode.SPECTATOR);
                     player.teleport(baseCenter);
                 }

@@ -1,10 +1,7 @@
 package eu.cosup.cores.listeners;
 
-import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.objects.Team;
-import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import org.bukkit.GameMode;
@@ -39,7 +36,7 @@ public class BlockBreakListener implements Listener {
                 Material.DIAMOND_BLOCK
         );
 
-        if ((event.getBlock().getType().toString().contains("OAK") && !event.getBlock().getType().toString().contains("DARK")) || allowedBlocks.contains(event.getBlock().getType())) {
+        if (allowedBlocks.contains(event.getBlock().getType())) {
             return;
         }
 

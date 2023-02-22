@@ -12,13 +12,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-import java.util.HashMap;
-
 public class SpectatorTask extends BukkitRunnable {
 
+    private static final int respawnDelay = Cores.getInstance().getConfig().getInt("respawn-delay");
     private final Player player;
     private final Boolean respawn;
-    private static final int respawnDelay = Cores.getInstance().getConfig().getInt("respawn-delay");
 
     public SpectatorTask(Player player, Boolean respawn) {
         this.player = player;
@@ -52,8 +50,8 @@ public class SpectatorTask extends BukkitRunnable {
                 @Override
                 public void run() {
                     player.clearTitle();
-                    Component msg = Component.text().content("Respawning in " ).color(NamedTextColor.RED)
-                            .append(Component.text().content(String.valueOf(respawnDelay-finalI))).build();
+                    Component msg = Component.text().content("Respawning in ").color(NamedTextColor.RED)
+                            .append(Component.text().content(String.valueOf(respawnDelay - finalI))).build();
 
                     Title title = Title.title(msg, Component.text().build());
 
@@ -61,7 +59,7 @@ public class SpectatorTask extends BukkitRunnable {
 
                     player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, finalI);
                 }
-            }.runTaskLater(Cores.getInstance(), i*20L);
+            }.runTaskLater(Cores.getInstance(), i * 20L);
         }
 
         new BukkitRunnable() {

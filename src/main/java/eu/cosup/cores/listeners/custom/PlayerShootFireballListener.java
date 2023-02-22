@@ -39,11 +39,11 @@ public class PlayerShootFireballListener implements Listener {
 
             // remove the firecharge itself from inventory
             ItemStack handItem = event.getPlayer().getInventory().getItemInMainHand();
-            handItem.setAmount(handItem.getAmount()-1);
+            handItem.setAmount(handItem.getAmount() - 1);
 
-            location.setX(location.getX() + location.getDirection().getX()*2);
-            location.setY(location.getY() + location.getDirection().getY()*2);
-            location.setZ(location.getZ() + location.getDirection().getZ()*2);
+            location.setX(location.getX() + location.getDirection().getX() * 2);
+            location.setY(location.getY() + location.getDirection().getY() * 2);
+            location.setZ(location.getZ() + location.getDirection().getZ() * 2);
 
             event.getPlayer().getInventory().setItemInMainHand(handItem);
 

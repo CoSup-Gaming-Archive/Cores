@@ -8,13 +8,13 @@ import java.util.List;
 
 public record ChangeGameStateEvent(GameStateManager.GameState newGameState, GameStateManager.GameState oldGameState) {
 
+    private static List<GameListener> listeners = new ArrayList<>();
+
     public ChangeGameStateEvent(GameStateManager.GameState newGameState, GameStateManager.GameState oldGameState) {
         this.newGameState = newGameState;
         this.oldGameState = oldGameState;
         changeGameState();
     }
-
-    private static List<GameListener> listeners = new ArrayList<>();
 
     public static void addListener(GameListener listener) {
         listeners.add(listener);

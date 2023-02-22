@@ -7,19 +7,18 @@ import eu.cosup.cores.events.ChangeGameStateEvent;
 import eu.cosup.cores.interfaces.GameListener;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.objects.Team;
-import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
-import org.bukkit.*;
-import org.bukkit.entity.EnderDragon;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.WorldCreator;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -38,13 +37,16 @@ public class GameChangePhaseListener implements GameListener {
 
         if (event.newGamePhase() == GameStateManager.GamePhase.ARENA) {
             Cores.getInstance().setGameWorld(Bukkit.createWorld(new WorldCreator("arena")));
+
+            Cores.getInstance().getGameWorld().getEntities().forEach(Entity::remove);
+
             // teleport all the player to the arena
             Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
                 player.teleport(new Location(
-                    Cores.getInstance().getGameWorld(),
-                    15.7,
-                    -45,
-                    10));
+                        Cores.getInstance().getGameWorld(),
+                        15.7,
+                        -45,
+                        10));
 
                 player.getInventory().clear();
                 ActivateGameTask.preparePlayerStats(player);
@@ -134,10 +136,10 @@ public class GameChangePhaseListener implements GameListener {
                 Team loserTeam;
 
                 if (teams.get(0).getAlivePlayers().size() > teams.get(1).getAlivePlayers().size()) {
-                    
+
                     winnerTeam = teams.get(0);
                     loserTeam = teams.get(1);
-                    
+
                 } else {
                     winnerTeam = teams.get(1);
                     loserTeam = teams.get(0);

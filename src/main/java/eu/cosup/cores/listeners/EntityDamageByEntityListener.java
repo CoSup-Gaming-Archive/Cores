@@ -21,7 +21,7 @@ public class EntityDamageByEntityListener implements Listener {
 
         if (event.getDamager().getType() == EntityType.PRIMED_TNT) {
             // we want less damage from tnt
-            event.setDamage(event.getDamage()/8);
+            event.setDamage(event.getDamage() / 8);
         }
 
         if (event.getEntity().getType() == EntityType.WANDERING_TRADER || event.getEntity().getType() == EntityType.VILLAGER) {
@@ -52,7 +52,7 @@ public class EntityDamageByEntityListener implements Listener {
         }
 
         if (Game.getGameInstance().getTeamManager().whichTeam(damaged.getUniqueId()).getColor() ==
-            Game.getGameInstance().getTeamManager().whichTeam(damager.getUniqueId()).getColor()) {
+                Game.getGameInstance().getTeamManager().whichTeam(damager.getUniqueId()).getColor()) {
 
             damager.sendMessage(Component.text().content("You cannot damage teammates").color(NamedTextColor.RED));
             event.setCancelled(true);

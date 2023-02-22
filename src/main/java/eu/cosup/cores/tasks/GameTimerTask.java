@@ -17,10 +17,26 @@ public class GameTimerTask extends BukkitRunnable {
         instance = this;
     }
 
+    public static void resetTimer() {
+        secondsElapsed = 0;
+    }
+
+    public static GameTimerTask getInstance() {
+        return instance;
+    }
+
+    public static int getSecondsElapsed() {
+        return secondsElapsed;
+    }
+
+    private static void setSecondsElapsed(int secondsElapsed) {
+        GameTimerTask.secondsElapsed = secondsElapsed;
+    }
+
     @Override
     public void run() {
         SideBarInformation.update();
-        setSecondsElapsed(getSecondsElapsed()+1);
+        setSecondsElapsed(getSecondsElapsed() + 1);
 
         if (secondsElapsed == 600) {
             Game.getGameInstance().getGameStateManager().setGamePhase(GameStateManager.GamePhase.ARMOR_UPGRADE);
@@ -54,20 +70,5 @@ public class GameTimerTask extends BukkitRunnable {
     public void cancelTimer() {
         this.cancel();
         instance = null;
-    }
-
-    public static void resetTimer() {
-        secondsElapsed = 0;
-    }
-
-    private static void setSecondsElapsed(int secondsElapsed) {
-        GameTimerTask.secondsElapsed = secondsElapsed;
-    }
-
-    public static GameTimerTask getInstance() {
-        return instance;
-    }
-    public static int getSecondsElapsed() {
-        return secondsElapsed;
     }
 }

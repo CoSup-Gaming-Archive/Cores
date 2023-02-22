@@ -5,7 +5,6 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.utility.BlockUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -40,6 +39,10 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            return;
+        }
+
         if (Game.getGameInstance().getSelectedMap().getMinHeight() > block.getY()) {
             player.sendMessage(msg);
             event.setCancelled(true);
@@ -53,30 +56,20 @@ public class BlockPlaceListener implements Listener {
         }
 
         if (event.getBlock().getLocation().getBlockX() > Game.getGameInstance().getSelectedMap().getxMax() ||
-            event.getBlock().getLocation().getBlockX() < Game.getGameInstance().getSelectedMap().getxMin()) {
+                event.getBlock().getLocation().getBlockX() < Game.getGameInstance().getSelectedMap().getxMin()) {
 
             event.setCancelled(true);
             return;
         }
 
         if (event.getBlock().getLocation().getBlockZ() > Game.getGameInstance().getSelectedMap().getzMax() ||
-            event.getBlock().getLocation().getBlockZ() < Game.getGameInstance().getSelectedMap().getzMin()) {
+                event.getBlock().getLocation().getBlockZ() < Game.getGameInstance().getSelectedMap().getzMin()) {
 
-            event.setCancelled(true);
-            return;
-        }
-
-        // for the lols if this actualy happens
-        if (event.getBlock().getType().toString().toLowerCase().contains("bed")) {
-            event.getPlayer().sendMessage("You cheater how you get bed?!?!");
-            Bukkit.getLogger().severe("Someone just tried placing a bed lol");
-            event.getPlayer().getInventory().remove(event.getBlock().getType());
             event.setCancelled(true);
             return;
         }
 
         Game.getGameInstance().getBlockManager().addBlock(block);
-
     }
 
     @EventHandler
