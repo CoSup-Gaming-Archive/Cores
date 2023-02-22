@@ -17,6 +17,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.WorldCreator;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +37,9 @@ public class GameChangePhaseListener implements GameListener {
 
         if (event.newGamePhase() == GameStateManager.GamePhase.ARENA) {
             Cores.getInstance().setGameWorld(Bukkit.createWorld(new WorldCreator("arena")));
+
+            Cores.getInstance().getGameWorld().getEntities().forEach(Entity::remove);
+
             // teleport all the player to the arena
             Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
                 player.teleport(new Location(
