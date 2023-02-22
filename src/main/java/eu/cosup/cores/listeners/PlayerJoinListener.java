@@ -10,6 +10,8 @@ import org.bukkit.GameMode;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class PlayerJoinListener implements Listener {
 
@@ -19,6 +21,12 @@ public class PlayerJoinListener implements Listener {
 
         if (PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             event.getPlayer().setGameMode(GameMode.CREATIVE);
+            return;
+        }
+
+        if (PlayerUtility.isPlayerStreamer(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
+            event.getPlayer().setGameMode(GameMode.SPECTATOR);
+            event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false, false));
             return;
         }
 
