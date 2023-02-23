@@ -24,7 +24,7 @@ public class PlaceOnCoralsListener implements Listener {
             return;
         }
 
-        if (event.getClickedBlock().getType().toString().contains("CORAL")) {
+        if (event.getClickedBlock().getType().toString().contains("CORAL") && !event.getClickedBlock().getType().toString().contains("BLOCK")) {
             event.setCancelled(true);
             event.getClickedBlock().setType(event.getPlayer().getInventory().getItemInMainHand().getType());
             event.getPlayer().getInventory().remove(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType(), 1));
