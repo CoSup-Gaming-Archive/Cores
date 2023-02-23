@@ -17,18 +17,24 @@ public class Team {
     private List<Player> players;
     private boolean isAlive;
     private String slug;
+    private String name;
     private int beaconCount = 2;
     private BeaconState leftBeaconState = BeaconState.ON;
     private BeaconState rightBeaconState = BeaconState.ON;
 
-    public Team(TeamColor teamColor, List<Player> players, boolean isAlive, @NotNull String slug) {
+    public Team(TeamColor teamColor, List<Player> players, boolean isAlive, @NotNull String slug, @NotNull String name) {
         this.players = players;
         this.color = teamColor;
         this.isAlive = isAlive;
         this.slug = slug;
+        this.name = name;
         for (Player player : players) {
             isPlayerDead(player);
         }
+    }
+
+    public String getName() {
+        return name;
     }
 
     public BeaconState getLeftBeaconState() {
