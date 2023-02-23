@@ -21,12 +21,14 @@ public class PlayerJoinListener implements Listener {
 
         if (PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             event.getPlayer().setGameMode(GameMode.CREATIVE);
+            event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
             return;
         }
 
         if (PlayerUtility.isPlayerStreamer(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             event.getPlayer().setGameMode(GameMode.SPECTATOR);
             event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1, false, false, false));
+            event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
             return;
         }
 
