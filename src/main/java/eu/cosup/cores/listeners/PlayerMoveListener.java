@@ -9,6 +9,7 @@ import eu.cosup.tournament.common.utility.PlayerUtility;
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -74,9 +75,13 @@ public class PlayerMoveListener implements Listener {
 
                 leftBeaconsChange.forEach(teamColor -> {
                     Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).setLeftBeaconState(BeaconState.ATTACK);
+                    Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getOnlinePlayers().forEach(player ->
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1));
                 });
                 rightBeaconsChange.forEach(teamColor -> {
                     Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).setRightBeaconState(BeaconState.ATTACK);
+                    Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getOnlinePlayers().forEach(player ->
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1));
                 });
 
             }
