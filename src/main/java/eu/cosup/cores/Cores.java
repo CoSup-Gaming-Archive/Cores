@@ -6,6 +6,7 @@ import eu.cosup.cores.managers.ScoreBoardManager;
 import eu.cosup.cores.objects.LoadedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -24,6 +25,7 @@ public final class Cores extends JavaPlugin {
         instance = this;
 
         gameWorld = Bukkit.getWorld("world");
+        gameWorld.getEntities().forEach(Entity::remove);
 
         reloadConfig();
         getConfig().options().copyDefaults(true);
@@ -36,6 +38,7 @@ public final class Cores extends JavaPlugin {
         }
 
         // register all the listeners
+        getServer().getPluginManager().registerEvents(new PlayerRegenerationListener(), this);
         getServer().getPluginManager().registerEvents(new PlaceOnCoralsListener(), this);
         getServer().getPluginManager().registerEvents(new ItemDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
