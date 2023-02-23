@@ -36,6 +36,7 @@ public final class Cores extends JavaPlugin {
         }
 
         // register all the listeners
+        getServer().getPluginManager().registerEvents(new PlaceOnCoralsListener(), this);
         getServer().getPluginManager().registerEvents(new ItemDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
