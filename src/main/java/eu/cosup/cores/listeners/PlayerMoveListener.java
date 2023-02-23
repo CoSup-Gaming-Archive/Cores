@@ -89,7 +89,7 @@ public class PlayerMoveListener implements Listener {
 
         // prevents ghosting
         if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
-            if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
+            if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName()) && !PlayerUtility.isPlayerStreamer(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
                 if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) {
                     event.setCancelled(true);
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 100));
