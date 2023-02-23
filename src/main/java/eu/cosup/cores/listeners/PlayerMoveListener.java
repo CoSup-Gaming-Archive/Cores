@@ -109,6 +109,10 @@ public class PlayerMoveListener implements Listener {
             return;
         }
 
+        if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()).isPlayerDead(event.getPlayer())) {
+            return;
+        }
+
         // if player is bellow the threshold
         if (Game.getGameInstance().getSelectedMap().getDeathHeight() > event.getTo().getY()) {
             // he die
