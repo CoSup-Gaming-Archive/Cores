@@ -48,11 +48,8 @@ public class GameChangePhaseListener implements GameListener {
                         -45,
                         10));
 
-                player.getInventory().clear();
                 ActivateGameTask.preparePlayerStats(player);
-                ActivateGameTask.givePlayerArmor(player);
                 Game.getGameInstance().updatePlayersNameTag(player);
-                ActivateGameTask.givePlayerTools(player);
             });
 
             // teleport team one to their spawn
