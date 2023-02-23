@@ -45,7 +45,7 @@ public class SideBarInformation {
             StringBuilder extra = new StringBuilder();
             extra.append(" ".repeat(Math.max(0, i)));
 
-            TextComponent.Builder teamText = Component.text().content(team.getSlug()).color(TeamColor.getNamedTextColor(team.getColor()));
+            TextComponent.Builder teamText = Component.text().content(team.getName()).color(TeamColor.getNamedTextColor(team.getColor()));
             scoreBoardManager.addItem(teamText.build());
 
             switch (team.getLeftBeaconState()) {

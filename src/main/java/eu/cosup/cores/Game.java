@@ -11,6 +11,7 @@ import eu.cosup.cores.tasks.GameTimerTask;
 import eu.cosup.cores.utility.NameTagEditor;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Game {
@@ -72,7 +73,7 @@ public class Game {
     }
 
     //Didn't know where else to put it
-    public void updatePlayersNameTag(Player player) {
+    public void updatePlayersNameTag(@NotNull Player player) {
         TeamColor teamColor = Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()).getColor();
         NameTagEditor nameTagEditor = new NameTagEditor(player);
         nameTagEditor.setNameColor(TeamColor.getChatColor(teamColor)).setPrefix(teamColor.toString() + " ").setSuffix(ChatColor.translateAlternateColorCodes('&', "&7 [&f" + Math.round(player.getHealth()) + "&c\u2764&7]")).setTabName(TeamColor.getChatColor(teamColor) + player.getName()).setChatName((TeamColor.getChatColor(teamColor) + player.getName()));
