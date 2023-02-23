@@ -26,7 +26,7 @@ public class EntityDamageByEntityListener implements Listener {
             event.setDamage(event.getDamage() / 8);
         }
 
-        if (event.getEntity().getType() == EntityType.WANDERING_TRADER || event.getEntity().getType() == EntityType.VILLAGER) {
+        if (event.getEntity().getType() == EntityType.ARMOR_STAND) {
             event.setCancelled(true);
             return;
         }
