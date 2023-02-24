@@ -126,19 +126,5 @@ public class PlayerMoveListener implements Listener {
             // he die
             event.getPlayer().setHealth(0);
         }
-
-        if (event.getPlayer().getLocation().getBlockX() > Game.getGameInstance().getSelectedMap().getxMax() ||
-                event.getPlayer().getLocation().getBlockX() < Game.getGameInstance().getSelectedMap().getxMin()) {
-
-            event.getPlayer().setHealth(0);
-            return;
-        }
-
-        if (event.getPlayer().getLocation().getBlockZ() > Game.getGameInstance().getSelectedMap().getzMax() ||
-                event.getPlayer().getLocation().getBlockZ() < Game.getGameInstance().getSelectedMap().getzMin()) {
-
-            event.getPlayer().setHealth(0);
-            return;
-        }
     }
 }
