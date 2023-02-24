@@ -121,7 +121,8 @@ public class CoresScoreboard extends ScoreboardBuilder {
 
             updateScore("cores_twitchViews", getTwitchViewers(), Component.text(" viewers").color(NamedTextColor.LIGHT_PURPLE));
 
-        }, 0L, 20L*30);
+            // every 5 seconds is ok or do it less often?
+        }, 0L, 20L*5);
     }
 
     private static Component getTwitchViewers() {
