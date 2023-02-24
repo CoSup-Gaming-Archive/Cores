@@ -4,6 +4,7 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
+import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -11,6 +12,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPhysicsEvent;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,5 +78,9 @@ public class BlockBreakListener implements Listener {
         }
     }
 
-
+    @EventHandler
+    private void onBlockFall(EntityChangeBlockEvent event) {
+        if (event.getBlock().getType().toString().contains("POWDER"))
+            event.setCancelled(true);
+    }
 }

@@ -3,7 +3,6 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.objects.BeaconState;
-import eu.cosup.cores.objects.SideBarInformation;
 import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.objects.TeamColor;
 import net.kyori.adventure.text.Component;
@@ -73,8 +72,6 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
             alivePlayer.showTitle(title);
             alivePlayer.playSound(alivePlayer.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
         }
-
-        SideBarInformation.update();
 
         // broadcast that they lost bed
         Component msg = Component.text().content("A ").color(TextColor.color(NamedTextColor.YELLOW))

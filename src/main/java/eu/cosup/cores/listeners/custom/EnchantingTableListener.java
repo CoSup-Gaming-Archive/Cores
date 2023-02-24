@@ -27,11 +27,12 @@ public class EnchantingTableListener implements Listener {
     @EventHandler
     private void onPlayerCloseEnchantingTale(InventoryClickEvent event) {
 
-
-        assert event.getCurrentItem() != null;
-        if (event.getCurrentItem().getType() == Material.LAPIS_LAZULI) {
-            event.setCancelled(true);
+        if (event.getCurrentItem() != null) {
+            if (event.getCurrentItem().getType() == Material.LAPIS_LAZULI) {
+                event.setCancelled(true);
+            }
         }
+
     }
 
     @EventHandler

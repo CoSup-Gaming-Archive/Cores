@@ -3,7 +3,6 @@ package eu.cosup.cores.tasks;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.objects.SideBarInformation;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -35,7 +34,6 @@ public class GameTimerTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        SideBarInformation.update();
         setSecondsElapsed(getSecondsElapsed() + 1);
 
         if (secondsElapsed == 600) {

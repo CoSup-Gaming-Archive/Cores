@@ -20,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerMoveListener implements Listener {
 
@@ -114,8 +115,10 @@ public class PlayerMoveListener implements Listener {
             return;
         }
 
-        if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()).isPlayerDead(event.getPlayer())) {
-            return;
+        if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()) != null) {
+            if (Objects.requireNonNull(Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId())).isPlayerDead(event.getPlayer())) {
+                return;
+            }
         }
 
         // if player is bellow the threshold

@@ -52,7 +52,7 @@ public class TeamManager {
     }
 
     // which team player is in
-    public Team whichTeam(@NotNull UUID playerUUID) {
+    public @Nullable Team whichTeam(@NotNull UUID playerUUID) {
 
         for (Team team : teams) {
 

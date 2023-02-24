@@ -2,7 +2,6 @@ package eu.cosup.cores.tasks;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.objects.SideBarInformation;
 import eu.cosup.cores.objects.Team;
 import eu.cosup.cores.objects.TeamColor;
 import net.kyori.adventure.text.Component;
@@ -94,9 +93,6 @@ public class GameEndTask extends BukkitRunnable {
             msg = Component.text("The game ended").color(NamedTextColor.RED);
         }
         Cores.getInstance().getServer().broadcast(msg);
-
-
-        SideBarInformation.update();
 
         Bukkit.getLogger().warning("Shutting down in: " + Cores.getInstance().getConfig().getInt("return-to-lobby-delay"));
         new BukkitRunnable() {
