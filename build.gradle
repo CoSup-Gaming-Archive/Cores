@@ -35,6 +35,7 @@ repositories {
 
 dependencies {
     implementation 'eu.cosup:Tournament:1.0.1-20230224.102243-13@jar'
+
     implementation 'org.apache.commons:commons-io:1.3.2'
     compileOnly 'io.papermc.paper:paper-api:1.19.3-R0.1-SNAPSHOT'
 }
