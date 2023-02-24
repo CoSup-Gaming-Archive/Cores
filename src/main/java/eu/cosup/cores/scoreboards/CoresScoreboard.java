@@ -137,7 +137,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
         URLConnection connection;
 
         try {
-            connection = new URL("https://api.twitch.tv/helix/streams?user_login=elxokas").openConnection();
+            connection = new URL("https://api.twitch.tv/helix/streams?user_login=CoSup_Gaming").openConnection();
             connection.setRequestProperty("Authorization", "Bearer "+bearer);
             connection.setRequestProperty("client-id", client_id);
             connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
