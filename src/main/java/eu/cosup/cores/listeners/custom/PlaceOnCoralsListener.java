@@ -1,5 +1,6 @@
 package eu.cosup.cores.listeners.custom;
 
+import eu.cosup.cores.Game;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -24,8 +25,9 @@ public class PlaceOnCoralsListener implements Listener {
             return;
         }
 
-        if (event.getClickedBlock().getType().toString().contains("CORAL")) {
+        if (event.getClickedBlock().getType().toString().contains("CORAL") && !event.getClickedBlock().getType().toString().contains("BLOCK")) {
             event.setCancelled(true);
+            Game.getGameInstance().getBlockManager().addBlock(event.getClickedBlock());
             event.getClickedBlock().setType(event.getPlayer().getInventory().getItemInMainHand().getType());
             event.getPlayer().getInventory().remove(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType(), 1));
         }

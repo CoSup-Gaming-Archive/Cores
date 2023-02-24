@@ -88,9 +88,15 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     public static void givePlayerTools(@NotNull Player player) {
-        player.getInventory().addItem(new ItemStack(Material.WOODEN_SWORD));
-        player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
+        player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
+        player.getInventory().addItem(new ItemStack(Material.BOW));
         player.getInventory().addItem(new ItemStack(Material.IRON_AXE));
+        player.getInventory().addItem(new ItemStack(Material.OAK_LOG, 32));
+        player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
+        player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
+        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 16));
+        player.getInventory().addItem(new ItemStack(Material.ARROW, 12));
+        player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
     }
 
     @Override

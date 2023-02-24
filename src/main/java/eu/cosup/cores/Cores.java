@@ -2,7 +2,6 @@ package eu.cosup.cores;
 
 import eu.cosup.cores.listeners.*;
 import eu.cosup.cores.listeners.custom.*;
-import eu.cosup.cores.managers.ScoreBoardManager;
 import eu.cosup.cores.objects.LoadedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -65,14 +64,10 @@ public final class Cores extends JavaPlugin {
 
         new GameChangePhaseListener();
         new TeamChangeAliveListener();
-
     }
 
     @Override
     public void onDisable() {
-        // so this doesnt accidentaly show up next time if the server was to crash
-        ScoreBoardManager scoreBoardManager = new ScoreBoardManager("bedwars");
-        scoreBoardManager.clearObjective();
         instance = null;
     }
 

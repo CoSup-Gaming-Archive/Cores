@@ -9,6 +9,7 @@ import eu.cosup.tournament.common.utility.PlayerUtility;
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -19,6 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class PlayerMoveListener implements Listener {
 
@@ -74,9 +76,13 @@ public class PlayerMoveListener implements Listener {
 
                 leftBeaconsChange.forEach(teamColor -> {
                     Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).setLeftBeaconState(BeaconState.ATTACK);
+                    Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getOnlinePlayers().forEach(player ->
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1));
                 });
                 rightBeaconsChange.forEach(teamColor -> {
                     Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).setRightBeaconState(BeaconState.ATTACK);
+                    Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getOnlinePlayers().forEach(player ->
+                            player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_BASS, 1, 1));
                 });
 
             }
@@ -89,7 +95,7 @@ public class PlayerMoveListener implements Listener {
 
         // prevents ghosting
         if (Game.getGameInstance().getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
-            if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
+            if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName()) && !PlayerUtility.isPlayerStreamer(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
                 if (event.getPlayer().getGameMode() == GameMode.SPECTATOR) {
                     event.setCancelled(true);
                     event.getPlayer().addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 10, 100));
@@ -109,8 +115,10 @@ public class PlayerMoveListener implements Listener {
             return;
         }
 
-        if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()).isPlayerDead(event.getPlayer())) {
-            return;
+        if (Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId()) != null) {
+            if (Objects.requireNonNull(Game.getGameInstance().getTeamManager().whichTeam(event.getPlayer().getUniqueId())).isPlayerDead(event.getPlayer())) {
+                return;
+            }
         }
 
         // if player is bellow the threshold

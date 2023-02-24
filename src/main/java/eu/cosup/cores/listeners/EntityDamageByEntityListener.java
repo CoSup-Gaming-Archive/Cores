@@ -6,11 +6,13 @@ import eu.cosup.cores.managers.PlayerDamageManager;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
+import org.bukkit.Material;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,7 +26,7 @@ public class EntityDamageByEntityListener implements Listener {
             event.setDamage(event.getDamage() / 8);
         }
 
-        if (event.getEntity().getType() == EntityType.WANDERING_TRADER || event.getEntity().getType() == EntityType.VILLAGER) {
+        if (event.getEntity().getType() == EntityType.ARMOR_STAND) {
             event.setCancelled(true);
             return;
         }
@@ -67,6 +69,12 @@ public class EntityDamageByEntityListener implements Listener {
             }
 
         }
-        PlayerDamageManager.setPlayerLastDamage((Player) event.getEntity(), (Player) event.getDamager());
+
+        if (damaged.getHealth() == 0) {
+            if (((Player) event.getDamager()).getInventory().getItemInMainHand().getType() == Material.BOW) {
+                damager.getInventory().addItem(new ItemStack(Material.ARROW, 4));
+            }
+        }
+        PlayerDamageManager.setPlayerLastDamage(damaged, damager);
     }
 }
