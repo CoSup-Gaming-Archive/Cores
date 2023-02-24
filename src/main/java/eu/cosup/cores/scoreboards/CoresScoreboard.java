@@ -119,7 +119,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Cores.getInstance(), () -> {
 
-            updateScore("cores_twitchViews", getTwitchViewers(), Component.text(" viewers").color(NamedTextColor.LIGHT_PURPLE));
+            updateScore("cores_twitchViews", getTwitchViewers(), Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
 
             // every 5 seconds is ok or do it less often?
         }, 0L, 20L*5);
@@ -143,7 +143,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
             connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
 
         } catch (IllegalArgumentException | IOException ignored) {
-            return Component.text("0").color(NamedTextColor.RED);
+            return Component.text("0").color(NamedTextColor.WHITE);
         }
 
         try {
@@ -161,14 +161,14 @@ public class CoresScoreboard extends ScoreboardBuilder {
             String data = JsonParser.parseString(new String(bytes)).getAsJsonObject().get("data").toString().replace("[", "").replace("]", "");
 
             if (data.length() == 0) {
-                return Component.text(0).color(NamedTextColor.RED);
+                return Component.text(0).color(NamedTextColor.WHITE);
             }
 
             return Component.text(Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""))).color(NamedTextColor.WHITE);
 
         } catch (IOException ignored) {}
 
-        return Component.text(0).color(NamedTextColor.RED);
+        return Component.text(0).color(NamedTextColor.WHITE);
     }
 
     private static String getFormattedTime() {
