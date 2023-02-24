@@ -6,7 +6,9 @@ import eu.cosup.cores.events.ChangeGamePhaseEvent;
 import eu.cosup.cores.events.ChangeGameStateEvent;
 import eu.cosup.cores.interfaces.GameListener;
 import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.cores.objects.BeaconState;
 import eu.cosup.cores.objects.Team;
+import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import it.unimi.dsi.fastutil.Pair;
@@ -85,9 +87,12 @@ public class GameChangePhaseListener implements GameListener {
                 player.showTitle(title);
             }
 
-            for (Pair<Location, Location> beaconLocations : Game.getGameInstance().getSelectedMap().getTeamBeacons().values()) {
-                new TeamLoseBeaconTask(beaconLocations.left(), null);
-                new TeamLoseBeaconTask(beaconLocations.right(), null);
+            for (TeamColor teamColor : Game.getGameInstance().getSelectedMap().getTeamBeacons().keySet()) {
+                Pair<Location, Location> beaconLocations = Game.getGameInstance().getSelectedMap().getTeamBeacons().get(teamColor);
+                if (Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getLeftBeaconState() != BeaconState.OFF)
+                    new TeamLoseBeaconTask(beaconLocations.left(), null);
+                if (Game.getGameInstance().getTeamManager().getTeamByColor(teamColor).getRightBeaconState() != BeaconState.OFF)
+                    new TeamLoseBeaconTask(beaconLocations.right(), null);
             }
 
             Cores.getInstance().getGameWorld().playSound(
