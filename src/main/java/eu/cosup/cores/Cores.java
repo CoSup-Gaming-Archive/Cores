@@ -24,7 +24,6 @@ public final class Cores extends JavaPlugin {
         instance = this;
 
         gameWorld = Bukkit.getWorld("world");
-        gameWorld.getEntities().forEach(Entity::remove);
 
         reloadConfig();
         getConfig().options().copyDefaults(true);
@@ -79,6 +78,7 @@ public final class Cores extends JavaPlugin {
             return false;
         }
         game = new Game(selectedMap);
+        gameWorld.getEntities().forEach(Entity::remove);
         Bukkit.getLogger().warning("Succesfully started a game.");
         return true;
     }
