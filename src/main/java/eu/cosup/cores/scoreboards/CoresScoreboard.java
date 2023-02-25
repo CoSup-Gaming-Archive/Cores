@@ -128,7 +128,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
     private static Component getTwitchViewers() {
 
         String bearer = System.getenv("TWITCH_BEARER");
-        String client_id = System.getenv("CLIENT_ID");
+        String client_id = System.getenv("TWITCH_CLIENT_ID");
 
         if (bearer == null || client_id == null) {
             throw new RuntimeException("One of the environment variables isnt set up TWITCH_BEARER OR CLIENT_ID");
