@@ -3,6 +3,7 @@ package eu.cosup.cores.listeners;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
+import eu.cosup.cores.utility.BlockUtility;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.GameMode;
@@ -44,15 +45,13 @@ public class BlockBreakListener implements Listener {
         }
 
         if (block.getType().equals(Material.BEACON)) {
-
             event.setCancelled(true);
             new TeamLoseBeaconTask(event.getBlock().getLocation(), event.getPlayer());
-
             return;
         }
 
         if (event.getPlayer().getGameMode() != GameMode.CREATIVE) {
-            if (!Game.getGameInstance().getBlockManager().isBlockPlaced(block)) {
+            if (BlockUtility.isLocationProtected(block.getLocation())) {
                 event.setCancelled(true);
                 return;
             }
