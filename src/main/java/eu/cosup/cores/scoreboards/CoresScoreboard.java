@@ -1,5 +1,6 @@
 package eu.cosup.cores.scoreboards;
 
+import com.google.gson.JsonParser;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.builders.EntryName;
@@ -11,10 +12,19 @@ import eu.cosup.tournament.common.utility.PlayerUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
+import net.md_5.bungee.api.ServerPing;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.jetbrains.annotations.NotNull;
+
+import javax.inject.Named;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
+import java.util.Arrays;
+import java.util.Objects;
 
 public class CoresScoreboard extends ScoreboardBuilder {
 
@@ -68,6 +78,8 @@ public class CoresScoreboard extends ScoreboardBuilder {
         addUpdatingScore(EntryName.ENTRY_2.entryName(), 2, "cores_teamBlueCoreRight", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Right beacon"));
         addScore(EntryName.ENTRY_1.entryName(), 1);
         addUpdatingScore(EntryName.ENTRY_0.entryName(), 0, "cores_gameTimer", Component.text("0").color(NamedTextColor.YELLOW), Component.text(" seconds").color(NamedTextColor.YELLOW));
+
+        addUpdatingScore(EntryName.ENTRY_10.entryName(), -1, "cores_twitchViews", Component.text("0").color(NamedTextColor.WHITE), Component.text(" viewers").color(NamedTextColor.DARK_PURPLE));
     }
 
     @Override
@@ -104,6 +116,59 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 }
             }
         }, 0, 20);
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(Cores.getInstance(), () -> {
+
+            updateScore("cores_twitchViews", getTwitchViewers(), Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
+
+            // every 5 seconds is ok or do it less often?
+        }, 0L, 20L*5);
+    }
+
+    private static Component getTwitchViewers() {
+
+        String bearer = System.getenv("TWITCH_BEARER");
+        String client_id = System.getenv("CLIENT_ID");
+
+        if (bearer == null || client_id == null) {
+            throw new RuntimeException("One of the environment variables isnt set up TWITCH_BEARER OR CLIENT_ID");
+        }
+
+        URLConnection connection;
+
+        try {
+            connection = new URL("https://api.twitch.tv/helix/streams?user_login=CoSup_Gaming").openConnection();
+            connection.setRequestProperty("Authorization", "Bearer "+bearer);
+            connection.setRequestProperty("client-id", client_id);
+            connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
+
+        } catch (IllegalArgumentException | IOException ignored) {
+            return Component.text("0").color(NamedTextColor.WHITE);
+        }
+
+        try {
+            InputStream is = connection.getInputStream();
+
+            String response = Arrays.toString(is.readAllBytes());
+
+            String[] byteValues = response.substring(1, response.length() - 1).split(",");
+            byte[] bytes = new byte[byteValues.length];
+
+            for (int i=0, len=bytes.length; i<len; i++) {
+                bytes[i] = Byte.parseByte(byteValues[i].trim());
+            }
+
+            String data = JsonParser.parseString(new String(bytes)).getAsJsonObject().get("data").toString().replace("[", "").replace("]", "");
+
+            if (data.length() == 0) {
+                return Component.text(0).color(NamedTextColor.WHITE);
+            }
+
+            return Component.text(Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""))).color(NamedTextColor.WHITE);
+
+        } catch (IOException ignored) {}
+
+        return Component.text(0).color(NamedTextColor.WHITE);
     }
 
     private static String getFormattedTime() {

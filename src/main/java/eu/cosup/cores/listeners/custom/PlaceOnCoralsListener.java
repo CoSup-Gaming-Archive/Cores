@@ -8,6 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 public class PlaceOnCoralsListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)
@@ -26,6 +28,20 @@ public class PlaceOnCoralsListener implements Listener {
         }
 
         if (event.getClickedBlock().getType().toString().contains("CORAL") && !event.getClickedBlock().getType().toString().contains("BLOCK")) {
+            event.setCancelled(true);
+            Game.getGameInstance().getBlockManager().addBlock(event.getClickedBlock());
+            event.getClickedBlock().setType(event.getPlayer().getInventory().getItemInMainHand().getType());
+            event.getPlayer().getInventory().remove(new ItemStack(event.getPlayer().getInventory().getItemInMainHand().getType(), 1));
+        }
+
+        List<Material> flowers = List.of(
+                Material.PINK_TULIP,
+                Material.ALLIUM,
+                Material.RED_TULIP,
+                Material.WHITE_TULIP
+        );
+
+        if (flowers.contains(event.getClickedBlock().getType())) {
             event.setCancelled(true);
             Game.getGameInstance().getBlockManager().addBlock(event.getClickedBlock());
             event.getClickedBlock().setType(event.getPlayer().getInventory().getItemInMainHand().getType());
