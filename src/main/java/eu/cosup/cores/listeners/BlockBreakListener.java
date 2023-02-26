@@ -36,7 +36,6 @@ public class BlockBreakListener implements Listener {
 
         List<Material> allowedBlocks = List.of(
                 Material.IRON_BLOCK,
-                Material.GOLD_BLOCK,
                 Material.DIAMOND_BLOCK
         );
 

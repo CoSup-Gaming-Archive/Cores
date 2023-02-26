@@ -38,6 +38,15 @@ public class GameChangePhaseListener implements GameListener {
     public void firedChangeGamePhaseEvent(@NotNull ChangeGamePhaseEvent event) {
 
         if (event.newGamePhase() == GameStateManager.GamePhase.ARENA) {
+            Cores.getInstance().getServer().broadcast(Component.text("TELEPORTING!").color(NamedTextColor.RED));
+            for (Player player : Cores.getInstance().getServer().getOnlinePlayers()) {
+                Title title = Title.title(
+                        Component.text().content("Teleporting to arena!").color(NamedTextColor.RED).build(),
+                        Component.text().build()
+                );
+                player.showTitle(title);
+            }
+
             Cores.getInstance().setGameWorld(Bukkit.createWorld(new WorldCreator("arena")));
 
             Cores.getInstance().getGameWorld().getEntities().forEach(Entity::remove);
@@ -46,33 +55,34 @@ public class GameChangePhaseListener implements GameListener {
             Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
                 player.teleport(new Location(
                         Cores.getInstance().getGameWorld(),
-                        15.7,
-                        -45,
-                        10));
+                        10.4,
+                        90,
+                        10.4
+                ));
 
                 ActivateGameTask.preparePlayerStats(player);
                 Game.getGameInstance().updatePlayersNameTag(player);
             });
 
             // teleport team one to their spawn
-            for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeams().get(0).getAlivePlayers()) {
+            for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.RED).getAlivePlayers()) {
 
                 alivePlayer.teleport(new Location(
                         Cores.getInstance().getGameWorld(),
-                        -8.6,
-                        -58,
-                        9.3
+                        43.4,
+                        74,
+                        10.4
                 ));
             }
 
             // teleport team two to their spawn
-            for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeams().get(1).getAlivePlayers()) {
+            for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.BLUE).getAlivePlayers()) {
 
                 alivePlayer.teleport(new Location(
                         Cores.getInstance().getGameWorld(),
-                        36,
-                        -58,
-                        9.6
+                        -26.4,
+                        74,
+                        10.6
                 ));
             }
         }

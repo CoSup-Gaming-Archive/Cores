@@ -94,7 +94,7 @@ public class ActivateGameTask extends BukkitRunnable {
         player.getInventory().addItem(new ItemStack(Material.OAK_LOG, 32));
         player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
         player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
-        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 16));
+        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 8));
         player.getInventory().addItem(new ItemStack(Material.ARROW, 12));
         player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
     }

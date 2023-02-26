@@ -2,6 +2,8 @@ package eu.cosup.cores.utility;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.BlockManager;
+import eu.cosup.cores.managers.GameStateManager;
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
@@ -48,6 +50,12 @@ public class BlockUtility {
                 if (teamBeaconLocations.right().getBlockZ() == location.getBlockZ()) {
                     return true;
                 }
+            }
+        }
+
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            if (!Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock())) {
+                return true;
             }
         }
         

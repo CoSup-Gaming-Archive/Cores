@@ -24,16 +24,4 @@ public class BlockManager {
     public boolean isBlockPlaced(Block block) {
         return playerPlacedBlocks.contains(block);
     }
-
-    public void clearMap() {
-
-        Bukkit.getLogger().severe("----------------CLEARING MAP---------------------");
-
-        for (Block block : playerPlacedBlocks) {
-            block.getWorld().setType(block.getLocation(), Material.AIR);
-        }
-
-        Bukkit.getLogger().severe("-------------------FINISHED---------------------");
-    }
-
 }

@@ -7,11 +7,11 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -76,5 +76,18 @@ public class EntityDamageByEntityListener implements Listener {
             }
         }
         PlayerDamageManager.setPlayerLastDamage(damaged, damager);
+    }
+
+    @EventHandler
+    private void onDamage(EntityDamageByEntityEvent event) {
+        Entity damager = event.getDamager(); // Get the object that damaged the entity
+        if (damager.getType() == EntityType.ARROW) { // Check if the object is an Arrow
+            Arrow arrow = (Arrow) damager; // Cast the damager to the arrow
+            if (arrow.getShooter() instanceof Player player) { // Check if the object that shot the arrow was a player
+                if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()) == Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())) {
+                    event.setCancelled(true);
+                }
+            }
+        }
     }
 }
