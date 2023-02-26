@@ -79,7 +79,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
         addScore(EntryName.ENTRY_1.entryName(), 1);
         addUpdatingScore(EntryName.ENTRY_0.entryName(), 0, "cores_gameTimer", Component.text("0").color(NamedTextColor.YELLOW), Component.text(" seconds").color(NamedTextColor.YELLOW));
 
-        addUpdatingScore(EntryName.ENTRY_10.entryName(), -1, "cores_twitchViews", Component.text("0").color(NamedTextColor.WHITE), Component.text(" viewers").color(NamedTextColor.DARK_PURPLE));
+        addUpdatingScore(EntryName.ENTRY_10.entryName(), -1, "cores_twitchViews", Component.text("OFFLINE").color(NamedTextColor.RED), null);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Cores.getInstance(), () -> {
 
-            updateScore("cores_twitchViews", getTwitchViewers(), Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
+            updateScore("cores_twitchViews", getTwitchViewers(), null);
 
             // every 5 seconds is ok or do it less often?
         }, 0L, 20L*5);
@@ -128,7 +128,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
     private static Component getTwitchViewers() {
 
         String bearer = System.getenv("TWITCH_BEARER");
-        String client_id = System.getenv("CLIENT_ID");
+        String client_id = System.getenv("TWITCH_CLIENT_ID");
 
         if (bearer == null || client_id == null) {
             throw new RuntimeException("One of the environment variables isnt set up TWITCH_BEARER OR CLIENT_ID");
@@ -143,7 +143,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
             connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
 
         } catch (IllegalArgumentException | IOException ignored) {
-            return Component.text("0").color(NamedTextColor.WHITE);
+            return Component.text("ERROR").color(NamedTextColor.RED);
         }
 
         try {
@@ -161,14 +161,14 @@ public class CoresScoreboard extends ScoreboardBuilder {
             String data = JsonParser.parseString(new String(bytes)).getAsJsonObject().get("data").toString().replace("[", "").replace("]", "");
 
             if (data.length() == 0) {
-                return Component.text(0).color(NamedTextColor.WHITE);
+                return Component.text("OFFLINE").color(NamedTextColor.RED);
             }
 
-            return Component.text(Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""))).color(NamedTextColor.WHITE);
+            return Component.text(Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""))).color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
 
-        } catch (IOException ignored) {}
-
-        return Component.text(0).color(NamedTextColor.WHITE);
+        } catch (IOException ignored) {
+            return Component.text("ERROR").color(NamedTextColor.RED);
+        }
     }
 
     private static String getFormattedTime() {
