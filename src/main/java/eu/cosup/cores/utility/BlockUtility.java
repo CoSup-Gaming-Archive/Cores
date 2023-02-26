@@ -30,24 +30,29 @@ public class BlockUtility {
 
         for (Pair<Location, Location> teamBeaconLocations : Game.getGameInstance().getSelectedMap().getTeamBeacons().values()) {
 
-            if (teamBeaconLocations.left().getBlockX() == location.getBlockX()) {
-                if (teamBeaconLocations.left().getBlockZ() == location.getBlockZ()) {
-                    return true;
-                }
-            }
             if (teamBeaconLocations.left().getBlockY() == location.getBlockY()) {
                 if (teamBeaconLocations.left().distance(location) < 4) {
                     return true;
                 }
             }
-
-            if (teamBeaconLocations.right().getBlockY() == location.getBlockY()) {
-                if (teamBeaconLocations.right().distance(location) < 4) {
+            if (teamBeaconLocations.left().getBlockX() == location.getBlockX()) {
+                if (teamBeaconLocations.left().getBlockZ() == location.getBlockZ()) {
+                    if (teamBeaconLocations.left().distance(location) > 4) {
+                        return false;
+                    }
                     return true;
                 }
             }
             if (teamBeaconLocations.right().getBlockX() == location.getBlockX()) {
                 if (teamBeaconLocations.right().getBlockZ() == location.getBlockZ()) {
+                    if (teamBeaconLocations.left().distance(location) > 4) {
+                        return false;
+                    }
+                    return true;
+                }
+            }
+            if (teamBeaconLocations.right().getBlockY() == location.getBlockY()) {
+                if (teamBeaconLocations.right().distance(location) < 4) {
                     return true;
                 }
             }

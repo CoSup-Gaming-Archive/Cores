@@ -23,6 +23,10 @@ public class PlaceOnCoralsListener implements Listener {
             return;
         }
 
+        if (event.getClickedBlock().getType() == Material.BEACON) {
+            event.setCancelled(true);
+        }
+
         if (event.getPlayer().getInventory().getItemInMainHand().getType() == Material.AIR || !event.getPlayer().getInventory().getItemInMainHand().getType().isBlock()) {
             return;
         }

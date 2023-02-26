@@ -9,6 +9,7 @@ import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -43,6 +44,10 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
+        if (Game.getGameInstance().getBlockManager().isBlockPlaced(event.getBlock())) {
+            return;
+        }
+
         if (block.getType().equals(Material.BEACON)) {
             event.setCancelled(true);
             new TeamLoseBeaconTask(event.getBlock().getLocation(), event.getPlayer());
@@ -55,6 +60,18 @@ public class BlockBreakListener implements Listener {
                 return;
             }
         }
+
+        event.setCancelled(true);
+        if (event.getBlock().getType() == Material.CHEST) {
+            // drop all items fomr chest
+            Chest chest = (Chest) event.getBlock();
+            chest.getInventory().forEach(itemStack -> {
+                if (itemStack != null) {
+                    event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), itemStack);
+                }
+            });
+        }
+        event.getBlock().setType(Material.AIR);
     }
 
 

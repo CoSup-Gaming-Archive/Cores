@@ -71,7 +71,6 @@ public class SpectatorTask extends BukkitRunnable {
                     cancel();
                     return;
                 }
-                Game.getGameInstance().updatePlayersNameTag(player);
                 player.setVelocity(new Vector().zero());
                 player.teleport(Game.getGameInstance().getSelectedMap().getSpawnByPlayer(player));
                 ActivateGameTask.preparePlayerFull(player);

@@ -10,10 +10,5 @@ public class PlayerRegenerationListener implements Listener {
 
     @EventHandler
     private void onPlayerHeal(EntityRegainHealthEvent event) {
-        if (!(event.getEntity() instanceof Player player)) {
-            return;
-        }
-
-        Game.getGameInstance().updatePlayersNameTag(player);
     }
 }

@@ -44,7 +44,6 @@ public class ActivateGameTask extends BukkitRunnable {
         preparePlayerStats(player);
         givePlayerArmor(player);
         teleportPlayerToSpawn(player);
-        Game.getGameInstance().updatePlayersNameTag(player);
         givePlayerTools(player);
     }
 
@@ -53,6 +52,7 @@ public class ActivateGameTask extends BukkitRunnable {
         player.setGameMode(GameMode.SURVIVAL);
         player.setFoodLevel(Integer.MAX_VALUE);
         player.setHealth(20);
+        player.setExp(0);
     }
 
     public static void teleportPlayerToSpawn(@NotNull Player player) {

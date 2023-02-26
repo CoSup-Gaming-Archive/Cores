@@ -61,7 +61,6 @@ public class GameChangePhaseListener implements GameListener {
                 ));
 
                 ActivateGameTask.preparePlayerStats(player);
-                Game.getGameInstance().updatePlayersNameTag(player);
             });
 
             // teleport team one to their spawn
