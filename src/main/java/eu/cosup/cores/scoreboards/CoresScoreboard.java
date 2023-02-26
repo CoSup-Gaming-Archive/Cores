@@ -24,9 +24,16 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Objects;
 
 public class CoresScoreboard extends ScoreboardBuilder {
+
+    private static HashMap<String, CoresScoreboard> scoreboards = new HashMap<>();
+
+    public static HashMap<String, CoresScoreboard> getScoreboards() {
+        return scoreboards;
+    }
 
     public CoresScoreboard(@NotNull Player player) {
         super(player, "coresScoreboard");

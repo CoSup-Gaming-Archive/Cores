@@ -12,10 +12,10 @@ import static java.util.Objects.requireNonNull;
 
 public abstract class ScoreboardBuilder {
 
-    protected final Scoreboard scoreboard;
-    protected final Objective objective;
+    private final Scoreboard scoreboard;
+    private final Objective objective;
 
-    protected final Player player;
+    private final Player player;
 
     public ScoreboardBuilder(@NotNull Player player, @NotNull String name) {
         requireNonNull(player, "player cannot be null");
@@ -50,6 +50,18 @@ public abstract class ScoreboardBuilder {
     }
     public void removeScore(String entry) {
         this.scoreboard.resetScores(entry);
+    }
+
+    public Scoreboard getScoreboard() {
+        return scoreboard;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public Objective getObjective() {
+        return objective;
     }
 
     public void addUpdatingScore(@NotNull String entry, int score, @NotNull String name, @Nullable Component prefix, @Nullable Component suffix) {

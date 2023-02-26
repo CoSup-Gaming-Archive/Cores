@@ -19,7 +19,7 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent event) {
         Game game = Game.getGameInstance();
-        new CoresScoreboard(event.getPlayer());
+        CoresScoreboard.getScoreboards().put(event.getPlayer().getName(), new CoresScoreboard(event.getPlayer()));
 
         if (PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             event.getPlayer().setGameMode(GameMode.CREATIVE);

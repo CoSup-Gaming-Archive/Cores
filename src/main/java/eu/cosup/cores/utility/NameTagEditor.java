@@ -1,24 +1,30 @@
 package eu.cosup.cores.utility;
 
+import eu.cosup.cores.scoreboards.CoresScoreboard;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
+import org.jetbrains.annotations.NotNull;
 
 public class NameTagEditor {
     Player player;
     Team team;
 
-    public NameTagEditor(Player player) {
+    public NameTagEditor(@NotNull Player player) {
         this.player = player;
-        this.team = Bukkit.getScoreboardManager().getMainScoreboard().getTeam(player.getName());
-        if (team == null) {
-            Bukkit.getLogger().info("createteam");
-            this.team = Bukkit.getScoreboardManager().getMainScoreboard().registerNewTeam(player.getName());
-            this.team.addEntry(player.getName());
+        Scoreboard scoreboard = CoresScoreboard.getScoreboards().get(player.getName()).getScoreboard();
+
+        if (scoreboard == null) {
+            scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
         }
 
-
+        this.team = scoreboard.getTeam(player.getName());
+        if (team == null) {
+            this.team = scoreboard.registerNewTeam(player.getName());
+            this.team.addEntry(player.getName());
+        }
     }
 
     public NameTagEditor setNameColor(ChatColor color) {
