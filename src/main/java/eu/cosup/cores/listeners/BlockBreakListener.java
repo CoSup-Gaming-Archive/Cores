@@ -52,7 +52,7 @@ public class BlockBreakListener implements Listener {
             }
         }
 
-        if (BlockUtility.shouldDropItem(event.getBlock())) {
+        if (!BlockUtility.shouldDropItem(event.getBlock())) {
             event.setDropItems(false);
         }
     }
