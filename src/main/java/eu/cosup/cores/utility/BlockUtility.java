@@ -67,6 +67,20 @@ public class BlockUtility {
         return false;
     }
 
+    public static boolean shouldDropItem(@NotNull Block block) {
+
+        if (Game.getGameInstance().getBlockManager().isBlockPlaced(block)) {
+            return true;
+        }
+
+        List<Material> allowedBlocks = List.of(
+            Material.IRON_BLOCK,
+            Material.DIAMOND_BLOCK
+        );
+
+        return allowedBlocks.contains(block.getType()) || block.getType().toString().contains("SPRUCE") || block.getType().toString().contains("OAK");
+    }
+
     public static RayTraceResult rayTrace(Location start, Vector direction, double maxDistance, ArrayList<Material> targetBlocks) {
         if (direction.lengthSquared() < 1e-5 || maxDistance <= 1e-5) return null;
 

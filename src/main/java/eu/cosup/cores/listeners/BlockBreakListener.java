@@ -35,15 +35,6 @@ public class BlockBreakListener implements Listener {
             }
         }
 
-        List<Material> allowedBlocks = List.of(
-                Material.IRON_BLOCK,
-                Material.DIAMOND_BLOCK
-        );
-
-        if (allowedBlocks.contains(event.getBlock().getType())) {
-            return;
-        }
-
         if (Game.getGameInstance().getBlockManager().isBlockPlaced(event.getBlock())) {
             return;
         }
@@ -61,17 +52,9 @@ public class BlockBreakListener implements Listener {
             }
         }
 
-        event.setCancelled(true);
-        if (event.getBlock().getType() == Material.CHEST) {
-            // drop all items fomr chest
-            Chest chest = (Chest) event.getBlock();
-            chest.getInventory().forEach(itemStack -> {
-                if (itemStack != null) {
-                    event.getBlock().getWorld().dropItemNaturally(event.getBlock().getLocation(), itemStack);
-                }
-            });
+        if (BlockUtility.shouldDropItem(event.getBlock())) {
+            event.setDropItems(false);
         }
-        event.getBlock().setType(Material.AIR);
     }
 
 
