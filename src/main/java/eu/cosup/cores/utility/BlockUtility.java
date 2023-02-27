@@ -22,6 +22,10 @@ public class BlockUtility {
 
     public static boolean isLocationProtected(@NotNull Location location) {
 
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            return !Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
+        }
+
         for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns().values()) {
             if (teamSpawn.distance(location) < spawnProtectionDistance) {
                 return true;
@@ -55,16 +59,12 @@ public class BlockUtility {
                 }
             }
         }
-
-        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
-            return !Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
-        }
         
         return false;
     }
 
     public static boolean isItemBlackListCraft(@NotNull Material material) {
-        return material.toString().contains("BOAT") || material.toString().contains("MINECART");
+        return material.toString().contains("BOAT") || material.toString().contains("MINECART") || material.toString().contains("HOPPER") || material.toString().contains("DYE") || material.toString().contains("RAIL");
     }
 
     public static boolean shouldDropItem(@NotNull Block block) {
