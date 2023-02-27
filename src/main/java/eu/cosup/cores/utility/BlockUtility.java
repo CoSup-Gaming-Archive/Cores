@@ -44,12 +44,12 @@ public class BlockUtility {
             }
 
             // around the beacon and one level bellow is not breakable
-            if (teamBeaconLocations.left().getBlockY() == location.getBlockY() || teamBeaconLocations.left().getBlockY() == location.getBlockY() - 1) {
+            if (teamBeaconLocations.left().getBlockY() == location.getBlockY() || teamBeaconLocations.left().getBlockY() == location.getBlockY() + 1) {
                 if (teamBeaconLocations.left().distance(location) < 5) {
                     return true;
                 }
             }
-            if (teamBeaconLocations.right().getBlockY() == location.getBlockY() || teamBeaconLocations.right().getBlockY() == location.getBlockY() - 1) {
+            if (teamBeaconLocations.right().getBlockY() == location.getBlockY() || teamBeaconLocations.right().getBlockY() == location.getBlockY() + 1) {
                 if (teamBeaconLocations.right().distance(location) < 5) {
                     return true;
                 }
