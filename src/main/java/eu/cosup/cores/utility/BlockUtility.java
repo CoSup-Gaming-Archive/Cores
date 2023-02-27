@@ -15,6 +15,7 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlockUtility {
     private static final double spawnProtectionDistance = Cores.getInstance().getConfig().getDouble("spawn-protection-distance");
@@ -22,7 +23,6 @@ public class BlockUtility {
     public static boolean isLocationProtected(@NotNull Location location) {
 
         for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns().values()) {
-
             if (teamSpawn.distance(location) < spawnProtectionDistance) {
                 return true;
             }
@@ -30,41 +30,41 @@ public class BlockUtility {
 
         for (Pair<Location, Location> teamBeaconLocations : Game.getGameInstance().getSelectedMap().getTeamBeacons().values()) {
 
-            if (teamBeaconLocations.left().getBlockY() == location.getBlockY()) {
-                if (teamBeaconLocations.left().distance(location) < 4) {
-                    return true;
-                }
-            }
+
+            // above beacon is not breakable
             if (teamBeaconLocations.left().getBlockX() == location.getBlockX()) {
                 if (teamBeaconLocations.left().getBlockZ() == location.getBlockZ()) {
-                    if (teamBeaconLocations.left().distance(location) > 4) {
-                        return false;
-                    }
-                    return true;
+                    return teamBeaconLocations.left().distance(location) < 10;
                 }
             }
             if (teamBeaconLocations.right().getBlockX() == location.getBlockX()) {
                 if (teamBeaconLocations.right().getBlockZ() == location.getBlockZ()) {
-                    if (teamBeaconLocations.left().distance(location) > 4) {
-                        return false;
-                    }
+                    return teamBeaconLocations.left().distance(location) < 10;
+                }
+            }
+
+            // around the beacon and one level bellow is not breakable
+            if (teamBeaconLocations.left().getBlockY() == location.getBlockY() || teamBeaconLocations.left().getBlockY() == location.getBlockY() - 1) {
+                if (teamBeaconLocations.left().distance(location) < 5) {
                     return true;
                 }
             }
-            if (teamBeaconLocations.right().getBlockY() == location.getBlockY()) {
-                if (teamBeaconLocations.right().distance(location) < 4) {
+            if (teamBeaconLocations.right().getBlockY() == location.getBlockY() || teamBeaconLocations.right().getBlockY() == location.getBlockY() - 1) {
+                if (teamBeaconLocations.right().distance(location) < 5) {
                     return true;
                 }
             }
         }
 
         if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
-            if (!Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock())) {
-                return true;
-            }
+            return !Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
         }
         
         return false;
+    }
+
+    public static boolean isItemBlackListCraft(@NotNull Material material) {
+        return material.toString().contains("BOAT") || material.toString().contains("MINECART");
     }
 
     public static boolean shouldDropItem(@NotNull Block block) {
