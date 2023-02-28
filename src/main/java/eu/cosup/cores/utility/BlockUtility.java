@@ -2,6 +2,8 @@ package eu.cosup.cores.utility;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.managers.BlockManager;
+import eu.cosup.cores.managers.GameStateManager;
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
@@ -13,14 +15,18 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BlockUtility {
     private static final double spawnProtectionDistance = Cores.getInstance().getConfig().getDouble("spawn-protection-distance");
 
     public static boolean isLocationProtected(@NotNull Location location) {
 
-        for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns().values()) {
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            return !Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
+        }
 
+        for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns().values()) {
             if (teamSpawn.distance(location) < spawnProtectionDistance) {
                 return true;
             }
@@ -28,30 +34,51 @@ public class BlockUtility {
 
         for (Pair<Location, Location> teamBeaconLocations : Game.getGameInstance().getSelectedMap().getTeamBeacons().values()) {
 
+
+            // above beacon is not breakable
             if (teamBeaconLocations.left().getBlockX() == location.getBlockX()) {
                 if (teamBeaconLocations.left().getBlockZ() == location.getBlockZ()) {
-                    return true;
-                }
-            }
-            if (teamBeaconLocations.left().getBlockY() == location.getBlockY()) {
-                if (teamBeaconLocations.left().distance(location) < 4) {
-                    return true;
-                }
-            }
-
-            if (teamBeaconLocations.right().getBlockY() == location.getBlockY()) {
-                if (teamBeaconLocations.right().distance(location) < 4) {
-                    return true;
+                    return teamBeaconLocations.left().distance(location) < 10;
                 }
             }
             if (teamBeaconLocations.right().getBlockX() == location.getBlockX()) {
                 if (teamBeaconLocations.right().getBlockZ() == location.getBlockZ()) {
+                    return teamBeaconLocations.left().distance(location) < 10;
+                }
+            }
+
+            // around the beacon and one level bellow is not breakable
+            if (teamBeaconLocations.left().getBlockY() == location.getBlockY() || teamBeaconLocations.left().getBlockY() == location.getBlockY() + 1) {
+                if (teamBeaconLocations.left().distance(location) < 3) {
+                    return true;
+                }
+            }
+            if (teamBeaconLocations.right().getBlockY() == location.getBlockY() || teamBeaconLocations.right().getBlockY() == location.getBlockY() + 1) {
+                if (teamBeaconLocations.right().distance(location) < 3) {
                     return true;
                 }
             }
         }
         
         return false;
+    }
+
+    public static boolean isItemBlackListCraft(@NotNull Material material) {
+        return material.toString().contains("BOAT") || material.toString().contains("MINECART") || material.toString().contains("HOPPER") || material.toString().contains("DYE") || material.toString().contains("RAIL");
+    }
+
+    public static boolean shouldDropItem(@NotNull Block block) {
+
+        if (Game.getGameInstance().getBlockManager().isBlockPlaced(block)) {
+            return true;
+        }
+
+        List<Material> allowedBlocks = List.of(
+            Material.IRON_BLOCK,
+            Material.DIAMOND_BLOCK
+        );
+
+        return allowedBlocks.contains(block.getType()) || block.getType().toString().contains("SPRUCE") || block.getType().toString().contains("OAK");
     }
 
     public static RayTraceResult rayTrace(Location start, Vector direction, double maxDistance, ArrayList<Material> targetBlocks) {

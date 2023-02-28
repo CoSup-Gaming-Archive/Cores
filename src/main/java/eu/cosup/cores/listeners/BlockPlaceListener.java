@@ -74,7 +74,5 @@ public class BlockPlaceListener implements Listener {
 
     @EventHandler
     private void onPlaceAboveBeacon(BlockPlaceEvent event) {
-
-        // on place above beacon
     }
 }

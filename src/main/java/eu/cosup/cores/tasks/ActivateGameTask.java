@@ -44,7 +44,6 @@ public class ActivateGameTask extends BukkitRunnable {
         preparePlayerStats(player);
         givePlayerArmor(player);
         teleportPlayerToSpawn(player);
-        Game.getGameInstance().updatePlayersNameTag(player);
         givePlayerTools(player);
     }
 
@@ -53,6 +52,7 @@ public class ActivateGameTask extends BukkitRunnable {
         player.setGameMode(GameMode.SURVIVAL);
         player.setFoodLevel(Integer.MAX_VALUE);
         player.setHealth(20);
+        player.setExp(0);
     }
 
     public static void teleportPlayerToSpawn(@NotNull Player player) {
@@ -94,7 +94,7 @@ public class ActivateGameTask extends BukkitRunnable {
         player.getInventory().addItem(new ItemStack(Material.OAK_LOG, 32));
         player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
         player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
-        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 16));
+        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 8));
         player.getInventory().addItem(new ItemStack(Material.ARROW, 12));
         player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
     }

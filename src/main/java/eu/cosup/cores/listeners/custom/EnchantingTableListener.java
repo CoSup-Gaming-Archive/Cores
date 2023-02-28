@@ -1,8 +1,10 @@
 package eu.cosup.cores.listeners.custom;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
@@ -22,6 +24,11 @@ public class EnchantingTableListener implements Listener {
         EnchantingInventory enchantingInventory = (EnchantingInventory) event.getInventory();
         ItemStack lapis = new ItemStack(Material.LAPIS_LAZULI, 64);
         enchantingInventory.setSecondary(lapis);
+    }
+
+    @EventHandler
+    private void removeSweepingEdge(EnchantItemEvent event) {
+        event.getEnchantsToAdd().remove(Enchantment.SWEEPING_EDGE);
     }
 
     @EventHandler

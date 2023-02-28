@@ -67,8 +67,8 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
             beaconTeam.setRightBeaconState(BeaconState.OFF);
         }
 
-        for (Player alivePlayer : beaconTeam.getAlivePlayers()) {
-            Title title = Title.title(Component.text("Beacon destroyed").color(NamedTextColor.RED), Component.text().build());
+        for (Player alivePlayer : Cores.getInstance().getServer().getOnlinePlayers()) {
+            Title title = Title.title(Component.text("Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())).append(Component.text(" destroyed")), Component.text("By ").append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeamColor))));
             alivePlayer.showTitle(title);
             alivePlayer.playSound(alivePlayer.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
         }

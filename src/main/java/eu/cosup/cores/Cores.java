@@ -36,7 +36,6 @@ public final class Cores extends JavaPlugin {
         }
 
         // register all the listeners
-        getServer().getPluginManager().registerEvents(new PlayerRegenerationListener(), this);
         getServer().getPluginManager().registerEvents(new PlaceOnCoralsListener(), this);
         getServer().getPluginManager().registerEvents(new ItemDamageListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(), this);
@@ -51,11 +50,11 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EntityExplodeListener(), this);
         getServer().getPluginManager().registerEvents(new TNTPlaceListener(), this);
         getServer().getPluginManager().registerEvents(new PearlTeleportListener(), this);
-        getServer().getPluginManager().registerEvents(new PlayerShootFireballListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageListener(), this);
         getServer().getPluginManager().registerEvents(new BeaconBreakListener(), this);
         getServer().getPluginManager().registerEvents(new EnchantingTableListener(), this);
         getServer().getPluginManager().registerEvents(new DisableItemRenameListener(), this);
+        getServer().getPluginManager().registerEvents(new ItemCraftListener(), this);
 
         new StartGameCommandListener();
         new EndGameCommandListener();

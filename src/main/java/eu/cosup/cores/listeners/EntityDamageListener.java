@@ -3,10 +3,12 @@ package eu.cosup.cores.listeners;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 
 public class EntityDamageListener implements Listener {
     @EventHandler
@@ -18,7 +20,6 @@ public class EntityDamageListener implements Listener {
             return;
         }
         Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Cores.getInstance(), () -> {
-            Game.getGameInstance().updatePlayersNameTag(player);
         }, 1L);
     }
 }

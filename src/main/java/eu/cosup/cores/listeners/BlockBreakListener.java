@@ -9,6 +9,7 @@ import io.papermc.paper.event.entity.EntityMoveEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -34,13 +35,7 @@ public class BlockBreakListener implements Listener {
             }
         }
 
-        List<Material> allowedBlocks = List.of(
-                Material.IRON_BLOCK,
-                Material.GOLD_BLOCK,
-                Material.DIAMOND_BLOCK
-        );
-
-        if (allowedBlocks.contains(event.getBlock().getType())) {
+        if (Game.getGameInstance().getBlockManager().isBlockPlaced(event.getBlock())) {
             return;
         }
 
@@ -55,6 +50,10 @@ public class BlockBreakListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
+        }
+
+        if (!BlockUtility.shouldDropItem(event.getBlock())) {
+            event.setDropItems(false);
         }
     }
 
