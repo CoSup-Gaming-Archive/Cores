@@ -63,13 +63,10 @@ public class BlockUtility {
     }
 
     public static boolean isBlacklistedFromCrafting(@NotNull Material material) {
-        // TODO: ik its tedious but i  asked you to make a whitelist, not a blacklist
-        
         return material.toString().contains("BOAT") || material.toString().contains("MINECART") || material.toString().contains("HOPPER") || material.toString().contains("DYE") || material.toString().contains("RAIL");
     }
 
     public static boolean isWhitelistedCrafting(@NotNull Material material) {
-        // all tools are allowed
         List<Material> allowedBlocks = List.of(
             Material.IRON_BLOCK,
             Material.DIAMOND_BLOCK,
