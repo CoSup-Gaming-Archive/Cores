@@ -22,7 +22,7 @@ public class BlockUtility {
     public static boolean isLocationProtected(@NotNull Location location) {
 
         if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
-            return !Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
+            return Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
         }
 
         for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns().values()) {
@@ -68,6 +68,8 @@ public class BlockUtility {
 
     public static boolean isWhitelistedCrafting(@NotNull Material material) {
         List<Material> allowedBlocks = List.of(
+            Material.STICK,
+            Material.CRAFTING_TABLE,
             Material.IRON_BLOCK,
             Material.DIAMOND_BLOCK,
             Material.OAK_PLANKS,
@@ -127,10 +129,6 @@ public class BlockUtility {
             Material.DIAMOND_BLOCK
         );
 
-        // TODO: WRROOOONNNGG, do not drop if spruce, the trees on the maps are out of spruce
-        // TODO: 3/1/2023 thats literaly the entire point of it being there
-        // old:  'return allowedBlocks.contains(block.getType()) || block.getType().toString().contains("SPRUCE") || block.getType().toString().contains("OAK");'
-        // new:
         return allowedBlocks.contains(block.getType()) || block.getType().toString().contains("OAK");
     }
 }
