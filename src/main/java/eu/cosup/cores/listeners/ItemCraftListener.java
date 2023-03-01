@@ -11,7 +11,7 @@ public class ItemCraftListener implements Listener {
 
     @EventHandler
     private void onPlayerCraft(CraftItemEvent event) {
-        if (BlockUtility.isBlacklistedFromCrafting(event.getRecipe().getResult().getType())) {
+        if (!BlockUtility.isWhitelistedCrafting(event.getRecipe().getResult().getType())) {
             event.setCancelled(true);
             event.getView().getPlayer().sendMessage(Component.text("You can't craft this item!").color(NamedTextColor.RED));
         }

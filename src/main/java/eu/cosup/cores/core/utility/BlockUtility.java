@@ -64,7 +64,60 @@ public class BlockUtility {
 
     public static boolean isBlacklistedFromCrafting(@NotNull Material material) {
         // TODO: ik its tedious but i  asked you to make a whitelist, not a blacklist
+        
         return material.toString().contains("BOAT") || material.toString().contains("MINECART") || material.toString().contains("HOPPER") || material.toString().contains("DYE") || material.toString().contains("RAIL");
+    }
+
+    public static boolean isWhitelistedCrafting(@NotNull Material material) {
+        // all tools are allowed
+        List<Material> allowedBlocks = List.of(
+            Material.IRON_BLOCK,
+            Material.DIAMOND_BLOCK,
+            Material.OAK_PLANKS,
+            Material.OAK_LOG,
+            Material.OAK_WOOD,
+            Material.OAK_SLAB,
+            Material.OAK_STAIRS,
+            Material.OAK_FENCE,
+            Material.OAK_FENCE_GATE,
+            Material.OAK_LEAVES,
+            Material.OAK_SAPLING,
+            Material.OAK_SIGN,
+            Material.OAK_WALL_SIGN,
+            Material.OAK_BUTTON,
+            Material.OAK_PRESSURE_PLATE,
+            Material.OAK_TRAPDOOR,
+            Material.OAK_DOOR,
+            Material.OAK_BOAT,
+            Material.WOODEN_AXE,
+            Material.WOODEN_HOE,
+            Material.WOODEN_PICKAXE,
+            Material.WOODEN_SHOVEL,
+            Material.WOODEN_SWORD,
+            Material.IRON_AXE,
+            Material.IRON_HOE,
+            Material.IRON_PICKAXE,
+            Material.IRON_SHOVEL,
+            Material.IRON_SWORD,
+            Material.IRON_BOOTS,
+            Material.IRON_CHESTPLATE,
+            Material.IRON_HELMET,
+            Material.IRON_LEGGINGS,
+            Material.IRON_INGOT,
+            Material.IRON_NUGGET,
+            Material.DIAMOND_AXE,
+            Material.DIAMOND_HOE,
+            Material.DIAMOND_PICKAXE,
+            Material.DIAMOND_SWORD,
+            Material.DIAMOND_BOOTS,
+            Material.DIAMOND_CHESTPLATE,
+            Material.DIAMOND_HELMET,
+            Material.DIAMOND_LEGGINGS,
+            Material.DIAMOND,
+            Material.DIAMOND_SHOVEL
+        );
+
+        return allowedBlocks.contains(material);
     }
 
     public static boolean shouldDropItem(@NotNull Block block) {
@@ -78,6 +131,7 @@ public class BlockUtility {
         );
 
         // TODO: WRROOOONNNGG, do not drop if spruce, the trees on the maps are out of spruce
+        // TODO: 3/1/2023 thats literaly the entire point of it being there
         // old:  'return allowedBlocks.contains(block.getType()) || block.getType().toString().contains("SPRUCE") || block.getType().toString().contains("OAK");'
         // new:
         return allowedBlocks.contains(block.getType()) || block.getType().toString().contains("OAK");
