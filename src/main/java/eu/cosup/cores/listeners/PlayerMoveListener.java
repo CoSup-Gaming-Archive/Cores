@@ -23,7 +23,13 @@ public class PlayerMoveListener implements Listener {
 
     public PlayerMoveListener() {
 
-        // TODO document this and explain why it needs to run every tick, those might be some very expensive operations.
+        // 3/1/2023 also I dont really see any expensive operations here, the only part is the loop which is capped as 8^2 = 64 iterations
+        // lowered to every 20 ticks, because that's when the timer updates
+
+
+        /**
+         * This task is used to check if player is in beacon range and if so, change beacon state to ON
+         */
         new BukkitRunnable() {
             @Override
             public void run() {
@@ -84,7 +90,7 @@ public class PlayerMoveListener implements Listener {
                 });
 
             }
-        }.runTaskTimer(Cores.getInstance(), 1, 1);
+        }.runTaskTimer(Cores.getInstance(), 1, 20);
 
     }
 

@@ -25,8 +25,6 @@ import java.util.HashMap;
 
 public class CoresScoreboard extends ScoreboardBuilder {
 
-    // TODO: DO NOT DISPLAY SINGLE DIGIT VIEWER COUNTS HERE. OTHERWISE IT WILL BE VERY EMBARASSING
-
     private static HashMap<String, CoresScoreboard> scoreboards = new HashMap<>();
 
     public static HashMap<String, CoresScoreboard> getScoreboards() {
@@ -123,10 +121,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
         }, 0, 20);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Cores.getInstance(), () -> {
-
             updateScore("cores_twitchViews", getTwitchViewers(), null);
-
-            // every 5 seconds is ok or do it less often?
         }, 0L, 20L*5);
     }
 
@@ -169,10 +164,16 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 return Component.text("OFFLINE").color(NamedTextColor.RED);
             }
 
-            return Component.text(Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""))).color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
+            int viewers = Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""));
+
+            if (viewers < 10) {
+                return Component.text("");
+            }
+
+            return Component.text(viewers + "").color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
 
         } catch (IOException ignored) {
-            return Component.text("ERROR").color(NamedTextColor.RED);
+            return Component.text("").color(NamedTextColor.RED);
         }
     }
 

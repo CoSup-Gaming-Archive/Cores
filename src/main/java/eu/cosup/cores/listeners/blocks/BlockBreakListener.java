@@ -52,16 +52,6 @@ public class BlockBreakListener implements Listener {
         }
     }
 
-
-    @EventHandler
-    private void onBlockDestroy(BlockBreakBlockEvent event) {
-        // TODO bedwars? but maybe useful in cores
-
-        if (!event.getBlock().isSolid() && !event.getBlock().getType().equals(Material.LADDER)) {
-            event.getDrops().clear();
-        }
-    }
-
     @EventHandler
     private void onBlockInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() != null) {
@@ -71,11 +61,5 @@ public class BlockBreakListener implements Listener {
                 event.setCancelled(true);
             }
         }
-    }
-
-    @EventHandler
-    private void onBlockFall(EntityChangeBlockEvent event) {
-        if (event.getBlock().getType().toString().contains("POWDER"))
-            event.setCancelled(true);
     }
 }

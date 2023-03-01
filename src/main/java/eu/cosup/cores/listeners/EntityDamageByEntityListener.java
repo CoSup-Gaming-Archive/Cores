@@ -23,12 +23,6 @@ public class EntityDamageByEntityListener implements Listener {
     @EventHandler
     private void onEntityDamageEntity(@NotNull EntityDamageByEntityEvent event) {
 
-        // TODO bedwars?
-        if (event.getDamager().getType() == EntityType.PRIMED_TNT) {
-            // we want less damage from tnt
-            event.setDamage(event.getDamage() / 8);
-        }
-
         if (event.getEntity().getType() == EntityType.ARMOR_STAND) {
             event.setCancelled(true);
             return;
@@ -59,7 +53,6 @@ public class EntityDamageByEntityListener implements Listener {
         if (Game.getGameInstance().getTeamManager().whichTeam(damaged.getUniqueId()).getColor() ==
                 Game.getGameInstance().getTeamManager().whichTeam(damager.getUniqueId()).getColor()) {
 
-            damager.sendMessage(Component.text().content("You cannot damage teammates").color(NamedTextColor.RED));
             event.setCancelled(true);
             return;
         }
@@ -90,7 +83,7 @@ public class EntityDamageByEntityListener implements Listener {
                 if (
                         Game.getGameInstance().getTeamManager().whichTeam(shooter.getUniqueId()) ==
                                 Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())
-                    // TODO this returns null if the hit entity is not a player in a team. problems?
+                    // 3/1/2023 nope because the event would not be cancelled then so it works as intended
                 ) {
                     event.setCancelled(true);
                 }

@@ -17,9 +17,5 @@ public class EntityDamageListener implements Listener {
         if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()) == null) {
             return;
         }
-        // TODO: Empty scheduled delayed task. Delete?
-        Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(Cores.getInstance(), () -> {
-
-        }, 1L);
     }
 }
