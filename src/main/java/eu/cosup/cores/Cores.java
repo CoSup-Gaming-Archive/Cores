@@ -1,8 +1,16 @@
 package eu.cosup.cores;
 
+import eu.cosup.cores.core.data.LoadedMap;
 import eu.cosup.cores.listeners.*;
-import eu.cosup.cores.listeners.custom.*;
-import eu.cosup.cores.objects.LoadedMap;
+import eu.cosup.cores.listeners.blocks.BlockBreakListener;
+import eu.cosup.cores.listeners.blocks.BlockPlaceListener;
+import eu.cosup.cores.listeners.consumers.EndGameCommandListener;
+import eu.cosup.cores.listeners.consumers.GameFreezeListener;
+import eu.cosup.cores.listeners.consumers.GameUnfreezeListener;
+import eu.cosup.cores.listeners.consumers.StartGameCommandListener;
+import eu.cosup.cores.listeners.gamelogic.*;
+import eu.cosup.cores.listeners.impl.GameChangePhaseListener;
+import eu.cosup.cores.listeners.impl.TeamChangeAliveListener;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -42,7 +50,7 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerLeaveListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerDeathListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerMoveListener(), this);
-        getServer().getPluginManager().registerEvents(new ItemThrowListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerDropItemListener(), this);
         getServer().getPluginManager().registerEvents(new HungerReceiveListener(), this);
         getServer().getPluginManager().registerEvents(new EntityDamageByEntityListener(), this);
         getServer().getPluginManager().registerEvents(new BlockBreakListener(), this);

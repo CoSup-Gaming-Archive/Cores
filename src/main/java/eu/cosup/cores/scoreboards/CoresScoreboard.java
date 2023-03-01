@@ -3,16 +3,14 @@ package eu.cosup.cores.scoreboards;
 import com.google.gson.JsonParser;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.builders.EntryName;
-import eu.cosup.cores.builders.ScoreboardBuilder;
+import eu.cosup.cores.core.data.TeamColor;
+import eu.cosup.cores.core.utility.builders.EntryName;
+import eu.cosup.cores.core.utility.builders.ScoreboardBuilder;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.GameTimerTask;
-import eu.cosup.tournament.common.utility.PlayerUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.md_5.bungee.api.ServerPing;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -26,6 +24,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 public class CoresScoreboard extends ScoreboardBuilder {
+
+    // TODO: DO NOT DISPLAY SINGLE DIGIT VIEWER COUNTS HERE. OTHERWISE IT WILL BE VERY EMBARASSING
 
     private static HashMap<String, CoresScoreboard> scoreboards = new HashMap<>();
 
@@ -94,7 +94,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 updateScore("cores_teamRed", Component.text(Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.RED).getName()).color(NamedTextColor.RED), null);
                 updateScore("cores_teamBlue", Component.text(Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.BLUE).getName()).color(NamedTextColor.BLUE), null);
                 updateScore("cores_gameTimer", Component.text(getFormattedTime()).color(NamedTextColor.YELLOW), Component.empty());
-                for (eu.cosup.cores.objects.Team team : Game.getGameInstance().getTeamManager().getTeams()) {
+                for (eu.cosup.cores.core.data.Team team : Game.getGameInstance().getTeamManager().getTeams()) {
 
                     switch (team.getLeftBeaconState()) {
                         case ON -> updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Left beacon"));

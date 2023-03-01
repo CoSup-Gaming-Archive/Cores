@@ -2,8 +2,8 @@ package eu.cosup.cores.tasks;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.objects.Team;
-import eu.cosup.cores.objects.TeamColor;
+import eu.cosup.cores.core.data.Team;
+import eu.cosup.cores.core.data.TeamColor;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;

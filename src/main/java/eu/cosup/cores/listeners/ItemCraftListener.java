@@ -1,6 +1,6 @@
 package eu.cosup.cores.listeners;
 
-import eu.cosup.cores.utility.BlockUtility;
+import eu.cosup.cores.core.utility.BlockUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.event.EventHandler;
@@ -11,7 +11,7 @@ public class ItemCraftListener implements Listener {
 
     @EventHandler
     private void onPlayerCraft(CraftItemEvent event) {
-        if (BlockUtility.isItemBlackListCraft(event.getRecipe().getResult().getType())) {
+        if (BlockUtility.isBlacklistedFromCrafting(event.getRecipe().getResult().getType())) {
             event.setCancelled(true);
             event.getView().getPlayer().sendMessage(Component.text("You can't craft this item!").color(NamedTextColor.RED));
         }

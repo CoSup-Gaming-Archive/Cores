@@ -2,10 +2,9 @@ package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.core.data.BeaconState;
+import eu.cosup.cores.core.data.TeamColor;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.objects.BeaconState;
-import eu.cosup.cores.objects.TeamColor;
-import eu.cosup.tournament.common.utility.PlayerUtility;
 import it.unimi.dsi.fastutil.Pair;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
@@ -14,8 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
@@ -26,6 +23,7 @@ public class PlayerMoveListener implements Listener {
 
     public PlayerMoveListener() {
 
+        // TODO document this and explain why it needs to run every tick, those might be some very expensive operations.
         new BukkitRunnable() {
             @Override
             public void run() {
