@@ -1,5 +1,6 @@
 package eu.cosup.cores.listeners.gamelogic;
 
+import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.EventHandler;
@@ -28,7 +29,10 @@ public class EnchantingTableListener implements Listener {
 
     @EventHandler
     private void removeSweepingEdge(EnchantItemEvent event) {
-        event.getEnchantsToAdd().remove(Enchantment.SWEEPING_EDGE);
+        if (event.getEnchantsToAdd().containsKey(Enchantment.SWEEPING_EDGE) || event.getEnchantsToAdd().containsKey(Enchantment.DIG_SPEED)) {
+            event.setCancelled(true);
+            event.getEnchanter().sendMessage(Component.text("You shall not enchant with this enchantment!"));
+        }
     }
 
     @EventHandler
