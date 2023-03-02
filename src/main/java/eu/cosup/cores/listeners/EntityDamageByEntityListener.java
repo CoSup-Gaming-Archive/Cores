@@ -82,7 +82,7 @@ public class EntityDamageByEntityListener implements Listener {
             if (arrow.getShooter() instanceof Player shooter) { // Check if the object that shot the arrow was a player
                 if (
                         Game.getGameInstance().getTeamManager().whichTeam(shooter.getUniqueId()) ==
-                                Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())
+                        Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())
                     // 3/1/2023 nope because the event would not be cancelled then so it works as intended
                 ) {
                     event.setCancelled(true);
