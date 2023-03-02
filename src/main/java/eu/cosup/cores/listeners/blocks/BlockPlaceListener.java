@@ -22,7 +22,6 @@ public class BlockPlaceListener implements Listener {
         Block block = event.getBlock();
 
         if (player.getGameMode() == GameMode.CREATIVE) {
-            Game.getGameInstance().getBlockManager().addBlock(block);
             return;
         }
 
@@ -40,6 +39,7 @@ public class BlockPlaceListener implements Listener {
         }
 
         if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            Game.getGameInstance().getBlockManager().addBlock(block);
             return;
         }
 
