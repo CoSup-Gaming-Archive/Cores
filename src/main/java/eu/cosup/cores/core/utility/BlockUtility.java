@@ -22,7 +22,7 @@ public class BlockUtility {
     public static boolean isLocationProtected(@NotNull Location location) {
 
         if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
-            return Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
+            return !Game.getGameInstance().getBlockManager().isBlockPlaced(location.getBlock());
         }
 
         for (Location teamSpawn : Game.getGameInstance().getSelectedMap().getTeamSpawns().values()) {
@@ -42,7 +42,7 @@ public class BlockUtility {
             }
             if (teamBeaconLocations.right().getBlockX() == location.getBlockX()) {
                 if (teamBeaconLocations.right().getBlockZ() == location.getBlockZ()) {
-                    return teamBeaconLocations.left().distance(location) < 10;
+                    return teamBeaconLocations.right().distance(location) < 10;
                 }
             }
 
@@ -69,6 +69,7 @@ public class BlockUtility {
     public static boolean isWhitelistedCrafting(@NotNull Material material) {
         List<Material> allowedBlocks = List.of(
             Material.STICK,
+            Material.CHEST,
             Material.CRAFTING_TABLE,
             Material.IRON_BLOCK,
             Material.DIAMOND_BLOCK,
