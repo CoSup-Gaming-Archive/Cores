@@ -11,14 +11,12 @@ import eu.cosup.cores.events.ChangeGameStateEvent;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
+import eu.cosup.tournament.common.utility.PlayerUtility;
 import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.title.Title;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.WorldCreator;
+import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -84,6 +82,17 @@ public class GameChangePhaseListener implements GameListener {
                         10.6
                 ));
             }
+
+            Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
+                if (PlayerUtility.isPlayerStreamer(player.getUniqueId(), player.getName())) {
+                    player.setGameMode(GameMode.SPECTATOR);
+                    player.setFlying(true);
+                }
+                if (PlayerUtility.isPlayerStaff(player.getUniqueId(), player.getName())) {
+                    player.setGameMode(GameMode.CREATIVE);
+                    player.setFlying(true);
+                }
+            });
         }
 
         if (event.newGamePhase() == GameStateManager.GamePhase.BEACON_DESTRUCTION) {
