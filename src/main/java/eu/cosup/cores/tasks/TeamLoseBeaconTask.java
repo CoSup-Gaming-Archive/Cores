@@ -61,6 +61,13 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         Cores.getInstance().getGameWorld().setType(beaconLocation, Material.AIR);
         beaconTeam.setBeaconCount(beaconTeam.getBeaconCount() - 1);
 
+        Component beaconSide = Component.text("Left").color(NamedTextColor.YELLOW);
+
+        boolean isLeftBeacon = Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation);
+        if (!isLeftBeacon) {
+            beaconSide = Component.text("Right").color(NamedTextColor.YELLOW);
+        }
+
         if (Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
             beaconTeam.setLeftBeaconState(BeaconState.OFF);
         } else if (!Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
@@ -69,7 +76,8 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
 
         for (Player alivePlayer : Cores.getInstance().getServer().getOnlinePlayers()) {
             if (killerTeamColor != null) {
-                Title title = Title.title(Component.text("Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor()))
+                Title title = Title.title(beaconSide
+                        .append(Component.text("Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
                         .append(Component.text(" destroyed")),
                         Component.text("By ")
                         .append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeam.getColor())))
