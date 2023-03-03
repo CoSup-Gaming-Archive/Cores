@@ -77,7 +77,7 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         for (Player alivePlayer : Cores.getInstance().getServer().getOnlinePlayers()) {
             if (killerTeamColor != null) {
                 Title title = Title.title(beaconSide
-                        .append(Component.text("Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
+                        .append(Component.text(" Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
                         .append(Component.text(" destroyed")),
                         Component.text("By ")
                         .append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeam.getColor())))
