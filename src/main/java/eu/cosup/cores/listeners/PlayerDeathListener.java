@@ -2,9 +2,9 @@ package eu.cosup.cores.listeners;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
+import eu.cosup.cores.core.data.TeamColor;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.PlayerDamageManager;
-import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.SpectatorTask;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;

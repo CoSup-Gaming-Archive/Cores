@@ -3,16 +3,14 @@ package eu.cosup.cores.scoreboards;
 import com.google.gson.JsonParser;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.builders.EntryName;
-import eu.cosup.cores.builders.ScoreboardBuilder;
+import eu.cosup.cores.core.data.TeamColor;
+import eu.cosup.cores.core.utility.builders.EntryName;
+import eu.cosup.cores.core.utility.builders.ScoreboardBuilder;
 import eu.cosup.cores.managers.GameStateManager;
-import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.GameTimerTask;
-import eu.cosup.tournament.common.utility.PlayerUtility;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
-import net.md_5.bungee.api.ServerPing;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -94,7 +92,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 updateScore("cores_teamRed", Component.text(Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.RED).getName()).color(NamedTextColor.RED), null);
                 updateScore("cores_teamBlue", Component.text(Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.BLUE).getName()).color(NamedTextColor.BLUE), null);
                 updateScore("cores_gameTimer", Component.text(getFormattedTime()).color(NamedTextColor.YELLOW), Component.empty());
-                for (eu.cosup.cores.objects.Team team : Game.getGameInstance().getTeamManager().getTeams()) {
+                for (eu.cosup.cores.core.data.Team team : Game.getGameInstance().getTeamManager().getTeams()) {
 
                     switch (team.getLeftBeaconState()) {
                         case ON -> updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Left beacon"));
@@ -123,10 +121,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
         }, 0, 20);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Cores.getInstance(), () -> {
-
             updateScore("cores_twitchViews", getTwitchViewers(), null);
-
-            // every 5 seconds is ok or do it less often?
         }, 0L, 20L*5);
     }
 
@@ -169,10 +164,16 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 return Component.text("OFFLINE").color(NamedTextColor.RED);
             }
 
-            return Component.text(Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""))).color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
+            int viewers = Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""));
+
+            if (viewers < 10) {
+                return Component.text("");
+            }
+
+            return Component.text(viewers + "").color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
 
         } catch (IOException ignored) {
-            return Component.text("ERROR").color(NamedTextColor.RED);
+            return Component.text("").color(NamedTextColor.RED);
         }
     }
 

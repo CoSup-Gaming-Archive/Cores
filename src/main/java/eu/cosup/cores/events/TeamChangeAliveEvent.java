@@ -1,7 +1,7 @@
 package eu.cosup.cores.events;
 
-import eu.cosup.cores.interfaces.TeamListener;
-import eu.cosup.cores.objects.TeamColor;
+import eu.cosup.cores.core.data.TeamColor;
+import eu.cosup.cores.core.interfaces.TeamListener;
 
 import java.util.ArrayList;
 import java.util.List;

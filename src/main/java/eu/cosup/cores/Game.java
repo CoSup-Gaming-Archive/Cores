@@ -1,16 +1,13 @@
 package eu.cosup.cores;
 
+import eu.cosup.cores.core.data.LoadedMap;
+import eu.cosup.cores.core.data.TeamColor;
 import eu.cosup.cores.managers.BlockManager;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.TeamManager;
-import eu.cosup.cores.objects.LoadedMap;
-import eu.cosup.cores.objects.TeamColor;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.GameEndTask;
 import eu.cosup.cores.tasks.GameTimerTask;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Game {

@@ -1,8 +1,8 @@
 package eu.cosup.cores.managers;
 
 import eu.cosup.cores.Cores;
-import eu.cosup.cores.objects.Team;
-import eu.cosup.cores.objects.TeamColor;
+import eu.cosup.cores.core.data.Team;
+import eu.cosup.cores.core.data.TeamColor;
 import eu.cosup.tournament.common.objects.GameTeam;
 import eu.cosup.tournament.server.TournamentServer;
 import org.bukkit.entity.Player;

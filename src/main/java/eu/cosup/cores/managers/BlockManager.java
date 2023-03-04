@@ -1,7 +1,5 @@
 package eu.cosup.cores.managers;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import java.util.ArrayList;

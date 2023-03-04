@@ -2,9 +2,9 @@ package eu.cosup.cores.tasks;
 
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
-import eu.cosup.cores.objects.BeaconState;
-import eu.cosup.cores.objects.Team;
-import eu.cosup.cores.objects.TeamColor;
+import eu.cosup.cores.core.data.BeaconState;
+import eu.cosup.cores.core.data.Team;
+import eu.cosup.cores.core.data.TeamColor;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextColor;
@@ -61,6 +61,13 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         Cores.getInstance().getGameWorld().setType(beaconLocation, Material.AIR);
         beaconTeam.setBeaconCount(beaconTeam.getBeaconCount() - 1);
 
+        Component beaconSide = Component.text("Left").color(NamedTextColor.YELLOW);
+
+        boolean isLeftBeacon = Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation);
+        if (!isLeftBeacon) {
+            beaconSide = Component.text("Right").color(NamedTextColor.YELLOW);
+        }
+
         if (Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
             beaconTeam.setLeftBeaconState(BeaconState.OFF);
         } else if (!Game.getGameInstance().getSelectedMap().isLeftBeacon(beaconTeam.getColor(), beaconLocation)) {
@@ -68,8 +75,15 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         }
 
         for (Player alivePlayer : Cores.getInstance().getServer().getOnlinePlayers()) {
-            Title title = Title.title(Component.text("Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())).append(Component.text(" destroyed")), Component.text("By ").append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeamColor))));
-            alivePlayer.showTitle(title);
+            if (killerTeamColor != null) {
+                Title title = Title.title(beaconSide
+                        .append(Component.text(" Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
+                        .append(Component.text(" destroyed")),
+                        Component.text("By ")
+                        .append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeam.getColor())))
+                        .append(Component.text(" destroyed")));
+                alivePlayer.showTitle(title);
+            }
             alivePlayer.playSound(alivePlayer.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
         }
 

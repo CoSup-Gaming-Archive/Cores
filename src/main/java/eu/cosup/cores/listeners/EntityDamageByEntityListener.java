@@ -7,11 +7,13 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
-import org.bukkit.entity.*;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -20,11 +22,6 @@ public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
     private void onEntityDamageEntity(@NotNull EntityDamageByEntityEvent event) {
-
-        if (event.getDamager().getType() == EntityType.PRIMED_TNT) {
-            // we want less damage from tnt
-            event.setDamage(event.getDamage() / 8);
-        }
 
         if (event.getEntity().getType() == EntityType.ARMOR_STAND) {
             event.setCancelled(true);
@@ -56,7 +53,6 @@ public class EntityDamageByEntityListener implements Listener {
         if (Game.getGameInstance().getTeamManager().whichTeam(damaged.getUniqueId()).getColor() ==
                 Game.getGameInstance().getTeamManager().whichTeam(damager.getUniqueId()).getColor()) {
 
-            damager.sendMessage(Component.text().content("You cannot damage teammates").color(NamedTextColor.RED));
             event.setCancelled(true);
             return;
         }
@@ -83,8 +79,12 @@ public class EntityDamageByEntityListener implements Listener {
         Entity damager = event.getDamager(); // Get the object that damaged the entity
         if (damager.getType() == EntityType.ARROW) { // Check if the object is an Arrow
             Arrow arrow = (Arrow) damager; // Cast the damager to the arrow
-            if (arrow.getShooter() instanceof Player player) { // Check if the object that shot the arrow was a player
-                if (Game.getGameInstance().getTeamManager().whichTeam(player.getUniqueId()) == Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())) {
+            if (arrow.getShooter() instanceof Player shooter) { // Check if the object that shot the arrow was a player
+                if (
+                        Game.getGameInstance().getTeamManager().whichTeam(shooter.getUniqueId()) ==
+                        Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())
+                    // 3/1/2023 nope because the event would not be cancelled then so it works as intended
+                ) {
                     event.setCancelled(true);
                 }
             }

@@ -1,6 +1,6 @@
 package eu.cosup.cores.events;
 
-import eu.cosup.cores.interfaces.GameListener;
+import eu.cosup.cores.core.interfaces.GameListener;
 import eu.cosup.cores.managers.GameStateManager;
 
 import java.util.ArrayList;
