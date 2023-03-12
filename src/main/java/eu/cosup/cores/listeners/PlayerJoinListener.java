@@ -3,16 +3,22 @@ package eu.cosup.cores.listeners;
 import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.core.data.Team;
+import eu.cosup.cores.core.data.TeamColor;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.scoreboards.CoresScoreboard;
 import eu.cosup.cores.tasks.SpectatorTask;
 import eu.cosup.tournament.common.utility.PlayerUtility;
+import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Objects;
 
 public class PlayerJoinListener implements Listener {
 
@@ -20,6 +26,19 @@ public class PlayerJoinListener implements Listener {
     private void onPlayerJoin(PlayerJoinEvent event) {
         Game game = Game.getGameInstance();
         CoresScoreboard.getScoreboards().put(event.getPlayer().getName(), new CoresScoreboard(event.getPlayer()));
+
+        // Set scoreboard (tablist) for all players
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getOnlinePlayers().forEach(allPlayer -> {
+                    Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+                        Cores.getInstance().updateScoreboard(allPlayer, onlinePlayer);
+                    });
+                });
+            }
+        }.runTaskAsynchronously(Cores.getInstance());
+
 
         if (PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             event.getPlayer().setGameMode(GameMode.CREATIVE);

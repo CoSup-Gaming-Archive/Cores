@@ -39,6 +39,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
     public void build() {
 
         addTeam("0010Staff",
+                NamedTextColor.GRAY,
                 Component.text()
                         .append(Component.text().content("Staff").color(NamedTextColor.DARK_AQUA).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
@@ -46,6 +47,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 Component.empty()
         );
         addTeam("0008Referee",
+                NamedTextColor.GRAY,
                 Component.text()
                         .append(Component.text().content("Referee").color(NamedTextColor.AQUA).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
@@ -53,6 +55,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 Component.empty()
         );
         addTeam("0006Commentator",
+                NamedTextColor.GRAY,
                 Component.text()
                         .append(Component.text().content("Commentator").color(NamedTextColor.LIGHT_PURPLE).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
@@ -60,10 +63,32 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 Component.empty()
         );
         addTeam("0005Streamer",
+                NamedTextColor.GRAY,
                 Component.text()
                         .append(Component.text().content("Streamer").color(NamedTextColor.DARK_PURPLE).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
                         .build(),
+                Component.empty()
+        );
+        addTeam("0002Blue",
+                NamedTextColor.BLUE,
+                Component.text()
+                        .append(Component.text().content("Blue").color(NamedTextColor.BLUE).build())
+                        .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
+                        .build(),
+                Component.empty()
+        );
+        addTeam("0001Red",
+                NamedTextColor.RED,
+                Component.text()
+                        .append(Component.text().content("Red").color(NamedTextColor.RED).build())
+                        .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
+                        .build(),
+                Component.empty()
+        );
+        addTeam("0000Player",
+                NamedTextColor.GRAY,
+                Component.empty(),
                 Component.empty()
         );
 

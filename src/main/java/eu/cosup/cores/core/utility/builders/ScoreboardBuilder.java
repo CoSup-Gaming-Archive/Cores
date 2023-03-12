@@ -1,6 +1,7 @@
 package eu.cosup.cores.core.utility.builders;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
@@ -82,8 +83,9 @@ public abstract class ScoreboardBuilder {
         team.suffix(suffix);
     }
 
-    public void addTeam(@NotNull String name, @Nullable Component prefix, @Nullable Component suffix) {
+    public void addTeam(@NotNull String name, @Nullable NamedTextColor color, @Nullable Component prefix, @Nullable Component suffix) {
         Team team = this.scoreboard.registerNewTeam(name);
+        team.color(color);
         team.prefix(prefix);
         team.suffix(suffix);
     }
