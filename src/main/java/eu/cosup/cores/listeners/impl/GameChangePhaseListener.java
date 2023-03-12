@@ -12,6 +12,7 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import eu.cosup.tournament.common.utility.PlayerUtility;
+import eu.cosup.tournament.server.item.ItemBuilder;
 import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -19,6 +20,7 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -73,6 +75,8 @@ public class GameChangePhaseListener implements GameListener {
                         74,
                         10.4
                 ));
+                setArenaEquipment(alivePlayer);
+
             }
 
             // teleport team two to their spawn
@@ -84,6 +88,8 @@ public class GameChangePhaseListener implements GameListener {
                         74,
                         10.6
                 ));
+                setArenaEquipment(alivePlayer);
+
             }
 
             Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
@@ -181,5 +187,31 @@ public class GameChangePhaseListener implements GameListener {
                 Game.getGameInstance().finishGame(winnerTeam.getColor());
             }
         }
+    }
+
+
+
+    private void setArenaEquipment(Player player) {
+        player.setGameMode(GameMode.SURVIVAL);
+        player.setFoodLevel(Integer.MAX_VALUE);
+        player.setHealth(20);
+        player.setExp(0);
+
+        player.getInventory().clear();
+
+        player.getInventory().setHelmet(ItemBuilder.of(Material.IRON_HELMET).build());
+        player.getInventory().setChestplate(ItemBuilder.of(Material.IRON_CHESTPLATE).build());
+        player.getInventory().setLeggings(ItemBuilder.of(Material.IRON_LEGGINGS).build());
+        player.getInventory().setBoots(ItemBuilder.of(Material.IRON_BOOTS).build());
+
+        player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
+        player.getInventory().addItem(new ItemStack(Material.BOW));
+        player.getInventory().addItem(new ItemStack(Material.IRON_AXE));
+        player.getInventory().addItem(new ItemStack(Material.OAK_LOG, 32));
+        player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
+        player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
+        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 8));
+        player.getInventory().addItem(new ItemStack(Material.ARROW, 10));
+        player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
     }
 }

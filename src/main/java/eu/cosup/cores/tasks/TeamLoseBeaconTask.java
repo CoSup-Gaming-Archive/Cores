@@ -58,7 +58,7 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
             }
         }
 
-        Cores.getInstance().getGameWorld().setType(beaconLocation, Material.AIR);
+        Cores.getInstance().getGameWorld().setType(beaconLocation, Material.BEDROCK);
         beaconTeam.setBeaconCount(beaconTeam.getBeaconCount() - 1);
 
         Component beaconSide = Component.text("Left").color(NamedTextColor.YELLOW);

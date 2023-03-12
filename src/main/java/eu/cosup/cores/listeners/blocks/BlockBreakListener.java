@@ -4,6 +4,7 @@ import eu.cosup.cores.Game;
 import eu.cosup.cores.core.utility.BlockUtility;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
+import eu.cosup.tournament.server.TournamentServer;
 import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
@@ -28,6 +29,11 @@ public class BlockBreakListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
+        }
+
+        if (TournamentServer.getInstance().isFrozen()) {
+            event.setCancelled(true);
+            return;
         }
 
         if (Game.getGameInstance().getBlockManager().isBlockPlaced(event.getBlock())) {

@@ -109,5 +109,17 @@ public class ActivateGameTask extends BukkitRunnable {
         for (Team team : Game.getGameInstance().getTeamManager().getTeams()) {
             team.getPlayers().forEach(ActivateGameTask::preparePlayerFull);
         }
+
+        // update scoreboard (tablist) for all players
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                Bukkit.getOnlinePlayers().forEach(allPlayer -> {
+                    Bukkit.getOnlinePlayers().forEach(onlinePlayer -> {
+                        Cores.getInstance().updateScoreboard(allPlayer, onlinePlayer);
+                    });
+                });
+            }
+        }.runTaskAsynchronously(Cores.getInstance());
     }
 }

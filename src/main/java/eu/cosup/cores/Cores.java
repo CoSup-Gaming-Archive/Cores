@@ -1,6 +1,8 @@
 package eu.cosup.cores;
 
 import eu.cosup.cores.core.data.LoadedMap;
+import eu.cosup.cores.core.data.Team;
+import eu.cosup.cores.core.data.TeamColor;
 import eu.cosup.cores.listeners.*;
 import eu.cosup.cores.listeners.blocks.BlockBreakListener;
 import eu.cosup.cores.listeners.blocks.BlockPlaceListener;
@@ -11,10 +13,15 @@ import eu.cosup.cores.listeners.consumers.StartGameCommandListener;
 import eu.cosup.cores.listeners.gamelogic.*;
 import eu.cosup.cores.listeners.impl.GameChangePhaseListener;
 import eu.cosup.cores.listeners.impl.TeamChangeAliveListener;
+import eu.cosup.cores.managers.GameStateManager;
+import eu.cosup.tournament.common.utility.PlayerUtility;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 
 public final class Cores extends JavaPlugin {
@@ -99,5 +106,32 @@ public final class Cores extends JavaPlugin {
 
     public Game getGame() {
         return game;
+    }
+
+    public void updateScoreboard(Player toSetScoreboard, Player toCheckPlayer) {
+        if (game.getGameStateManager().getGameState() == GameStateManager.GameState.ACTIVE) {
+            Team team = Game.getGameInstance().getTeamManager().whichTeam(toCheckPlayer.getUniqueId());
+            if (team != null) {
+                if (team.getColor().equals(TeamColor.BLUE)) {
+                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0002Blue")).addEntry(toCheckPlayer.getName());
+                } else if (team.getColor().equals(TeamColor.RED)) {
+                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0001Red")).addEntry(toCheckPlayer.getName());
+                }
+                return;
+            }
+        }
+
+
+        if (PlayerUtility.isPlayerRef(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0008Referee")).addEntry(toCheckPlayer.getName());
+        } else if (PlayerUtility.isPlayerCommentator(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0006Commentator")).addEntry(toCheckPlayer.getName());
+        } else if (PlayerUtility.isPlayerStreamer(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0005Streamer")).addEntry(toCheckPlayer.getName());
+        } else if (PlayerUtility.isPlayerStaff(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0010Staff")).addEntry(toCheckPlayer.getName());
+        } else {
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0000Player")).addEntry(toCheckPlayer.getName());
+        }
     }
 }
