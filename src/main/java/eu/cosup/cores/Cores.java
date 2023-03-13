@@ -113,9 +113,9 @@ public final class Cores extends JavaPlugin {
             Team team = Game.getGameInstance().getTeamManager().whichTeam(toCheckPlayer.getUniqueId());
             if (team != null) {
                 if (team.getColor().equals(TeamColor.BLUE)) {
-                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0002Blue")).addEntry(toCheckPlayer.getName());
+                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0009Blue")).addEntry(toCheckPlayer.getName());
                 } else if (team.getColor().equals(TeamColor.RED)) {
-                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0001Red")).addEntry(toCheckPlayer.getName());
+                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("00010Red")).addEntry(toCheckPlayer.getName());
                 }
                 return;
             }
@@ -123,15 +123,15 @@ public final class Cores extends JavaPlugin {
 
 
         if (PlayerUtility.isPlayerRef(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
-            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0008Referee")).addEntry(toCheckPlayer.getName());
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0001Referee")).addEntry(toCheckPlayer.getName());
         } else if (PlayerUtility.isPlayerCommentator(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
-            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0006Commentator")).addEntry(toCheckPlayer.getName());
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0005Commentator")).addEntry(toCheckPlayer.getName());
         } else if (PlayerUtility.isPlayerStreamer(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
-            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0005Streamer")).addEntry(toCheckPlayer.getName());
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0006Streamer")).addEntry(toCheckPlayer.getName());
         } else if (PlayerUtility.isPlayerStaff(toCheckPlayer.getUniqueId(), toCheckPlayer.getName())) {
-            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0010Staff")).addEntry(toCheckPlayer.getName());
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0000Staff")).addEntry(toCheckPlayer.getName());
         } else {
-            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0000Player")).addEntry(toCheckPlayer.getName());
+            Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0015Player")).addEntry(toCheckPlayer.getName());
         }
     }
 }

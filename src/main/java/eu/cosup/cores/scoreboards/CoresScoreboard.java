@@ -38,23 +38,23 @@ public class CoresScoreboard extends ScoreboardBuilder {
     @Override
     public void build() {
 
-        addTeam("0010Staff",
+        addTeam("0000Staff",
                 NamedTextColor.GRAY,
                 Component.text()
-                        .append(Component.text().content("Staff").color(NamedTextColor.DARK_AQUA).build())
+                        .append(Component.text().content("Staff").color(NamedTextColor.DARK_RED).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
                         .build(),
                 Component.empty()
         );
-        addTeam("0008Referee",
+        addTeam("0001Referee",
                 NamedTextColor.GRAY,
                 Component.text()
-                        .append(Component.text().content("Referee").color(NamedTextColor.AQUA).build())
+                        .append(Component.text().content("Referee").color(NamedTextColor.GOLD).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
                         .build(),
                 Component.empty()
         );
-        addTeam("0006Commentator",
+        addTeam("0005Commentator",
                 NamedTextColor.GRAY,
                 Component.text()
                         .append(Component.text().content("Commentator").color(NamedTextColor.LIGHT_PURPLE).build())
@@ -62,7 +62,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                         .build(),
                 Component.empty()
         );
-        addTeam("0005Streamer",
+        addTeam("0006Streamer",
                 NamedTextColor.GRAY,
                 Component.text()
                         .append(Component.text().content("Streamer").color(NamedTextColor.DARK_PURPLE).build())
@@ -70,7 +70,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                         .build(),
                 Component.empty()
         );
-        addTeam("0002Blue",
+        addTeam("0009Blue",
                 NamedTextColor.BLUE,
                 Component.text()
                         .append(Component.text().content("Blue").color(NamedTextColor.BLUE).build())
@@ -78,7 +78,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                         .build(),
                 Component.empty()
         );
-        addTeam("0001Red",
+        addTeam("00010Red",
                 NamedTextColor.RED,
                 Component.text()
                         .append(Component.text().content("Red").color(NamedTextColor.RED).build())
@@ -86,7 +86,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                         .build(),
                 Component.empty()
         );
-        addTeam("0000Player",
+        addTeam("0015Player",
                 NamedTextColor.GRAY,
                 Component.empty(),
                 Component.empty()
