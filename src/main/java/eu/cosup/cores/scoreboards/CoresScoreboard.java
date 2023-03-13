@@ -41,7 +41,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
         addTeam("0010Staff",
                 NamedTextColor.GRAY,
                 Component.text()
-                        .append(Component.text().content("Staff").color(NamedTextColor.DARK_AQUA).build())
+                        .append(Component.text().content("Staff").color(NamedTextColor.DARK_RED).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
                         .build(),
                 Component.empty()
@@ -49,7 +49,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
         addTeam("0008Referee",
                 NamedTextColor.GRAY,
                 Component.text()
-                        .append(Component.text().content("Referee").color(NamedTextColor.AQUA).build())
+                        .append(Component.text().content("Referee").color(NamedTextColor.GOLD).build())
                         .append(Component.text().content(" ┃ ").color(NamedTextColor.DARK_GRAY).build())
                         .build(),
                 Component.empty()
