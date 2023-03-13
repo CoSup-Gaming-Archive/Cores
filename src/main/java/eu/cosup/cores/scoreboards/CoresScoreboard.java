@@ -78,7 +78,7 @@ public class CoresScoreboard extends ScoreboardBuilder {
                         .build(),
                 Component.empty()
         );
-        addTeam("00010Red",
+        addTeam("0010Red",
                 NamedTextColor.RED,
                 Component.text()
                         .append(Component.text().content("Red").color(NamedTextColor.RED).build())
