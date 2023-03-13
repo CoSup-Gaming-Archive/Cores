@@ -68,28 +68,22 @@ public class GameChangePhaseListener implements GameListener {
 
             // teleport team one to their spawn
             for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.RED).getAlivePlayers()) {
-
                 alivePlayer.teleport(new Location(
                         Cores.getInstance().getGameWorld(),
                         43.4,
                         74,
                         10.4
                 ));
-                setArenaEquipment(alivePlayer);
-
             }
 
             // teleport team two to their spawn
             for (Player alivePlayer : Game.getGameInstance().getTeamManager().getTeamByColor(TeamColor.BLUE).getAlivePlayers()) {
-
                 alivePlayer.teleport(new Location(
                         Cores.getInstance().getGameWorld(),
                         -26.4,
                         74,
                         10.6
                 ));
-                setArenaEquipment(alivePlayer);
-
             }
 
             Cores.getInstance().getServer().getOnlinePlayers().forEach(player -> {
@@ -187,31 +181,5 @@ public class GameChangePhaseListener implements GameListener {
                 Game.getGameInstance().finishGame(winnerTeam.getColor());
             }
         }
-    }
-
-
-
-    private void setArenaEquipment(Player player) {
-        player.setGameMode(GameMode.SURVIVAL);
-        player.setFoodLevel(Integer.MAX_VALUE);
-        player.setHealth(20);
-        player.setExp(0);
-
-        player.getInventory().clear();
-
-        player.getInventory().setHelmet(ItemBuilder.of(Material.IRON_HELMET).build());
-        player.getInventory().setChestplate(ItemBuilder.of(Material.IRON_CHESTPLATE).build());
-        player.getInventory().setLeggings(ItemBuilder.of(Material.IRON_LEGGINGS).build());
-        player.getInventory().setBoots(ItemBuilder.of(Material.IRON_BOOTS).build());
-
-        player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
-        player.getInventory().addItem(new ItemStack(Material.BOW));
-        player.getInventory().addItem(new ItemStack(Material.IRON_AXE));
-        player.getInventory().addItem(new ItemStack(Material.OAK_LOG, 32));
-        player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
-        player.getInventory().addItem(new ItemStack(Material.OAK_PLANKS, 64));
-        player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, 8));
-        player.getInventory().addItem(new ItemStack(Material.ARROW, 10));
-        player.getInventory().addItem(new ItemStack(Material.IRON_PICKAXE));
     }
 }

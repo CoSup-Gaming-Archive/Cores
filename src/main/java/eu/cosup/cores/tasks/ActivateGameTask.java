@@ -4,6 +4,7 @@ import eu.cosup.cores.Cores;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.core.data.Team;
 import eu.cosup.cores.core.data.TeamColor;
+import eu.cosup.cores.managers.GameStateManager;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.GameRule;
@@ -63,14 +64,19 @@ public class ActivateGameTask extends BukkitRunnable {
 
         ItemStack leggings = new ItemStack(Material.LEATHER_LEGGINGS);
         ItemStack boots = new ItemStack(Material.LEATHER_BOOTS);
-        addColor(leggings, player);
-        addColor(boots, player);
-
         ItemStack chestplate = new ItemStack(Material.LEATHER_CHESTPLATE);
         ItemStack helmet = new ItemStack(Material.LEATHER_HELMET);
-
+        addColor(leggings, player);
+        addColor(boots, player);
         addColor(helmet, player);
         addColor(chestplate, player);
+
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            leggings.setType(Material.IRON_LEGGINGS);
+            boots.setType(Material.IRON_BOOTS);
+            chestplate.setType(Material.IRON_CHESTPLATE);
+            helmet.setType(Material.IRON_HELMET);
+        }
 
         player.getInventory().setHelmet(helmet);
         player.getInventory().setChestplate(chestplate);
@@ -88,7 +94,13 @@ public class ActivateGameTask extends BukkitRunnable {
     }
 
     public static void givePlayerTools(@NotNull Player player) {
-        player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
+
+        if (Game.getGameInstance().getGameStateManager().getGamePhase() == GameStateManager.GamePhase.ARENA) {
+            player.getInventory().addItem(new ItemStack(Material.IRON_SWORD));
+        } else {
+            player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
+        }
+
         player.getInventory().addItem(new ItemStack(Material.BOW));
         player.getInventory().addItem(new ItemStack(Material.IRON_AXE));
         player.getInventory().addItem(new ItemStack(Material.OAK_LOG, 32));
