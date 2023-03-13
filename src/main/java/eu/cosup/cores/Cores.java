@@ -115,7 +115,7 @@ public final class Cores extends JavaPlugin {
                 if (team.getColor().equals(TeamColor.BLUE)) {
                     Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0009Blue")).addEntry(toCheckPlayer.getName());
                 } else if (team.getColor().equals(TeamColor.RED)) {
-                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("00010Red")).addEntry(toCheckPlayer.getName());
+                    Objects.requireNonNull(toSetScoreboard.getScoreboard().getTeam("0010Red")).addEntry(toCheckPlayer.getName());
                 }
                 return;
             }
