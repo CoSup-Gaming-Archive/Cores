@@ -68,6 +68,7 @@ public final class Cores extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EnchantingTableListener(), this);
         getServer().getPluginManager().registerEvents(new DisableItemRenameListener(), this);
         getServer().getPluginManager().registerEvents(new ItemCraftListener(), this);
+        getServer().getPluginManager().registerEvents(new PlayerPickupArrowListener(), this);
 
         new StartGameCommandListener();
         new EndGameCommandListener();
