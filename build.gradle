@@ -64,7 +64,7 @@ publishing {
 }
 
 def targetJavaVersion = 17
- 
+  
 java {
     def javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
