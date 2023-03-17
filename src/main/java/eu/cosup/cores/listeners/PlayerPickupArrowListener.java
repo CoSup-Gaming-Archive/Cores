@@ -16,7 +16,7 @@ public class PlayerPickupArrowListener implements Listener {
         if (PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             // Just in case we want to allow staff to pickup arrows outside of the game for whatever reason
             // its interesting that a simple query needs to be this long ~Niko
-            if (!Cores.getInstance().getGame().getGameStateManager().getGameState().equals(GameStateManager.GameState.ACTIVE)) {
+            if (Cores.getInstance().getGame().getGameStateManager().getGameState().equals(GameStateManager.GameState.ACTIVE)) {
                 event.setCancelled(true);
             }
         }
