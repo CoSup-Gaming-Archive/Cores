@@ -48,6 +48,7 @@ public abstract class ScoreboardBuilder {
     public void addScore(String entry, int score) {
         this.objective.getScore(entry).setScore(score);
     }
+
     public void removeScore(String entry) {
         this.scoreboard.resetScores(entry);
     }
@@ -71,6 +72,7 @@ public abstract class ScoreboardBuilder {
         team.suffix(suffix);
         team.addEntry(entry);
     }
+
     public void removeUpdatingScore(@NotNull String entry, @NotNull String name) {
         this.scoreboard.resetScores(entry);
         this.scoreboard.getTeam(name).unregister();
@@ -89,15 +91,18 @@ public abstract class ScoreboardBuilder {
         team.prefix(prefix);
         team.suffix(suffix);
     }
+
     public void removeTeam(@NotNull String name) {
         requireNonNull(this.scoreboard.getTeam(name)).unregister();
     }
+
     public Team getTeam(@NotNull String name) {
         return this.scoreboard.getTeam(name);
     }
 
 
     public abstract void build();
+
     public abstract void update();
 
 }

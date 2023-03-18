@@ -28,6 +28,7 @@ public enum EntryName {
     public int entry() {
         return this.entry;
     }
+
     public String entryName() {
         return this.entryName;
     }

@@ -9,7 +9,7 @@ import java.util.List;
 
 public record TeamChangeAliveEvent(boolean teamAlive, TeamColor teamColor) {
 
-    private static List<TeamListener> listeners = new ArrayList<>();
+    private static final List<TeamListener> listeners = new ArrayList<>();
 
     public TeamChangeAliveEvent(boolean teamAlive, TeamColor teamColor) {
         this.teamAlive = teamAlive;

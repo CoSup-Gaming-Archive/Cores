@@ -10,8 +10,7 @@ public class EntityChangeBlockListener implements Listener {
 
     @EventHandler
     public void onBlockFall(EntityChangeBlockEvent event) {
-        if (event.getEntity() instanceof FallingBlock) {
-            FallingBlock block = (FallingBlock) event.getEntity();
+        if (event.getEntity() instanceof FallingBlock block) {
             block.setGravity(false);
             event.setCancelled(true);
         }

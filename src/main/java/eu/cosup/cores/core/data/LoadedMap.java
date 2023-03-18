@@ -27,8 +27,8 @@ public class LoadedMap {
     private final int xMin;
     private final int zMax;
     private final int zMin;
-    private HashMap<TeamColor, Location> teamSpawns;
-    private HashMap<TeamColor, Pair<Location, Location>> teamBeacons;
+    private final HashMap<TeamColor, Location> teamSpawns;
+    private final HashMap<TeamColor, Pair<Location, Location>> teamBeacons;
 
     public LoadedMap(HashMap<TeamColor, Location> teamSpawns, HashMap<TeamColor, Pair<Location, Location>> teamBeacons, Location spectatorSpawn, int maxHeight, int minHeight, int deathHeight
             , int xMax, int xMin, int zMax, int zMin

@@ -14,10 +14,10 @@ public class Team {
 
     private final TeamColor color;
     private final HashMap<String, Boolean> deathList = new HashMap<>();
-    private List<Player> players;
+    private final List<Player> players;
     private boolean isAlive;
-    private String slug;
-    private String name;
+    private final String slug;
+    private final String name;
     private int beaconCount = 2;
     private BeaconState leftBeaconState = BeaconState.ON;
     private BeaconState rightBeaconState = BeaconState.ON;

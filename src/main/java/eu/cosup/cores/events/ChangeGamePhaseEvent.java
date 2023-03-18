@@ -8,7 +8,7 @@ import java.util.List;
 
 public record ChangeGamePhaseEvent(GameStateManager.GamePhase newGamePhase, GameStateManager.GamePhase oldGamePhase) {
 
-    private static List<GameListener> listeners = new ArrayList<>();
+    private static final List<GameListener> listeners = new ArrayList<>();
 
     public ChangeGamePhaseEvent(GameStateManager.GamePhase newGamePhase, GameStateManager.GamePhase oldGamePhase) {
         this.newGamePhase = newGamePhase;

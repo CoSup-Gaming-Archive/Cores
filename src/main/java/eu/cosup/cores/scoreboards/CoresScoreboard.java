@@ -25,14 +25,80 @@ import java.util.HashMap;
 
 public class CoresScoreboard extends ScoreboardBuilder {
 
-    private static HashMap<String, CoresScoreboard> scoreboards = new HashMap<>();
+    private static final HashMap<String, CoresScoreboard> scoreboards = new HashMap<>();
+
+    public CoresScoreboard(@NotNull Player player) {
+        super(player, "coresScoreboard");
+    }
 
     public static HashMap<String, CoresScoreboard> getScoreboards() {
         return scoreboards;
     }
 
-    public CoresScoreboard(@NotNull Player player) {
-        super(player, "coresScoreboard");
+    private static Component getTwitchViewers() {
+
+        String bearer = System.getenv("TWITCH_BEARER");
+        String client_id = System.getenv("TWITCH_CLIENT_ID");
+
+        if (bearer == null || client_id == null) {
+            throw new RuntimeException("One of the environment variables isnt set up TWITCH_BEARER OR CLIENT_ID");
+        }
+
+        URLConnection connection;
+
+        try {
+            connection = new URL("https://api.twitch.tv/helix/streams?user_login=CoSup_Gaming").openConnection();
+            connection.setRequestProperty("Authorization", "Bearer " + bearer);
+            connection.setRequestProperty("client-id", client_id);
+            connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
+
+        } catch (IllegalArgumentException | IOException ignored) {
+            return Component.text("ERROR").color(NamedTextColor.RED);
+        }
+
+        try {
+            InputStream is = connection.getInputStream();
+
+            String response = Arrays.toString(is.readAllBytes());
+
+            String[] byteValues = response.substring(1, response.length() - 1).split(",");
+            byte[] bytes = new byte[byteValues.length];
+
+            for (int i = 0, len = bytes.length; i < len; i++) {
+                bytes[i] = Byte.parseByte(byteValues[i].trim());
+            }
+
+            String data = JsonParser.parseString(new String(bytes)).getAsJsonObject().get("data").toString().replace("[", "").replace("]", "");
+
+            if (data.length() == 0) {
+                return Component.text("OFFLINE").color(NamedTextColor.RED);
+            }
+
+            int viewers = Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""));
+
+            if (viewers < 10) {
+                return Component.text("");
+            }
+
+            return Component.text(viewers + "").color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
+
+        } catch (IOException ignored) {
+            return Component.text("").color(NamedTextColor.RED);
+        }
+    }
+
+    private static String getFormattedTime() {
+
+        int seconds = GameTimerTask.getSecondsElapsed();
+
+        int minutes = seconds / 60;
+        seconds = seconds - minutes * 60;
+
+        if (minutes > 0) {
+            return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " elapsed";
+        }
+
+        return seconds + " seconds";
     }
 
     @Override
@@ -120,8 +186,10 @@ public class CoresScoreboard extends ScoreboardBuilder {
                 for (eu.cosup.cores.core.data.Team team : Game.getGameInstance().getTeamManager().getTeams()) {
 
                     switch (team.getLeftBeaconState()) {
-                        case ON -> updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Left beacon"));
-                        case OFF -> updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u2716").color(NamedTextColor.RED), Component.text(" Left beacon"));
+                        case ON ->
+                                updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Left beacon"));
+                        case OFF ->
+                                updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u2716").color(NamedTextColor.RED), Component.text(" Left beacon"));
                         case ATTACK -> {
                             if (GameTimerTask.getSecondsElapsed() % 2 == 0) {
                                 updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreLeft", Component.text("\u26A0").color(NamedTextColor.WHITE), Component.text(" Left beacon").color(NamedTextColor.WHITE));
@@ -131,8 +199,10 @@ public class CoresScoreboard extends ScoreboardBuilder {
                         }
                     }
                     switch (team.getRightBeaconState()) {
-                        case ON -> updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreRight", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Right beacon"));
-                        case OFF -> updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreRight", Component.text("\u2716").color(NamedTextColor.RED), Component.text(" Right beacon"));
+                        case ON ->
+                                updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreRight", Component.text("\u2714").color(NamedTextColor.GREEN), Component.text(" Right beacon"));
+                        case OFF ->
+                                updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreRight", Component.text("\u2716").color(NamedTextColor.RED), Component.text(" Right beacon"));
                         case ATTACK -> {
                             if (GameTimerTask.getSecondsElapsed() % 2 == 0) {
                                 updateScore("cores_team" + TeamColor.getFormattedTeamColor(team.getColor()) + "CoreRight", Component.text("\u26A0").color(NamedTextColor.WHITE), Component.text(" Right beacon").color(NamedTextColor.WHITE));
@@ -147,72 +217,6 @@ public class CoresScoreboard extends ScoreboardBuilder {
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(Cores.getInstance(), () -> {
             updateScore("cores_twitchViews", getTwitchViewers(), null);
-        }, 0L, 20L*5);
-    }
-
-    private static Component getTwitchViewers() {
-
-        String bearer = System.getenv("TWITCH_BEARER");
-        String client_id = System.getenv("TWITCH_CLIENT_ID");
-
-        if (bearer == null || client_id == null) {
-            throw new RuntimeException("One of the environment variables isnt set up TWITCH_BEARER OR CLIENT_ID");
-        }
-
-        URLConnection connection;
-
-        try {
-            connection = new URL("https://api.twitch.tv/helix/streams?user_login=CoSup_Gaming").openConnection();
-            connection.setRequestProperty("Authorization", "Bearer "+bearer);
-            connection.setRequestProperty("client-id", client_id);
-            connection.setRequestProperty("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8");
-
-        } catch (IllegalArgumentException | IOException ignored) {
-            return Component.text("ERROR").color(NamedTextColor.RED);
-        }
-
-        try {
-            InputStream is = connection.getInputStream();
-
-            String response = Arrays.toString(is.readAllBytes());
-
-            String[] byteValues = response.substring(1, response.length() - 1).split(",");
-            byte[] bytes = new byte[byteValues.length];
-
-            for (int i=0, len=bytes.length; i<len; i++) {
-                bytes[i] = Byte.parseByte(byteValues[i].trim());
-            }
-
-            String data = JsonParser.parseString(new String(bytes)).getAsJsonObject().get("data").toString().replace("[", "").replace("]", "");
-
-            if (data.length() == 0) {
-                return Component.text("OFFLINE").color(NamedTextColor.RED);
-            }
-
-            int viewers = Integer.parseInt(data.split("viewer_count")[1].split(",")[0].replace("\":", ""));
-
-            if (viewers < 10) {
-                return Component.text("");
-            }
-
-            return Component.text(viewers + "").color(NamedTextColor.WHITE).append(Component.text(" viewers").color(TextColor.fromCSSHexString("#6441a5")));
-
-        } catch (IOException ignored) {
-            return Component.text("").color(NamedTextColor.RED);
-        }
-    }
-
-    private static String getFormattedTime() {
-
-        int seconds = GameTimerTask.getSecondsElapsed();
-
-        int minutes = seconds / 60;
-        seconds = seconds - minutes * 60;
-
-        if (minutes > 0) {
-            return minutes + ":" + (seconds < 10 ? "0" + seconds : seconds) + " elapsed";
-        }
-
-        return seconds + " seconds";
+        }, 0L, 20L * 5);
     }
 }

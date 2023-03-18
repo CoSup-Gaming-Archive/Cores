@@ -71,7 +71,6 @@ public class PlayerJoinListener implements Listener {
         event.getPlayer().teleport(Game.getGameInstance().getSelectedMap().getSpectatorSpawn());
         if (!PlayerUtility.isPlayerStaff(event.getPlayer().getUniqueId(), event.getPlayer().getName())) {
             new SpectatorTask(event.getPlayer(), false).runTask(Cores.getInstance());
-            return;
         }
     }
 }

@@ -13,10 +13,10 @@ import org.jetbrains.annotations.Nullable;
 public class Game {
 
     private static Game gameInstance;
-    private GameStateManager gameStateManager;
-    private TeamManager teamManager;
-    private LoadedMap selectedMap;
-    private BlockManager blockManager;
+    private final GameStateManager gameStateManager;
+    private final TeamManager teamManager;
+    private final LoadedMap selectedMap;
+    private final BlockManager blockManager;
 
     public Game(LoadedMap selectedMap) {
         gameInstance = this;

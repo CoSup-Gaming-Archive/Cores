@@ -20,8 +20,8 @@ import org.jetbrains.annotations.Nullable;
 
 public class TeamLoseBeaconTask extends BukkitRunnable {
 
-    private Location beaconLocation;
-    private Player killer;
+    private final Location beaconLocation;
+    private final Player killer;
 
     public TeamLoseBeaconTask(@NotNull Location beaconLocation, @Nullable Player killer) {
         this.killer = killer;
@@ -77,11 +77,11 @@ public class TeamLoseBeaconTask extends BukkitRunnable {
         for (Player alivePlayer : Cores.getInstance().getServer().getOnlinePlayers()) {
             if (killerTeamColor != null) {
                 Title title = Title.title(beaconSide
-                        .append(Component.text(" Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
-                        .append(Component.text(" destroyed")),
+                                .append(Component.text(" Beacon ").color(TeamColor.getNamedTextColor(beaconTeam.getColor())))
+                                .append(Component.text(" destroyed")),
                         Component.text("By ")
-                        .append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeam.getColor())))
-                        .append(Component.text(" destroyed")));
+                                .append(Component.text(killer.getName()).color(TeamColor.getNamedTextColor(killerTeam.getColor())))
+                                .append(Component.text(" destroyed")));
                 alivePlayer.showTitle(title);
             }
             alivePlayer.playSound(alivePlayer.getLocation(), Sound.ENTITY_LIGHTNING_BOLT_THUNDER, 1, 1);
