@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class PlaceOnCoralsListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)

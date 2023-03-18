@@ -5,7 +5,6 @@ import eu.cosup.cores.core.utility.BlockUtility;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import eu.cosup.tournament.server.TournamentServer;
-import io.papermc.paper.event.block.BlockBreakBlockEvent;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,10 +12,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class BlockBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOW)

@@ -47,6 +47,7 @@ public class GameEndTask extends BukkitRunnable {
             for (int xIndex = -8; xIndex < 8; xIndex++) {
                 for (int yIndex = -8; yIndex < 8; yIndex++) {
                     for (int zIndex = -8; zIndex < 8; zIndex++) {
+                        // TODO: these integers arent used
                         int bx = x + xIndex;
                         int by = y + yIndex;
                         int bz = z + zIndex;

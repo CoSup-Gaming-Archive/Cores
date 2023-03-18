@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
-
+@SuppressWarnings("unused")
 public class PlayerDropItemListener implements Listener {
 
     // when player tries to get rid of default items we should stop him

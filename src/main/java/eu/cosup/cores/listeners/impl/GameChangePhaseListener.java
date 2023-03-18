@@ -12,7 +12,6 @@ import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.tasks.ActivateGameTask;
 import eu.cosup.cores.tasks.TeamLoseBeaconTask;
 import eu.cosup.tournament.common.utility.PlayerUtility;
-import eu.cosup.tournament.server.item.ItemBuilder;
 import it.unimi.dsi.fastutil.Pair;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -20,11 +19,9 @@ import net.kyori.adventure.title.Title;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-
 
 // this could be usefull for later
 public class GameChangePhaseListener implements GameListener {

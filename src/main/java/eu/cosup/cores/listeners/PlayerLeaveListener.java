@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
+@SuppressWarnings("unused")
 public class PlayerLeaveListener implements Listener {
     @EventHandler
     private void onPlayerLeave(PlayerQuitEvent event) {

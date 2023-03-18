@@ -13,7 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-
+@SuppressWarnings("unused")
 public class BlockPlaceListener implements Listener {
 
     @EventHandler

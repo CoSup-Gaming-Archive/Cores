@@ -6,6 +6,7 @@ import org.bukkit.event.inventory.PrepareAnvilEvent;
 
 import java.util.Objects;
 
+@SuppressWarnings("unused")
 public class DisableItemRenameListener implements Listener {
 
     @EventHandler

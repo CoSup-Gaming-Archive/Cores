@@ -3,8 +3,6 @@ package eu.cosup.cores.listeners;
 import eu.cosup.cores.Game;
 import eu.cosup.cores.managers.GameStateManager;
 import eu.cosup.cores.managers.PlayerDamageManager;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
@@ -18,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class EntityDamageByEntityListener implements Listener {
 
     @EventHandler
@@ -82,7 +81,7 @@ public class EntityDamageByEntityListener implements Listener {
             if (arrow.getShooter() instanceof Player shooter) { // Check if the object that shot the arrow was a player
                 if (
                         Game.getGameInstance().getTeamManager().whichTeam(shooter.getUniqueId()) ==
-                        Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())
+                                Game.getGameInstance().getTeamManager().whichTeam(event.getEntity().getUniqueId())
                     // 3/1/2023 nope because the event would not be cancelled then so it works as intended
                 ) {
                     event.setCancelled(true);

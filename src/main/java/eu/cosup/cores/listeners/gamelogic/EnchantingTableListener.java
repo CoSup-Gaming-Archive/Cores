@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.EnchantingInventory;
 import org.bukkit.inventory.ItemStack;
 
+@SuppressWarnings("unused")
 public class EnchantingTableListener implements Listener {
 
     @EventHandler
